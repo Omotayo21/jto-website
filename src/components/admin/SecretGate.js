@@ -1,0 +1,78 @@
+'use client';
+import { useState, useEffect } from 'react';
+import { Lock } from 'lucide-react';
+import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
+
+import { verifyAdminPasskey } from '@/lib/actions';
+
+export default function SecretGate({ children }) {
+  const [passkey, setPasskey] = useState('');
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [error, setError] = useState('');
+  const [isVerifying, setIsVerifying] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('admin_gate_key');
+    if (saved) {
+      // We still check against the server to be sure, although for demo persistence we could trust localstorage
+      // But for real security we verify the key again.
+      verifyAdminPasskey(saved).then(res => {
+        if (res.success) setIsAuthorized(true);
+        else localStorage.removeItem('admin_gate_key');
+      });
+    }
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsVerifying(true);
+    setError('');
+
+    try {
+      const res = await verifyAdminPasskey(passkey);
+      if (res.success) {
+        localStorage.setItem('admin_gate_key', passkey);
+        setIsAuthorized(true);
+      } else {
+        setError(res.error || 'Invalid Administrative Passkey');
+      }
+    } catch (err) {
+      setError('System verification failed. Please try again.');
+    } finally {
+      setIsVerifying(false);
+    }
+  };
+
+  if (isAuthorized) return children;
+
+  return (
+    <div className="fixed inset-0 z-[100] bg-gray-50 flex items-center justify-center p-6">
+      <div className="max-w-md w-full bg-white p-12 rounded-[2.5rem] shadow-2xl shadow-gray-200 border border-gray-100 text-center">
+        <div className="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner">
+          <Lock size={32} />
+        </div>
+        <h1 className="text-3xl font-black text-gray-900 tracking-tight mb-3">Admin Access</h1>
+        <p className="text-gray-500 font-bold mb-10 leading-relaxed">Please enter your 12-character administrative passkey to gain dashboard privileges.</p>
+        
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <Input 
+            type="password" 
+            placeholder="Enter passkey here..." 
+            value={passkey} 
+            onChange={(e) => setPasskey(e.target.value)}
+            className="h-14 text-center tracking-[0.5em] font-black text-xl placeholder:tracking-normal placeholder:font-bold"
+          />
+          {error && <p className="text-rose-500 text-sm font-bold animate-shake">{error}</p>}
+          <Button type="submit" className="w-full h-14 text-lg font-black shadow-lg shadow-indigo-100">
+            Authorize Sessions
+          </Button>
+        </form>
+        
+        <p className="mt-8 text-[10px] text-gray-400 uppercase font-black tracking-widest leading-loose">
+          Secure Environment • Encrypted Connection • System Rev: 4.1.0
+        </p>
+      </div>
+    </div>
+  );
+}
