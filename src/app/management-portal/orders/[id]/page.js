@@ -10,6 +10,7 @@ export default function AdminOrderDetailsPage({ params }) {
   const { id } = params;
   const [order, setOrder] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -31,6 +32,10 @@ export default function AdminOrderDetailsPage({ params }) {
   }, [id]);
 
   const updateStatus = async (newStatus) => {
+    if (newStatus === order.status) return;
+    
+    setIsUpdating(true);
+    const t = toast.loading(`Updating order to ${newStatus}...`);
     try {
       const res = await fetch(`/api/orders/${id}/status`, {
         method: 'PATCH',
@@ -40,12 +45,14 @@ export default function AdminOrderDetailsPage({ params }) {
       const data = await res.json();
       if (data.success) {
         setOrder(prev => ({ ...prev, status: newStatus }));
-        toast.success(`Order status: ${newStatus.toUpperCase()}`);
+        toast.success(`Order status: ${newStatus.toUpperCase()}`, { id: t });
       } else {
-        toast.error(data.error || 'Failed to update status');
+        toast.error(data.error || 'Failed to update status', { id: t });
       }
     } catch (err) {
-      toast.error('Network error');
+      toast.error('Network error', { id: t });
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -92,8 +99,9 @@ export default function AdminOrderDetailsPage({ params }) {
                 ].map((s) => (
                   <button 
                     key={s.id}
+                    disabled={isUpdating}
                     onClick={() => updateStatus(s.id)}
-                    className={`flex flex-col items-center gap-3 p-6 rounded-3xl border-2 transition-all ${order.status === s.id ? `${s.bg} border-indigo-600 shadow-lg` : 'bg-gray-50 border-transparent hover:border-gray-200'}`}
+                    className={`flex flex-col items-center gap-3 p-6 rounded-3xl border-2 transition-all ${order.status === s.id ? `${s.bg} border-indigo-600 shadow-lg` : 'bg-gray-50 border-transparent hover:border-gray-200'} ${isUpdating ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     <s.icon size={24} className={order.status === s.id ? s.color : 'text-gray-400'} />
                     <span className={`text-xs font-black uppercase tracking-widest ${order.status === s.id ? s.color : 'text-gray-400'}`}>{s.label}</span>
@@ -110,12 +118,18 @@ export default function AdminOrderDetailsPage({ params }) {
              <div className="p-8 space-y-6">
                 {order.items.map((item, idx) => (
                   <div key={idx} className="flex items-center gap-6 group">
-                    <div className="w-20 h-20 rounded-2xl bg-gray-50 border border-gray-100 shrink-0" />
+                    <div className="w-20 h-20 rounded-2xl bg-gray-50 border border-gray-100 shrink-0 overflow-hidden">
+                       <img src={item.image || '/placeholder.png'} alt={item.productName} className="w-full h-full object-cover" />
+                    </div>
                     <div className="flex-1">
                        <h4 className="font-bold text-gray-900">{item.productName}</h4>
                        <div className="flex gap-4 mt-1">
                           <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Qty: {item.quantity}</span>
-                          {item.variant && <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">{item.variant.size} / {item.variant.color.name}</span>}
+                          {item.variant && (
+                            <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+                              {item.variant.size} {item.variant.color?.name ? `/ ${item.variant.color.name}` : ''}
+                            </span>
+                          )}
                        </div>
                     </div>
                     <div className="text-right">
@@ -138,11 +152,16 @@ export default function AdminOrderDetailsPage({ params }) {
              <div className="space-y-6">
                 <div>
                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Email Address</p>
-                   <p className="font-bold text-gray-900">{order.userEmail}</p>
+                   <p className="font-bold text-gray-900">{order.userEmail || order.delivery?.email}</p>
                 </div>
                 <div>
                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Payment Status</p>
-                   <Badge variant="success" className="uppercase tracking-widest text-[10px] px-3 py-1.5">Paid Successfully</Badge>
+                   <Badge variant={order.payment?.status === 'success' ? 'success' : 'warning'} className="uppercase tracking-widest text-[10px] px-3 py-1.5">
+                     {order.payment?.status || 'Pending'}
+                   </Badge>
+                   {order.payment?.reference && (
+                      <p className="text-[10px] mt-2 text-gray-400 font-mono">Ref: {order.payment.reference}</p>
+                   )}
                 </div>
              </div>
           </section>
@@ -150,11 +169,26 @@ export default function AdminOrderDetailsPage({ params }) {
           <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
              <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-amber-600 pl-4 uppercase tracking-tight">Shipping</h2>
              <div className="space-y-4 text-sm text-gray-600 font-medium leading-relaxed">
-                <p>123 Demo Street, Victoria Island, Lagos, Nigeria</p>
+                <p>
+                   {order.delivery?.fullName}<br/>
+                   {order.delivery?.address}<br/>
+                   {order.delivery?.city}, {order.delivery?.state}<br/>
+                   {order.delivery?.country}
+                </p>
                 <div className="pt-4 border-t border-gray-50">
-                   <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Method</p>
-                   <p className="font-bold text-gray-900">Premium Door Delivery</p>
+                   <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Phone</p>
+                   <p className="font-bold text-gray-900">{order.delivery?.phone}</p>
                 </div>
+                <div className="pt-4 border-t border-gray-50">
+                   <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Zone</p>
+                   <p className="font-bold text-gray-900 uppercase">{order.delivery?.zone || 'Standard'}</p>
+                </div>
+                {order.delivery?.notes && (
+                  <div className="pt-4 border-t border-gray-50 bg-amber-50/50 p-4 rounded-2xl">
+                     <p className="text-[10px] font-black text-amber-600 uppercase tracking-widest mb-1">Customer Note</p>
+                     <p className="text-gray-900 font-bold italic">"{order.delivery.notes}"</p>
+                  </div>
+                )}
              </div>
           </section>
         </div>

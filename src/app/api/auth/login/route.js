@@ -40,7 +40,7 @@ export async function POST(req) {
     }
 
     // 4. Sign JWT
-    const token = signToken({ id: user._id, email: user.email });
+    const token = signToken({ id: user._id, email: user.email, name: user.name });
 
     // 5. Set Cookie and Return User
     const response = NextResponse.json({

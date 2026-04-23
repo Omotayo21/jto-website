@@ -61,7 +61,7 @@ export function CartDrawer() {
                 {isLoading ? <Loader2 className="w-12 h-12 text-indigo-400 animate-spin" /> : <ShoppingCart size={48} className="text-indigo-300" />}
               </div>
               <p className="text-2xl font-semibold text-gray-900 font-display">Your cart is empty</p>
-              <p className="text-gray-500 mt-3 mb-8 max-w-[250px]">Looks like you haven't added any products to your cart yet.</p>
+              <p className="text-gray-500 mt-3 mb-8 max-w-[250px]">Looks like you haven&apos;t added any products to your cart yet.</p>
               <Button onClick={closeCart} className="min-w-[200px] h-12 text-base">Continue Shopping</Button>
             </div>
           ) : (

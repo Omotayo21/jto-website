@@ -31,7 +31,7 @@ export default function SearchPage() {
              <ArrowLeft size={16} /> Back to Catalog
            </Link>
            <h1 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">Search Results</h1>
-           <p className="text-gray-500 font-bold mt-4">Showing results for <span className="text-indigo-600">"{query}"</span></p>
+           <p className="text-gray-500 font-bold mt-4">Showing results for <span className="text-indigo-600">&quot;{query}&quot;</span></p>
         </div>
         <div className="px-8 py-4 bg-gray-50 rounded-2xl border border-gray-100 flex items-center gap-4">
            <SearchIcon className="text-indigo-600" size={20} />
@@ -84,7 +84,7 @@ export default function SearchPage() {
            </div>
            <div>
               <h3 className="text-2xl font-black text-gray-900 mb-2">No matches found</h3>
-              <p className="text-gray-400 font-bold max-w-xs mx-auto">We couldn't find anything matching your search. Try adjusting your query or keywords.</p>
+              <p className="text-gray-400 font-bold max-w-xs mx-auto">We couldn&apos;t find anything matching your search. Try adjusting your query or keywords.</p>
            </div>
            <Link href="/products" className="bg-gray-900 text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-black transition-all shadow-xl shadow-gray-200">
               Browse All Products

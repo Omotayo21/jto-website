@@ -1,11 +1,5 @@
 import crypto from 'crypto';
 
-export const verifyPaystackSignature = (body, signature) => {
-  const secret = process.env.PAYSTACK_WEBHOOK_SECRET;
-  const hash = crypto.createHmac('sha512', secret).update(JSON.stringify(body)).digest('hex');
-  return hash === signature;
-};
-
 export const initializePayment = async (email, amountInKobo, reference, metadata) => {
   const secret = process.env.PAYSTACK_SECRET_KEY;
   const response = await fetch('https://api.paystack.co/transaction/initialize', {

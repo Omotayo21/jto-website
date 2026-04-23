@@ -55,7 +55,10 @@ export default function LoginPage() {
           <Input required type="email" value={email} onChange={e => setEmail(e.target.value)} className="h-12 text-md" />
         </div>
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+          <div className="flex justify-between items-center mb-2">
+            <label className="text-sm font-semibold text-gray-700">Password</label>
+            <Link href="/forgot-password" title="Forgot password?" className="text-xs font-bold text-indigo-600 hover:text-indigo-500 transition-colors">Forgot password?</Link>
+          </div>
           <Input required type="password" value={password} onChange={e => setPassword(e.target.value)} className="h-12 text-md" />
         </div>
         <Button type="submit" disabled={loading} className="w-full h-14 text-lg mt-6 shadow-indigo-200">
@@ -64,7 +67,7 @@ export default function LoginPage() {
       </form>
 
       <p className="text-center text-sm text-gray-500 mt-10">
-        Don't have an account? <Link href="/register" className="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors">Sign up</Link>
+        Don&apos;t have an account? <Link href="/register" className="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors">Sign up</Link>
       </p>
     </div>
   );

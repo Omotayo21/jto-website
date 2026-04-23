@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { toast } from 'react-hot-toast';
 import { ShoppingCart, Menu, User, LogOut, Search, X, ChevronRight, Package, LayoutDashboard, Heart } from 'lucide-react';
 import { useCartStore } from '@/store/cartStore';
 import { useAuthStore } from '@/store/authStore';
@@ -10,7 +11,7 @@ export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const isAdminPage = pathname?.startsWith('/management-portal');
-  const isAuthPage = pathname === '/login' || pathname === '/register';
+  const isAuthPage = pathname === '/login' || pathname === '/register' || pathname === '/forgot-password' || pathname?.startsWith('/reset-password');
   
   const { items, openCart, fetchCart } = useCartStore();
   const { user, clearUser } = useAuthStore();
@@ -53,7 +54,7 @@ export function Navbar() {
       <nav className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/90 border-b border-gray-100 shadow-sm lg:hidden">
         <div className="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
             <Link href="/" className="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 tracking-tighter">
-              NexusCart <span className="text-gray-400 text-[10px] uppercase ml-1">Admin</span>
+              JTOtheLabel <span className="text-gray-400 text-[10px] uppercase ml-1">Admin</span>
             </Link>
             <div className="flex items-center gap-3">
                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse mr-1" />
@@ -72,7 +73,7 @@ export function Navbar() {
             {/* Logo & Desktop Nav */}
             <div className="flex items-center gap-10">
               <Link href="/" className="text-2xl md:text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 tracking-tighter">
-                NexusCart
+                JTOtheLabel
               </Link>
               <div className="hidden lg:flex items-center space-x-8">
                 <Link href="/products" className="text-gray-500 hover:text-indigo-600 font-bold text-sm uppercase tracking-widest transition-all hover:-translate-y-0.5">Products</Link>
@@ -163,7 +164,7 @@ export function Navbar() {
         <div className="flex flex-col h-full bg-gray-50/50">
           <div className="p-6 flex justify-between items-center bg-white border-b border-gray-100">
             <Link href="/" className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 tracking-tighter">
-              NexusCart
+              JTOtheLabel
             </Link>
             <button onClick={() => setIsMobileMenuOpen(false)} className="p-3 bg-gray-50 rounded-2xl text-gray-500 shadow-sm border border-gray-100">
               <X size={24} />

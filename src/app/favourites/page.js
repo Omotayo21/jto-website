@@ -62,7 +62,7 @@ export default function FavouritesPage() {
         <h1 className="text-4xl font-black text-gray-900 tracking-tight flex items-center gap-4">
           <Heart className="text-rose-500 fill-current" size={32} /> Your Favourites
         </h1>
-        <p className="text-gray-500 font-bold mt-2">All the items you've fallen in love with</p>
+        <p className="text-gray-500 font-bold mt-2">All the items you&apos;ve fallen in love with</p>
       </div>
 
       {favourites.length === 0 ? (

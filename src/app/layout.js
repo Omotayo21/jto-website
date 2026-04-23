@@ -7,7 +7,7 @@ import { Toaster } from 'react-hot-toast';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'NexusCart | Premium E-commerce',
+  title: 'JTOtheLabel | Premium E-commerce',
   description: 'Shop the best products online.',
 };
 

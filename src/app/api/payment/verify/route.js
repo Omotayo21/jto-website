@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Order from '@/models/Order';
 import { verifyTransaction } from '@/lib/paystack';
+import { processOrderSuccess } from '@/lib/order-utils';
 
 /**
  * GET handler to verify transaction reference.
@@ -20,23 +21,10 @@ export async function GET(request) {
     const verification = await verifyTransaction(reference);
 
     if (verification.data.status === 'success') {
-      // Find the order by reference (which is the orderNumber in our case)
-      const order = await Order.findOne({ 'payment.reference': reference });
-      
-      if (order && order.status === 'pending') {
-         order.status = 'processing';
-         order.payment.status = 'success';
-         order.payment.paidAt = new Date();
-         order.statusHistory.push({
-           status: 'processing',
-           timestamp: new Date(),
-           note: 'Payment verified via callback'
-         });
-         await order.save();
-      }
+      const result = await processOrderSuccess(reference);
       
       // Redirect to confirmation page
-      return NextResponse.redirect(new URL(`/order-confirmation/${order?._id || reference}`, request.url));
+      return NextResponse.redirect(new URL(`/order-confirmation/${result.orderId || reference}`, request.url));
     } else {
       return NextResponse.redirect(new URL('/checkout?error=Payment+Verification+Failed', request.url));
     }

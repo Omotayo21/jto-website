@@ -33,10 +33,10 @@ export default async function AdminOrdersPage() {
             </thead>
             <tbody>
               {orders.map(order => (
-                 <tr key={order.id} className="hover:bg-gray-50 transition-colors border-b border-gray-50">
+                 <tr key={order._id} className="hover:bg-gray-50 transition-colors border-b border-gray-50">
                    <td className="p-5 pl-8 font-extrabold text-gray-900 whitespace-nowrap">{order.orderNumber}</td>
                    <td className="p-5 text-gray-600 font-medium">{order.delivery?.email || order.userEmail}</td>
-                   <td className="p-5 text-gray-500 text-sm font-semibold whitespace-nowrap">{new Date(order.createdAt?.toDate ? order.createdAt.toDate() : order.createdAt).toLocaleDateString()}</td>
+                   <td className="p-5 text-gray-500 text-sm font-semibold whitespace-nowrap">{new Date(order.createdAt).toLocaleDateString()}</td>
                    <td className="p-5 font-extrabold text-indigo-600 whitespace-nowrap">{formatCurrency(order.total, order.currency || 'NGN')}</td>
                    <td className="p-5">
                       <Badge variant={order.status === 'delivered' ? 'success' : order.status === 'pending' ? 'warning' : 'brand'} className="uppercase tracking-widest text-[10px] px-2 py-1">
@@ -44,7 +44,7 @@ export default async function AdminOrdersPage() {
                       </Badge>
                    </td>
                    <td className="p-5 pr-8 text-right">
-                     <Link href={`/management-portal/orders/${order.id}`} className="text-indigo-600 font-bold hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 px-4 py-2 rounded-lg transition-colors inline-block whitespace-nowrap">
+                     <Link href={`/management-portal/orders/${order._id}`} className="text-indigo-600 font-bold hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 px-4 py-2 rounded-lg transition-colors inline-block whitespace-nowrap">
                        Details
                      </Link>
                    </td>

@@ -28,7 +28,7 @@ export default function RegisterPage() {
       if (!data.success) throw new Error(data.error || 'Registration failed');
       
       setUser(data.data);
-      toast.success('Registration successful! Welcome to NexusCart.');
+      toast.success('Registration successful! Welcome to JTOtheLabel.');
       window.location.href = '/account';
     } catch (err) {
       setError(err.message || 'Registration failed. Please check your details.');

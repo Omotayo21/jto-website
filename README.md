@@ -1,4 +1,4 @@
-# **NexusCart** - Full-Stack E-Commerce Platform
+# **JTOtheLabel** - Full-Stack E-Commerce Platform
 
 A modern, full-featured e-commerce platform built with **Next.js 14**, **MongoDB**, and **Tailwind CSS**. Features complete shopping cart, secure authentication, admin dashboard, and payment integration.
 

@@ -25,7 +25,7 @@ export default function AdminLayout({ children }) {
         {/* Mobile Header */}
         <div className="lg:hidden bg-white border-b border-gray-100 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
           <Link href="/" className="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 tracking-tighter">
-            NexusCart <span className="text-gray-400 text-[10px] uppercase ml-1">Admin</span>
+            JTOtheLabel <span className="text-gray-400 text-[10px] uppercase ml-1">Admin</span>
           </Link>
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -51,7 +51,7 @@ export default function AdminLayout({ children }) {
         `}>
           <div className="hidden lg:block mb-10">
             <Link href="/" className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 tracking-tighter">
-              NexusCart <span className="block text-gray-400 font-bold text-[10px] uppercase tracking-widest mt-1">Global Admin Suite</span>
+              JTOtheLabel <span className="block text-gray-400 font-bold text-[10px] uppercase tracking-widest mt-1">Global Admin Suite</span>
             </Link>
           </div>
 

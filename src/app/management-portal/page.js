@@ -2,9 +2,11 @@ import { connectDB } from '@/lib/mongodb';
 import Order from '@/models/Order';
 import Product from '@/models/Product';
 import User from '@/models/User';
+import AbandonedCart from '@/models/AbandonedCart';
 import { formatCurrency } from '@/lib/utils';
 import { ShoppingBag, TrendingUp, Users, MousePointer2, ExternalLink, Package } from 'lucide-react';
 import Link from 'next/link';
+
 export default async function AdminDashboard() {
   let stats = { totalRevenue: 0, pendingOrders: 0, abandonedCount: 0, totalUsers: 0 };
   let recentOrders = [];
@@ -12,10 +14,11 @@ export default async function AdminDashboard() {
 
   try {
     await connectDB();
-    const [orderDocs, userCount, productDocs] = await Promise.all([
+    const [orderDocs, userCount, productDocs, abandonedCount] = await Promise.all([
       Order.find().sort({ createdAt: -1 }).limit(5),
       User.countDocuments(),
-      Product.find().sort({ salesCount: -1 }).limit(3)
+      Product.find().sort({ salesCount: -1 }).limit(3),
+      AbandonedCart.countDocuments({ converted: false })
     ]);
     
     const revenue = await Order.aggregate([
@@ -28,7 +31,7 @@ export default async function AdminDashboard() {
     stats = {
       totalRevenue: revenue[0]?.total || 0,
       pendingOrders: pendingCount,
-      abandonedCount: 12, // Placeholder - pending real abandoned cart logic
+      abandonedCount,
       totalUsers: userCount
     };
     recentOrders = JSON.parse(JSON.stringify(orderDocs));

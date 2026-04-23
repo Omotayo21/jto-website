@@ -4,6 +4,7 @@ import Product from '@/models/Product';
 import Order from '@/models/Order';
 import Coupon from '@/models/Coupon';
 import DeliveryZone from '@/models/DeliveryZone';
+import AbandonedCart from '@/models/AbandonedCart';
 import { initializePayment } from '@/lib/paystack';
 import { cookies } from 'next/headers';
 import { verifyToken } from '@/lib/auth';
@@ -37,12 +38,13 @@ export async function POST(request) {
         return NextResponse.json({ success: false, error: `Product ${item.name} not found or inactive` }, { status: 400 });
       }
 
-      // Stock check for variant
+      // Stock check — we check for specific variant stock first, then fallback to 'total' stock
       const variantKey = item.variant?.color 
         ? `${item.variant.size}-${item.variant.color.name}`
         : `${item.variant.size}`;
       
-      const availableStock = product.inventory.total.get(variantKey) || 0;
+      const availableStock = product.inventory?.get(variantKey) || product.inventory?.get('total') || 0;
+      
       if (availableStock < item.quantity) {
         return NextResponse.json({ success: false, error: `Insufficient stock for ${product.name} (${item.variant.size})` }, { status: 400 });
       }
@@ -82,7 +84,14 @@ export async function POST(request) {
     if (delivery.zone) {
        const zone = await DeliveryZone.findOne({ slug: delivery.zone, active: true });
        if (zone) {
-          deliveryFee = zone.effectiveFee;
+          const now = new Date();
+          const hasOverride = zone.pricingOverride?.active && 
+                             zone.pricingOverride.validFrom && 
+                             zone.pricingOverride.validUntil &&
+                             now >= zone.pricingOverride.validFrom && 
+                             now <= zone.pricingOverride.validUntil;
+          
+          deliveryFee = hasOverride ? zone.pricingOverride.fee : zone.fee;
        }
     }
 
@@ -101,9 +110,10 @@ export async function POST(request) {
        }
     );
 
-    if (!paystackRes.success) {
+    if (!paystackRes.status) {
       return NextResponse.json({ success: false, error: 'Payment provider error' }, { status: 500 });
     }
+
 
     // 5. Create Pending Order
     const order = await Order.create({
@@ -117,14 +127,16 @@ export async function POST(request) {
       },
       coupon: appliedCoupon,
       subtotal,
+      deliveryFee,
       discount,
       total,
       currency: 'NGN',
       status: 'pending',
       payment: {
         provider: 'paystack',
-        reference: orderNumber, // Using orderNumber as reference
-        status: 'pending'
+        reference: orderNumber,
+        status: 'pending',
+        amount: total
       },
       statusHistory: [{
         status: 'pending',
@@ -132,6 +144,26 @@ export async function POST(request) {
         note: 'Order initiated, awaiting payment confirmation.'
       }]
     });
+
+    // 6. Track as Abandoned Cart (will be marked converted on success)
+    try {
+      await AbandonedCart.create({
+        user: userId,
+        userEmail: email,
+        items: orderItems.map(i => ({
+          product: i.product,
+          productName: i.productName,
+          image: i.image,
+          price: i.price,
+          variant: { size: i.variant?.size, color: i.variant?.color?.name },
+          quantity: i.quantity
+        })),
+        totalValue: total,
+        lastUpdated: new Date()
+      });
+    } catch (e) {
+      console.error('Abandoned cart logging failed:', e);
+    }
 
     return NextResponse.json({ 
       success: true, 
@@ -141,6 +173,9 @@ export async function POST(request) {
 
   } catch (error) {
     console.error('Payment Init Error:', error);
-    return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
+    if (error.name === 'ValidationError') {
+      return NextResponse.json({ success: false, error: 'Order validation failed', details: error.errors }, { status: 400 });
+    }
+    return NextResponse.json({ success: false, error: 'Internal Server Error', message: error.message }, { status: 500 });
   }
 }

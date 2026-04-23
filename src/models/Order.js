@@ -8,7 +8,13 @@ const orderSchema = new mongoose.Schema({
     product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
     productName: String,
     image: String,
-    variant: { size: String, color: String },
+    variant: { 
+      size: String, 
+      color: {
+        name: String,
+        hex: String
+      }
+    },
     quantity: { type: Number, required: true },
     price: { type: Number, required: true }
   }],
@@ -20,7 +26,7 @@ const orderSchema = new mongoose.Schema({
     city: String,
     state: String,
     country: String,
-    zone: { type: String, enum: ['island', 'mainland', 'outside-lagos', 'outside-nigeria'] },
+    zone: String,
     fee: { type: Number, required: true },
     notes: String
   },
@@ -54,5 +60,10 @@ const orderSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-const Order = mongoose.models.Order || mongoose.model('Order', orderSchema);
+// Check if model exists and if so, delete it to ensure the new schema is applied
+if (mongoose.models.Order) {
+  delete mongoose.models.Order;
+}
+
+const Order = mongoose.model('Order', orderSchema);
 export default Order;
