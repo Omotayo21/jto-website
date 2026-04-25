@@ -186,7 +186,7 @@ export default function AdminOrderDetailsPage({ params }) {
                 {order.delivery?.notes && (
                   <div className="pt-4 border-t border-gray-50 bg-amber-50/50 p-4 rounded-2xl">
                      <p className="text-[10px] font-black text-amber-600 uppercase tracking-widest mb-1">Customer Note</p>
-                     <p className="text-gray-900 font-bold italic">"{order.delivery.notes}"</p>
+                     <p className="text-gray-900 font-bold italic">&quot;{order.delivery.notes}&quot;</p>
                   </div>
                 )}
              </div>
