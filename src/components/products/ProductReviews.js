@@ -147,7 +147,7 @@ export function ProductReviews({ productId }) {
                     ))}
                   </div>
                 </div>
-                <p className="text-gray-600 font-medium leading-relaxed italic">"{review.comment}"</p>
+                <p className="text-gray-600 font-medium leading-relaxed italic">&quot;{review.comment}&quot;</p>
                 <div className="mt-6 flex items-center gap-2">
                    <div className="w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center">
                       <CheckCircle2 size={10} className="text-white" />
