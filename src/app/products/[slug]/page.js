@@ -16,7 +16,7 @@ export default async function ProductPage({ params }) {
   
   let product;
   await connectDB();
-  const productDoc = await Product.findOne({ slug, status: 'active' }).populate('category');
+  const productDoc = await Product.findOne({ slug: slug.toLowerCase(), status: 'active' }).populate('category');
   if (productDoc) product = JSON.parse(JSON.stringify(productDoc));
   
   if (!product) return notFound();

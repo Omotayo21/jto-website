@@ -12,7 +12,7 @@ export default async function ProductsPage({ searchParams }) {
     await connectDB();
     let query = { status: 'active' };
     if (category) {
-      query.category = category; // This should be updated to handle category slug/id
+      query.category = category.toLowerCase();
     }
     const snapshot = await Product.find(query).populate('category');
     products = JSON.parse(JSON.stringify(snapshot));
