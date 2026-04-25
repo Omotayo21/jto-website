@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { Camera, Plus, Trash, Save, ArrowLeft, Video, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
@@ -7,6 +8,7 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 
 export function AdminProductForm({ initialData = null, isEdit = false }) {
+  const router = useRouter();
   const [formData, setFormData] = useState(initialData || {
     name: '',
     slug: '',
@@ -157,7 +159,7 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
       const data = await res.json();
       if (data.success) {
         toast.success('Product saved successfully');
-        window.location.href = '/management-portal/products';
+        router.push('/management-portal/products');
       } else {
         toast.error(data.error || 'Failed to save product');
       }

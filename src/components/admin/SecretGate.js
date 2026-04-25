@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { Lock } from 'lucide-react';
+import { Lock, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 
@@ -9,19 +9,29 @@ import { verifyAdminPasskey } from '@/lib/actions';
 export default function SecretGate({ children }) {
   const [passkey, setPasskey] = useState('');
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
   const [error, setError] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem('admin_gate_key');
-    if (saved) {
-      // We still check against the server to be sure, although for demo persistence we could trust localstorage
-      // But for real security we verify the key again.
-      verifyAdminPasskey(saved).then(res => {
-        if (res.success) setIsAuthorized(true);
-        else localStorage.removeItem('admin_gate_key');
-      });
-    }
+    const checkSavedKey = async () => {
+      const saved = localStorage.getItem('admin_gate_key');
+      if (saved) {
+        try {
+          const res = await verifyAdminPasskey(saved);
+          if (res.success) {
+            setIsAuthorized(true);
+          } else {
+            localStorage.removeItem('admin_gate_key');
+          }
+        } catch (err) {
+          console.error('Initial verification failed:', err);
+        }
+      }
+      setIsChecking(false);
+    };
+
+    checkSavedKey();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -43,6 +53,18 @@ export default function SecretGate({ children }) {
       setIsVerifying(false);
     }
   };
+
+  if (isChecking) {
+    return (
+      <div className="fixed inset-0 z-[110] bg-gray-50 flex flex-col items-center justify-center animate-in fade-in duration-500">
+        <div className="relative">
+          <div className="w-20 h-20 border-4 border-indigo-100 rounded-full" />
+          <Loader2 className="w-20 h-20 text-indigo-600 animate-spin absolute inset-0" />
+        </div>
+        <p className="mt-6 text-xs font-black uppercase tracking-[0.4em] text-gray-400 animate-pulse">Syncing Portal</p>
+      </div>
+    );
+  }
 
   if (isAuthorized) return children;
 
