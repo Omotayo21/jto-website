@@ -1,10 +1,17 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { Lock, Loader2 } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 
 import { verifyAdminPasskey } from '@/lib/actions';
+
+// Safe icon component helper
+const Icon = ({ name, size = 20, ...props }) => {
+  const LucidIcon = LucideIcons[name];
+  if (!LucidIcon) return null;
+  return <LucidIcon size={size} {...props} />;
+};
 
 export default function SecretGate({ children }) {
   const [passkey, setPasskey] = useState('');
@@ -59,7 +66,7 @@ export default function SecretGate({ children }) {
       <div className="fixed inset-0 z-[110] bg-gray-50 flex flex-col items-center justify-center animate-in fade-in duration-500">
         <div className="relative">
           <div className="w-20 h-20 border-4 border-indigo-100 rounded-full" />
-          <Loader2 className="w-20 h-20 text-indigo-600 animate-spin absolute inset-0" />
+          <Icon name="Loader2" size={80} className="text-indigo-600 animate-spin absolute inset-0" />
         </div>
         <p className="mt-6 text-xs font-black uppercase tracking-[0.4em] text-gray-400 animate-pulse">Syncing Portal</p>
       </div>
@@ -72,7 +79,7 @@ export default function SecretGate({ children }) {
     <div className="fixed inset-0 z-[100] bg-gray-50 flex items-center justify-center p-6">
       <div className="max-w-md w-full bg-white p-12 rounded-[2.5rem] shadow-2xl shadow-gray-200 border border-gray-100 text-center">
         <div className="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner">
-          <Lock size={32} />
+          <Icon name="Lock" size={32} />
         </div>
         <h1 className="text-3xl font-black text-gray-900 tracking-tight mb-3">Admin Access</h1>
         <p className="text-gray-500 font-bold mb-10 leading-relaxed">Please enter your 12-character administrative passkey to gain dashboard privileges.</p>
@@ -98,3 +105,4 @@ export default function SecretGate({ children }) {
     </div>
   );
 }
+

@@ -1,26 +1,25 @@
-import { Inter } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
 import { CartDrawer } from '@/components/cart/CartDrawer';
 import { Toaster } from 'react-hot-toast';
 
-const inter = Inter({ subsets: ['latin'] });
-
 export const metadata = {
-  title: 'JTOtheLabel | Premium E-commerce',
-  description: 'Shop the best products online.',
+  title: 'JTOtheLabel | Premium Luxury Fashion',
+  description: 'Curating luxury essentials for the modern silhouette.',
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-50 text-gray-900 min-h-screen flex flex-col antialiased`}>
+      <body className="bg-white text-black min-h-screen flex flex-col antialiased selection:bg-black selection:text-white">
         <Navbar />
-        <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        <main className="flex-grow w-full min-h-screen">
           {children}
         </main>
+        <Footer />
         <CartDrawer />
-        <Toaster position="bottom-right" toastOptions={{ className: 'font-medium rounded-xl shadow-lg border border-gray-100' }} />
+        <Toaster position="bottom-right" toastOptions={{ className: 'font-sans text-xs uppercase tracking-widest rounded-none shadow-2xl border border-gray-100' }} />
       </body>
     </html>
   );

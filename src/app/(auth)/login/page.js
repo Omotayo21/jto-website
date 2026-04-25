@@ -1,8 +1,6 @@
 'use client';
 import { useState } from 'react';
 import { useAuthStore } from '@/store/authStore';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 
@@ -21,54 +19,88 @@ export default function LoginPage() {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
       });
-      
       const data = await res.json();
       if (!data.success) throw new Error(data.error || 'Login failed');
-      
-      // The API returns the user object in data.data
       setUser(data.data);
-      toast.success('Login successful! Welcome back.');
+      toast.success('Welcome back.');
       window.location.href = '/account';
     } catch (err) {
       const msg = err.message || 'Login failed. Please check your credentials.';
       setError(msg);
-      toast.error(msg);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-20 p-10 bg-white rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100">
-      <div className="text-center mb-10">
-        <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Welcome Back</h1>
-        <p className="text-gray-500 mt-2">Sign in to your account</p>
-      </div>
+    <div className="min-h-[80vh] flex items-center justify-center px-4 bg-white">
+      <div className="w-full max-w-md">
+        {/* Title */}
+        <h1 className="text-3xl serif-font italic text-center text-black mb-12 tracking-tight">
+          Log in
+        </h1>
 
-      {error && <div className="bg-rose-50 text-rose-600 font-medium p-4 rounded-xl text-sm mb-8 border border-rose-100">{error}</div>}
+        {error && (
+          <p className="text-sm text-[#800020] text-center mb-6 font-medium">{error}</p>
+        )}
 
-      <form onSubmit={handleLogin} className="space-y-6">
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
-          <Input required type="email" value={email} onChange={e => setEmail(e.target.value)} className="h-12 text-md" />
-        </div>
-        <div>
-          <div className="flex justify-between items-center mb-2">
-            <label className="text-sm font-semibold text-gray-700">Password</label>
-            <Link href="/forgot-password" title="Forgot password?" className="text-xs font-bold text-indigo-600 hover:text-indigo-500 transition-colors">Forgot password?</Link>
+        <form onSubmit={handleLogin} className="space-y-0">
+          {/* Email */}
+          <div className="border-b border-gray-300 focus-within:border-black transition-colors">
+            <input
+              required
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              className="w-full bg-transparent py-4 text-sm outline-none placeholder:text-gray-400 text-black"
+            />
           </div>
-          <Input required type="password" value={password} onChange={e => setPassword(e.target.value)} className="h-12 text-md" />
-        </div>
-        <Button type="submit" disabled={loading} className="w-full h-14 text-lg mt-6 shadow-indigo-200">
-          {loading ? 'Authenticating...' : 'Sign In'}
-        </Button>
-      </form>
 
-      <p className="text-center text-sm text-gray-500 mt-10">
-        Don&apos;t have an account? <Link href="/register" className="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors">Sign up</Link>
-      </p>
+          {/* Password */}
+          <div className="border-b border-gray-300 focus-within:border-black transition-colors mt-6">
+            <input
+              required
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              className="w-full bg-transparent py-4 text-sm outline-none placeholder:text-gray-400 text-black"
+            />
+          </div>
+
+          {/* Forgot password */}
+          <div className="text-center mt-6">
+            <Link
+              href="/forgot-password"
+              className="text-sm text-gray-500 hover:text-black transition-colors underline-offset-2 hover:underline"
+            >
+              Forgot your password?
+            </Link>
+          </div>
+
+          {/* Submit */}
+          <div className="mt-10">
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-4 bg-black text-white rounded-full text-sm font-bold uppercase tracking-widest hover:bg-[#800020] transition-colors disabled:opacity-50"
+            >
+              {loading ? 'Signing in…' : 'Sign in'}
+            </button>
+          </div>
+        </form>
+
+        {/* Register link */}
+        <p className="text-center text-sm text-gray-400 mt-8">
+          New customer?{' '}
+          <Link href="/register" className="text-black font-bold hover:text-[#800020] transition-colors underline underline-offset-2">
+            Create account
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

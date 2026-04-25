@@ -1,7 +1,9 @@
-import Link from 'next/link';
 import { connectDB } from '@/lib/mongodb';
 import Product from '@/models/Product';
 import { ProductCard } from '@/components/products/ProductCard';
+import { Hero } from '@/components/home/Hero';
+import { NewsletterSection } from '@/components/home/NewsletterSection';
+import { FaqAccordion } from '@/components/home/FaqAccordion';
 
 export const revalidate = 60;
 
@@ -17,36 +19,58 @@ export default async function Home() {
   }
 
   return (
-    <div className="space-y-16">
-      <section className="relative bg-gray-900 text-white rounded-3xl overflow-hidden shadow-2xl">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 via-gray-900 to-black opacity-90" />
-        <div className="relative px-8 py-24 sm:px-16 sm:py-32 flex flex-col items-center text-center">
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6">Discover the Extraordinary</h1>
-          <p className="text-lg sm:text-xl text-gray-300 mb-10 max-w-2xl">
-            Shop the latest trends with exclusive deals. Elevated quality and unmatched performance wrapped in an elegant aesthetic.
-          </p>
-          <Link href="/products" className="bg-white text-gray-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-50 transition-colors shadow-xl border border-transparent hover:scale-105">
-            Shop Now
-          </Link>
-        </div>
-      </section>
+    <div>
+      {/* Hero Carousel */}
+      <Hero />
 
-      <section>
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900">Featured Products</h2>
-          <Link href="/products" className="text-indigo-600 font-semibold hover:underline">View all Collection &rarr;</Link>
+      {/* Featured Collection */}
+      <section className="section-padding max-w-[1440px] mx-auto">
+        <div className="flex flex-col items-center mb-16 text-center">
+          <h2 className="text-3xl md:text-4xl serif-font italic mb-4">The Curated Selection</h2>
+          <div className="w-12 h-[1px] bg-black mb-6" />
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
+            Essential Pieces for the Modern Silhouette
+          </p>
         </div>
-        
+
         {products.length === 0 ? (
-          <p className="text-gray-500 text-center py-12">No products available at the moment.</p>
+          <p className="text-gray-400 text-center py-12 serif-font italic">New arrivals coming soon…</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-4">
             {products.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         )}
+
+        <div className="flex justify-center mt-12">
+          <a
+            href="/products"
+            className="text-[10px] font-black uppercase tracking-[0.3em] border-b border-black pb-2 hover:opacity-50 transition-opacity"
+          >
+            View All Collections
+          </a>
+        </div>
       </section>
+
+      {/* Luxury Statement — off-white bg */}
+      <section className="bg-[#f9f9f7] section-padding text-center">
+        <div className="max-w-2xl mx-auto space-y-8">
+          <span className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Our Ethos</span>
+          <h3 className="text-4xl serif-font italic leading-snug">
+            &ldquo;Wearable Art, That Commands Attention&rdquo;
+          </h3>
+          <p className="text-sm text-gray-500 font-medium leading-relaxed">
+            Every piece in our collection is a testament to the intersection of craftsmanship and contemporary art. Designed with the precision of a sculptor and the soul of a poet.
+          </p>
+        </div>
+      </section>
+
+      {/* Newsletter Section (dark, split) */}
+      <NewsletterSection />
+
+      {/* FAQ Accordion (dark) */}
+      <FaqAccordion />
     </div>
   );
 }
