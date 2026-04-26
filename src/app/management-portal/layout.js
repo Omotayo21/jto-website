@@ -24,12 +24,12 @@ export default function AdminLayout({ children }) {
       <div className="flex flex-col lg:flex-row min-h-screen bg-gray-50 overflow-x-hidden">
         {/* Mobile Header */}
         <div className="lg:hidden bg-white border-b border-gray-100 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
-          <Link href="/" className="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 tracking-tighter">
+          <Link href="/" className="text-xl font-black    text-black tracking-tighter">
             JTOtheLabel <span className="text-gray-400 text-[10px] uppercase ml-1">Admin</span>
           </Link>
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 bg-gray-50 rounded-xl text-gray-500 hover:text-indigo-600 transition-all border border-gray-100"
+            className="p-2 bg-gray-50 rounded-xl text-gray-500 hover:text-black transition-all border border-gray-100"
           >
             {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -50,7 +50,7 @@ export default function AdminLayout({ children }) {
           ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}>
           <div className="hidden lg:block mb-10">
-            <Link href="/" className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 tracking-tighter">
+            <Link href="/" className="text-2xl font-black    text-black tracking-tighter">
               JTOtheLabel <span className="block text-gray-400 font-bold text-[10px] uppercase tracking-widest mt-1">Global Admin Suite</span>
             </Link>
           </div>
@@ -66,8 +66,8 @@ export default function AdminLayout({ children }) {
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`flex items-center gap-4 px-5 py-3.5 rounded-2xl font-bold transition-all duration-200 ${
                     isActive 
-                      ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' 
-                      : 'text-gray-500 hover:bg-gray-50 hover:text-indigo-600 hover:translate-x-1'
+                      ? 'bg-black text-white shadow-lg shadow-gray-200' 
+                      : 'text-gray-500 hover:bg-gray-50 hover:text-black hover:translate-x-1'
                   }`}
                 >
                   <link.icon size={20} className={isActive ? 'opacity-100' : 'opacity-60'} /> 
@@ -78,7 +78,7 @@ export default function AdminLayout({ children }) {
           </nav>
 
           <div className="pt-8 border-t border-gray-50 flex flex-col gap-2">
-             <Link href="/" className="flex items-center justify-between gap-4 px-5 py-4 rounded-2xl font-bold text-gray-400 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all group">
+             <Link href="/" className="flex items-center justify-between gap-4 px-5 py-4 rounded-2xl font-bold text-gray-400 hover:text-black hover:bg-gray-100/50 transition-all group">
                 <span className="text-xs uppercase tracking-widest font-black">View Storefront</span>
                 <ExternalLink size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
              </Link>

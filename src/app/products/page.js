@@ -6,12 +6,16 @@ export const revalidate = 60;
 
 export default async function ProductsPage({ searchParams }) {
   const category = searchParams.category;
+  const q = searchParams.q;
 
   let products = [];
   try {
     await connectDB();
     let query = { status: 'active' };
     if (category) query.category = category.toLowerCase();
+    if (q) {
+      query.name = { $regex: q, $options: 'i' };
+    }
     const snapshot = await Product.find(query).populate('category');
     products = JSON.parse(JSON.stringify(snapshot));
   } catch (error) {
@@ -44,9 +48,12 @@ export default async function ProductsPage({ searchParams }) {
         </p>
       </div>
 
-      {/* ── Category Title ── */}
+      {/* ── Category / Search Title ── */}
       {category && (
         <h1 className="text-2xl md:text-3xl serif-font italic capitalize mb-10">{category}</h1>
+      )}
+      {q && (
+        <h1 className="text-2xl md:text-3xl serif-font italic mb-10">Search: &ldquo;{q}&rdquo;</h1>
       )}
 
       {/* ── Grid ── */}

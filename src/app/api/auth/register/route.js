@@ -3,6 +3,7 @@ import { connectDB } from '@/lib/mongodb';
 import User from '@/models/User';
 import { hashPassword, signToken } from '@/lib/auth';
 import validator from 'validator';
+import { sendEmail } from '@/lib/brevo';
 
 export async function POST(req) {
   try {
@@ -48,7 +49,34 @@ export async function POST(req) {
     // 6. Sign JWT
     const token = signToken({ id: user._id, email: user.email, name: user.name });
 
-    // 7. Set Cookie and Return User
+    // 7. Send Welcome Email
+    try {
+      const emailHtml = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; text-align: center; color: #000;">
+          <h4 style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">WELCOME TO JTOTHELABEL</h4>
+          <p style="font-size: 16px; margin-bottom: 30px;">
+            You've activated your customer account. Next time, login for faster checkout.
+          </p>
+          <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://jtothelabel.com'}/products" 
+             style="display: inline-block; background-color: #000; color: #fff; padding: 15px 30px; text-decoration: none; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;">
+            Visit Our Store
+          </a>
+          <div style="margin-top: 50px; border-top: 1px solid #eee; padding-top: 20px; font-size: 12px; color: #666;">
+            If you have any questions, reply to this email or contact us at support@jtothelabel@gmail.com
+          </div>
+        </div>
+      `;
+      await sendEmail({
+        to: user.email,
+        subject: 'Welcome to JTOtheLabel',
+        htmlContent: emailHtml,
+      });
+    } catch (emailError) {
+      console.error('Welcome Email Error:', emailError);
+      // We don't fail registration if email fails
+    }
+
+    // 8. Set Cookie and Return User
     const response = NextResponse.json({
       success: true,
       data: {

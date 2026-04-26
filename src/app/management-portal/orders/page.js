@@ -37,14 +37,14 @@ export default async function AdminOrdersPage() {
                    <td className="p-5 pl-8 font-extrabold text-gray-900 whitespace-nowrap">{order.orderNumber}</td>
                    <td className="p-5 text-gray-600 font-medium">{order.delivery?.email || order.userEmail}</td>
                    <td className="p-5 text-gray-500 text-sm font-semibold whitespace-nowrap">{new Date(order.createdAt).toLocaleDateString()}</td>
-                   <td className="p-5 font-extrabold text-indigo-600 whitespace-nowrap">{formatCurrency(order.total, order.currency || 'NGN')}</td>
+                   <td className="p-5 font-extrabold text-black whitespace-nowrap">{formatCurrency(order.total, order.currency || 'NGN')}</td>
                    <td className="p-5">
                       <Badge variant={order.status === 'delivered' ? 'success' : order.status === 'pending' ? 'warning' : 'brand'} className="uppercase tracking-widest text-[10px] px-2 py-1">
                         {order.status}
                       </Badge>
                    </td>
                    <td className="p-5 pr-8 text-right">
-                     <Link href={`/management-portal/orders/${order._id}`} className="text-indigo-600 font-bold hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 px-4 py-2 rounded-lg transition-colors inline-block whitespace-nowrap">
+                     <Link href={`/management-portal/orders/${order._id}`} className="text-black font-bold hover:text-black bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg transition-colors inline-block whitespace-nowrap">
                        Details
                      </Link>
                    </td>

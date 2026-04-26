@@ -42,7 +42,7 @@ export default async function AdminDashboard() {
 
   const statCards = [
     { label: 'Total Revenue', value: formatCurrency(stats.totalRevenue), icon: TrendingUp, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-    { label: 'Pending Orders', value: stats.pendingOrders, icon: ShoppingBag, color: 'text-indigo-600', bg: 'bg-indigo-50' },
+    { label: 'Pending Orders', value: stats.pendingOrders, icon: ShoppingBag, color: 'text-black', bg: 'bg-gray-100' },
     { label: 'Abandoned Carts', value: stats.abandonedCount, icon: MousePointer2, color: 'text-rose-600', bg: 'bg-rose-50' },
     { label: 'Total Users', value: stats.totalUsers, icon: Users, color: 'text-amber-600', bg: 'bg-amber-50' }
   ];
@@ -78,7 +78,7 @@ export default async function AdminDashboard() {
         <div className="lg:col-span-2 bg-white rounded-[3rem] shadow-2xl shadow-gray-100 border border-gray-50 overflow-hidden">
           <div className="p-8 md:p-10 border-b border-gray-50 flex items-center justify-between">
             <h3 className="text-lg md:text-xl font-black text-gray-900 uppercase tracking-tight">Recent Transactions</h3>
-            <Link href="/management-portal/orders" className="text-[10px] font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2 hover:bg-indigo-50 px-4 py-2 rounded-xl transition-all">
+            <Link href="/management-portal/orders" className="text-[10px] font-black text-black uppercase tracking-widest flex items-center gap-2 hover:bg-gray-100 px-4 py-2 rounded-xl transition-all">
                View All <ExternalLink size={14} />
             </Link>
           </div>
@@ -95,12 +95,12 @@ export default async function AdminDashboard() {
               <tbody>
                 {recentOrders.map((order, i) => (
                   <tr key={i} className="border-b border-gray-50/50 hover:bg-gray-50/30 transition-colors group">
-                    <td className="px-8 py-6 font-black text-gray-900 group-hover:text-indigo-600 transition-colors text-sm whitespace-nowrap">{order.orderNumber}</td>
+                    <td className="px-8 py-6 font-black text-gray-900 group-hover:text-black transition-colors text-sm whitespace-nowrap">{order.orderNumber}</td>
                     <td className="px-8 py-6 text-gray-400 font-bold text-sm truncate max-w-[150px]">{order.userEmail}</td>
                     <td className="px-8 py-6 font-black text-gray-900 text-sm whitespace-nowrap">{formatCurrency(order.total)}</td>
                     <td className="px-8 py-6 text-right">
                        <span className={`text-[9px] font-black uppercase px-3 py-1 rounded-full whitespace-nowrap ${
-                         order.status === 'delivered' ? 'bg-emerald-50 text-emerald-600' : 'bg-indigo-50 text-indigo-600'
+                         order.status === 'delivered' ? 'bg-emerald-50 text-emerald-600' : 'bg-gray-100 text-black'
                        }`}>
                          {order.status}
                        </span>
@@ -121,11 +121,11 @@ export default async function AdminDashboard() {
                       <img src={p.media?.[0]?.url || p.images?.[0]?.url || '/placeholder.png'} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                    </div>
                    <div className="flex-1 min-w-0">
-                      <p className="font-black text-gray-900 group-hover:text-indigo-600 transition-colors truncate text-sm">{p.name}</p>
+                      <p className="font-black text-gray-900 group-hover:text-black transition-colors truncate text-sm">{p.name}</p>
                       <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-1 whitespace-nowrap">{p.salesCount || 0} Sales <span className="mx-2 opacity-20">|</span> {formatCurrency(p.price)}</p>
                    </div>
-                   <div className="p-2 bg-gray-50 rounded-lg group-hover:bg-indigo-50 transition-colors">
-                      <ExternalLink size={14} className="text-gray-300 group-hover:text-indigo-400" />
+                   <div className="p-2 bg-gray-50 rounded-lg group-hover:bg-gray-100 transition-colors">
+                      <ExternalLink size={14} className="text-gray-300 group-hover:text-gray-400" />
                    </div>
                 </div>
               ))}

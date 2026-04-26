@@ -35,8 +35,11 @@ export default function FavouritesPage() {
   if (loading) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center">
-        <Loader2 className="w-12 h-12 text-indigo-600 animate-spin" />
-        <p className="mt-4 text-xs font-black uppercase tracking-[0.3em] text-gray-400 animate-pulse">Loading Favourites</p>
+        <div className="relative w-10 h-10 mb-4">
+          <div className="absolute inset-0 border-2 border-gray-200 rounded-full" />
+          <div className="absolute inset-0 border-2 border-transparent border-t-black rounded-full animate-spin" />
+        </div>
+        <p className="text-xs font-black uppercase tracking-[0.3em] text-gray-400 animate-pulse">Loading</p>
       </div>
     );
   }
@@ -47,9 +50,9 @@ export default function FavouritesPage() {
         <div className="w-24 h-24 bg-rose-50 rounded-full flex items-center justify-center mb-6 text-rose-500 shadow-inner">
           <Heart size={40} className="fill-current" />
         </div>
-        <h1 className="text-3xl font-black text-gray-900 tracking-tight mb-4">Login Required</h1>
+        <h1 className="text-3xl serif-font italic text-gray-900 tracking-tight mb-4">Login Required</h1>
         <p className="text-gray-500 font-bold mb-8 max-w-sm leading-relaxed">Please sign in to view and manage your favorited items across all your devices.</p>
-        <Link href="/login" className="bg-indigo-600 text-white h-14 px-10 rounded-2xl flex items-center justify-center font-black uppercase tracking-widest text-[10px] shadow-xl shadow-indigo-100 transition-all hover:-translate-y-1 active:scale-95">
+        <Link href="/login" className="bg-black text-white h-14 px-10 rounded-2xl flex items-center justify-center font-black uppercase tracking-widest text-[10px] shadow-xl shadow-gray-200 transition-all hover:bg-[#800020] hover:-translate-y-1 active:scale-95">
            Sign In Now
         </Link>
       </div>
@@ -59,8 +62,8 @@ export default function FavouritesPage() {
   return (
     <div className="animate-in fade-in duration-1000">
       <div className="mb-12">
-        <h1 className="text-4xl font-black text-gray-900 tracking-tight flex items-center gap-4">
-          <Heart className="text-rose-500 fill-current" size={32} /> Your Favourites
+        <h1 className="text-4xl serif-font italic text-gray-900 tracking-tight flex items-center gap-4">
+          <Heart className="text-[#800020] fill-current" size={32} /> Your Favourites
         </h1>
         <p className="text-gray-500 font-bold mt-2">All the items you&apos;ve fallen in love with</p>
       </div>
@@ -70,9 +73,9 @@ export default function FavouritesPage() {
           <div className="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-8 text-gray-300">
              <Heart size={32} />
           </div>
-          <h2 className="text-2xl font-black text-gray-900 mb-4 tracking-tight">Your collection is empty</h2>
+          <h2 className="text-2xl serif-font italic text-gray-900 mb-4 tracking-tight">Your collection is empty</h2>
           <p className="text-gray-500 font-bold mb-10 leading-relaxed">Start exploring our premium collection and save the items you like for later.</p>
-          <Link href="/products" className="bg-indigo-600 text-white h-14 px-10 rounded-2xl flex items-center justify-center font-black uppercase tracking-widest text-[10px] shadow-xl shadow-indigo-100 transition-all hover:-translate-y-1 active:scale-95">
+          <Link href="/products" className="bg-black text-white h-14 px-10 rounded-2xl flex items-center justify-center font-black uppercase tracking-widest text-[10px] shadow-xl shadow-gray-200 transition-all hover:bg-[#800020] hover:-translate-y-1 active:scale-95">
              <ShoppingBag className="mr-2" size={16} /> Explore Collection
           </Link>
         </div>

@@ -38,7 +38,7 @@ export default async function Home() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-4">
             {products.map(product => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product._id} product={product} />
             ))}
           </div>
         )}
@@ -50,6 +50,26 @@ export default async function Home() {
           >
             View All Collections
           </a>
+        </div>
+      </section>
+
+      {/* ── ABOUT US SECTION ── */}
+      <section className="bg-[#800020] text-white section-padding">
+        <div className="max-w-3xl mx-auto text-center space-y-6">
+          <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/50">About Us</span>
+          <h3 className="text-3xl md:text-4xl serif-font italic leading-snug">
+            JTOtheLabel
+          </h3>
+          <p className="text-sm md:text-base font-medium leading-relaxed text-white/80">
+            Born from a passion for self-expression through fashion, JTOtheLabel is a luxury womenswear brand 
+            that celebrates bold silhouettes, rich textures, and timeless craftsmanship. Every piece is designed 
+            to empower — blending contemporary artistry with heritage techniques to create wearable art that 
+            commands attention. From our atelier to your wardrobe, we pour heart and soul into every stitch.
+          </p>
+          <div className="w-12 h-[1px] bg-white/30 mx-auto" />
+          <p className="text-xs text-white/50 font-medium uppercase tracking-[0.2em]">
+            Wearable Art · Crafted with Purpose
+          </p>
         </div>
       </section>
 

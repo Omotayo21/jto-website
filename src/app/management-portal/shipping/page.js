@@ -75,7 +75,7 @@ export default function ShippingManagementPage() {
   if (loading && zones.length === 0) {
     return (
       <div className="h-[60vh] flex items-center justify-center">
-        <Loader2 className="w-10 h-10 text-indigo-600 animate-spin" />
+        <Loader2 className="w-10 h-10 text-black animate-spin" />
       </div>
     );
   }
@@ -87,7 +87,7 @@ export default function ShippingManagementPage() {
           <h1 className="text-4xl font-black text-gray-900 tracking-tight">Shipping Fees</h1>
           <p className="text-gray-500 font-bold mt-2">Manage delivery zones and costs</p>
         </div>
-        <Button onClick={() => { setEditingZone(null); setFormData({ name: '', fee: 0, estimatedDays: '', active: true }); setIsModalOpen(true); }} className="rounded-2xl h-14 px-8 font-black uppercase tracking-widest text-[10px] shadow-xl shadow-indigo-100 transition-all hover:-translate-y-1">
+        <Button onClick={() => { setEditingZone(null); setFormData({ name: '', fee: 0, estimatedDays: '', active: true }); setIsModalOpen(true); }} className="rounded-2xl h-14 px-8 font-black uppercase tracking-widest text-[10px] shadow-xl shadow-gray-200 transition-all hover:-translate-y-1">
           <Plus className="mr-2 h-4 w-4" /> Add New Zone
         </Button>
       </div>
@@ -95,26 +95,26 @@ export default function ShippingManagementPage() {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {zones.map(zone => (
           <div key={zone._id} className="bg-white rounded-[2.5rem] p-8 shadow-xl shadow-gray-100 border border-gray-50 group hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
-            <div className={`absolute top-0 right-0 w-32 h-32 -mr-16 -mt-16 rounded-full blur-3xl opacity-10 transition-opacity group-hover:opacity-20 ${zone.active ? 'bg-indigo-600' : 'bg-gray-400'}`} />
+            <div className={`absolute top-0 right-0 w-32 h-32 -mr-16 -mt-16 rounded-full blur-3xl opacity-10 transition-opacity group-hover:opacity-20 ${zone.active ? 'bg-black' : 'bg-gray-400'}`} />
             
             <div className="flex justify-between items-start mb-6">
-              <div className="p-4 bg-indigo-50 text-indigo-600 rounded-2xl group-hover:scale-110 transition-transform duration-500">
+              <div className="p-4 bg-gray-100 text-black rounded-2xl group-hover:scale-110 transition-transform duration-500">
                 <Truck size={24} />
               </div>
               <div className="flex gap-2">
-                <button onClick={() => handleEdit(zone)} className="p-2 text-gray-400 hover:text-indigo-600 transition-colors"><Edit2 size={18}/></button>
+                <button onClick={() => handleEdit(zone)} className="p-2 text-gray-400 hover:text-black transition-colors"><Edit2 size={18}/></button>
               </div>
             </div>
 
             <h3 className="text-xl font-black text-gray-900 mb-2 truncate">{zone.name}</h3>
             <div className="flex items-baseline gap-2 mb-6">
-               <span className="text-3xl font-black text-indigo-600">NGN {zone.fee.toLocaleString()}</span>
+               <span className="text-3xl font-black text-black">NGN {zone.fee.toLocaleString()}</span>
                <span className="text-xs font-black text-gray-400 uppercase tracking-widest">Fixed Fee</span>
             </div>
 
             <div className="space-y-3 mb-8">
                <div className="flex items-center gap-3 text-sm font-bold text-gray-500 bg-gray-50 p-3 rounded-xl">
-                  <Calendar size={16} className="text-indigo-400" />
+                  <Calendar size={16} className="text-gray-400" />
                   {zone.estimatedDays || 'No estimate set'}
                </div>
                <div className="flex items-center gap-3">
@@ -123,7 +123,7 @@ export default function ShippingManagementPage() {
                </div>
             </div>
 
-            <Button onClick={() => handleEdit(zone)} variant="secondary" className="w-full rounded-xl bg-gray-50 hover:bg-indigo-50 border-none font-bold text-indigo-600">Update Settings</Button>
+            <Button onClick={() => handleEdit(zone)} variant="secondary" className="w-full rounded-xl bg-gray-50 hover:bg-gray-100 border-none font-bold text-black">Update Settings</Button>
           </div>
         ))}
       </div>
@@ -175,13 +175,13 @@ export default function ShippingManagementPage() {
                       id="zone-active"
                       checked={formData.active}
                       onChange={e => setFormData({...formData, active: e.target.checked})}
-                      className="w-5 h-5 rounded-lg accent-indigo-600"
+                      className="w-5 h-5 rounded-lg accent-black"
                    />
                    <label htmlFor="zone-active" className="font-bold text-gray-700">Active and visible to customers</label>
                 </div>
 
                 <div className="pt-6 flex gap-3">
-                   <Button type="submit" disabled={loading} className="flex-1 h-14 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-xl shadow-indigo-100 transition-all active:scale-95">
+                   <Button type="submit" disabled={loading} className="flex-1 h-14 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-xl shadow-gray-200 transition-all active:scale-95">
                       {loading ? <Loader2 className="animate-spin" /> : <><Save className="mr-2" size={16}/> Save Changes</>}
                    </Button>
                    <Button type="button" variant="secondary" onClick={() => setIsModalOpen(false)} className="h-14 px-8 rounded-2xl border-none bg-gray-50 font-black uppercase tracking-widest text-[10px]">Cancel</Button>

@@ -174,12 +174,12 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
     <form onSubmit={handleSubmit} className="space-y-12 pb-20">
       <div className="flex justify-between items-center bg-white p-6 rounded-3xl shadow-sm border border-gray-100 sticky top-20 z-20">
         <div className="flex items-center gap-4">
-          <Link href="/management-portal/products" className="p-3 bg-gray-50 rounded-2xl text-gray-500 hover:text-indigo-600 transition-colors">
+          <Link href="/management-portal/products" className="p-3 bg-gray-50 rounded-2xl text-gray-500 hover:text-black transition-colors">
             <ArrowLeft size={20} />
           </Link>
           <h1 className="text-2xl font-black text-gray-900">{isEdit ? 'Edit Product' : 'Add New Product'}</h1>
         </div>
-        <Button type="submit" disabled={isSubmitting || isUploading} className="px-8 h-14 rounded-2xl font-black shadow-xl shadow-indigo-100 flex gap-2 disabled:opacity-50">
+        <Button type="submit" disabled={isSubmitting || isUploading} className="px-8 h-14 rounded-2xl font-black shadow-xl shadow-gray-200 flex gap-2 disabled:opacity-50">
           {isSubmitting ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />} 
           {isEdit ? (isSubmitting ? 'Updating...' : 'Update Changes') : (isSubmitting ? 'Publishing...' : 'Publish Product')}
         </Button>
@@ -189,7 +189,7 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
         {/* Left Column: Basic Info & Media */}
         <div className="lg:col-span-2 space-y-10">
           <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
-            <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-indigo-600 pl-4 uppercase tracking-tight">Basic Information</h2>
+            <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-black pl-4 uppercase tracking-tight">Basic Information</h2>
             <div className="space-y-6">
               <div>
                 <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Product Name</label>
@@ -202,7 +202,7 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
                 </div>
                 <div>
                   <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Category</label>
-                  <select name="category" value={formData.category} onChange={handleChange} className="w-full h-14 rounded-2xl border-gray-200 focus:border-indigo-600 focus:ring-indigo-600 font-bold px-4 bg-gray-50" required>
+                  <select name="category" value={formData.category} onChange={handleChange} className="w-full h-14 rounded-2xl border-gray-200 focus:border-black focus:ring-black font-bold px-4 bg-gray-50" required>
                     <option value="">Select Category</option>
                     {CATEGORIES.map(cat => (
                       <option key={cat} value={cat.toLowerCase()}>{cat}</option>
@@ -217,7 +217,7 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
                   value={formData.description} 
                   onChange={handleChange} 
                   rows={5} 
-                  className="w-full rounded-3xl border-gray-200 focus:border-indigo-600 focus:ring-indigo-600 font-medium p-6 bg-gray-50"
+                  className="w-full rounded-3xl border-gray-200 focus:border-black focus:ring-black font-medium p-6 bg-gray-50"
                   placeholder="Detailed product story and specifications..."
                 />
               </div>
@@ -226,7 +226,7 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
 
           <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
               <div className="flex justify-between items-center mb-8">
-                <h2 className="text-xl font-black text-gray-900 border-l-4 border-indigo-600 pl-4 uppercase tracking-tight">Media Gallery</h2>
+                <h2 className="text-xl font-black text-gray-900 border-l-4 border-black pl-4 uppercase tracking-tight">Media Gallery</h2>
                 <div className="flex gap-3">
                   <input 
                     type="file" 
@@ -247,7 +247,7 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
                     type="button" 
                     disabled={isUploading}
                     onClick={() => addMedia('image')} 
-                    className="p-3 bg-gray-50 text-indigo-600 rounded-xl hover:bg-indigo-50 border border-gray-100 transition-all flex items-center gap-2 font-bold text-xs disabled:opacity-50"
+                    className="p-3 bg-gray-50 text-black rounded-xl hover:bg-gray-100 border border-gray-100 transition-all flex items-center gap-2 font-bold text-xs disabled:opacity-50"
                   >
                     {isUploading ? <Loader2 className="animate-spin" size={16}/> : <Plus size={16}/>} Add Image
                   </button>
@@ -255,7 +255,7 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
                     type="button" 
                     disabled={isUploading}
                     onClick={() => addMedia('video')} 
-                    className="p-3 bg-gray-50 text-indigo-600 rounded-xl hover:bg-indigo-50 border border-gray-100 transition-all flex items-center gap-2 font-bold text-xs disabled:opacity-50"
+                    className="p-3 bg-gray-50 text-black rounded-xl hover:bg-gray-100 border border-gray-100 transition-all flex items-center gap-2 font-bold text-xs disabled:opacity-50"
                   >
                     {isUploading ? <Loader2 className="animate-spin" size={16}/> : <Plus size={16}/>} Add Video
                   </button>
@@ -303,14 +303,14 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Price (NGN)</label>
-                  <Input type="number" name="price" value={formData.price} onChange={handleChange} className="h-14 font-black text-indigo-600" />
+                  <Input type="number" name="price" value={formData.price} onChange={handleChange} className="h-14 font-black text-black" />
                 </div>
                
               </div>
               <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-50">
                 <div>
                   <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Price (USD)</label>
-                  <Input type="number" name="priceUSD" value={formData.priceUSD} onChange={handleChange} className="h-14 font-black text-indigo-600" />
+                  <Input type="number" name="priceUSD" value={formData.priceUSD} onChange={handleChange} className="h-14 font-black text-black" />
                 </div>
                
               </div>
@@ -335,7 +335,7 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
                    <div className="flex gap-2">
                      <Input placeholder="Color Name" value={newColor.name} onChange={e => setNewColor({...newColor, name: e.target.value})} className="h-10 text-xs font-medium" />
                      <input type="color" value={newColor.hex} onChange={e => setNewColor({...newColor, hex: e.target.value})} className="h-10 w-10 shrink-0 p-1 bg-white border border-gray-200 rounded-lg cursor-pointer" />
-                     <button type="button" onClick={addColor} className="p-2 bg-indigo-600 text-white rounded-lg"><Plus size={16}/></button>
+                     <button type="button" onClick={addColor} className="p-2 bg-black text-white rounded-lg"><Plus size={16}/></button>
                    </div>
                 </div>
 
@@ -345,21 +345,21 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
                    <div className="flex flex-wrap gap-2 mb-4">
                       {formData.variants.sizes.map((s, i) => (
                         <div key={i} className="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-xl border border-gray-100 group">
-                           <span className="text-xs font-black text-indigo-600">{s}</span>
+                           <span className="text-xs font-black text-black">{s}</span>
                            <button type="button" onClick={() => removeVariant('sizes', i)} className="text-rose-400 opacity-0 group-hover:opacity-100 transition-all"><Trash size={12}/></button>
                         </div>
                       ))}
                    </div>
                    <div className="flex gap-2">
                      <Input placeholder="e.g. XL, 42" value={newSize} onChange={e => setNewSize(e.target.value.toUpperCase())} className="h-10 text-xs font-medium" />
-                     <button type="button" onClick={addSize} className="p-2 bg-indigo-600 text-white rounded-lg"><Plus size={16}/></button>
+                     <button type="button" onClick={addSize} className="p-2 bg-black text-white rounded-lg"><Plus size={16}/></button>
                    </div>
                 </div>
              </div>
           </section>
 
           <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
-            <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-indigo-600 pl-4 uppercase tracking-tight">Stock Management</h2>
+            <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-black pl-4 uppercase tracking-tight">Stock Management</h2>
             <div className="space-y-6">
                <div>
                   <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Available Quantity</label>
@@ -368,11 +368,11 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
                     value={totalStock} 
                     onChange={e => setTotalStock(e.target.value)} 
                     placeholder="e.g. 100" 
-                    className="h-14 font-black text-indigo-600" 
+                    className="h-14 font-black text-black" 
                   />
                </div>
                <div className="flex gap-4">
-                  <button type="button" onClick={() => setFormData({...formData, status: 'active'})} className={`flex-1 h-14 rounded-2xl font-black text-xs uppercase tracking-widest border transition-all ${formData.status === 'active' ? 'bg-indigo-50 border-indigo-600 text-indigo-600' : 'bg-gray-50 border-transparent text-gray-400'}`}>Show on Shop</button>
+                  <button type="button" onClick={() => setFormData({...formData, status: 'active'})} className={`flex-1 h-14 rounded-2xl font-black text-xs uppercase tracking-widest border transition-all ${formData.status === 'active' ? 'bg-gray-100 border-black text-black' : 'bg-gray-50 border-transparent text-gray-400'}`}>Show on Shop</button>
                   <button type="button" onClick={() => setFormData({...formData, status: 'draft'})} className={`flex-1 h-14 rounded-2xl font-black text-xs uppercase tracking-widest border transition-all ${formData.status === 'draft' ? 'bg-rose-50 border-rose-600 text-rose-600' : 'bg-gray-50 border-transparent text-gray-400'}`}>Keep in Draft</button>
                </div>
             </div>

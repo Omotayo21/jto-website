@@ -96,7 +96,7 @@ export default function AdminCouponsPage() {
     }
   };
 
-  if (isLoading) return <div className="h-96 flex items-center justify-center"><Loader2 className="animate-spin text-indigo-600" size={40} /></div>;
+  if (isLoading) return <div className="h-96 flex items-center justify-center"><Loader2 className="animate-spin text-black" size={40} /></div>;
 
   return (
     <div className="space-y-10 pb-20">
@@ -105,14 +105,14 @@ export default function AdminCouponsPage() {
           <h1 className="text-3xl font-black text-gray-900 tracking-tight">Marketing Coupons</h1>
           <p className="text-gray-500 font-bold text-sm uppercase tracking-widest mt-1 opacity-70">Manage discounts and promotions</p>
         </div>
-        <Button onClick={() => setShowAdd(!showAdd)} className="rounded-2xl h-14 px-8 font-black uppercase tracking-widest text-xs flex items-center gap-3 shadow-xl shadow-indigo-100">
+        <Button onClick={() => setShowAdd(!showAdd)} className="rounded-2xl h-14 px-8 font-black uppercase tracking-widest text-xs flex items-center gap-3 shadow-xl shadow-gray-200">
            {showAdd ? 'Close Form' : <><Plus size={20} /> Create Coupon</>}
         </Button>
       </div>
 
       {showAdd && (
-        <div className="bg-white p-10 rounded-[2.5rem] shadow-xl border border-indigo-50 animate-in fade-in slide-in-from-top-4 duration-500">
-           <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-indigo-600 pl-4 uppercase tracking-tight">New Coupon Details</h2>
+        <div className="bg-white p-10 rounded-[2.5rem] shadow-xl border border-gray-100 animate-in fade-in slide-in-from-top-4 duration-500">
+           <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-black pl-4 uppercase tracking-tight">New Coupon Details</h2>
            <form onSubmit={handleCreate} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               <div className="space-y-2">
                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Promo Code</label>
@@ -142,7 +142,7 @@ export default function AdminCouponsPage() {
                  <Input required type="date" value={formData.validUntil} onChange={e => setFormData({...formData, validUntil: e.target.value})} className="h-14 rounded-xl font-bold" />
               </div>
               <div className="lg:col-span-3 pt-4">
-                 <Button disabled={isSubmitting} type="submit" className="w-full h-16 rounded-2xl text-lg font-black uppercase tracking-widest shadow-2xl shadow-indigo-200">
+                 <Button disabled={isSubmitting} type="submit" className="w-full h-16 rounded-2xl text-lg font-black uppercase tracking-widest shadow-2xl shadow-gray-300">
                     {isSubmitting ? <Loader2 className="animate-spin" /> : 'Generate Coupon Code'}
                  </Button>
               </div>
@@ -153,10 +153,10 @@ export default function AdminCouponsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {coupons.map((coupon) => (
           <div key={coupon._id} className={`bg-white rounded-[2.5rem] p-8 shadow-xl border-2 transition-all relative overflow-hidden group ${coupon.active ? 'border-transparent' : 'border-dashed border-gray-200 grayscale'}`}>
-            <div className={`absolute top-0 right-0 w-24 h-24 -mr-8 -mt-8 rounded-full blur-2xl opacity-20 ${coupon.active ? 'bg-indigo-500' : 'bg-gray-500'}`} />
+            <div className={`absolute top-0 right-0 w-24 h-24 -mr-8 -mt-8 rounded-full blur-2xl opacity-20 ${coupon.active ? 'bg-gray-1000' : 'bg-gray-500'}`} />
             
             <div className="flex justify-between items-start mb-8">
-               <div className={`p-4 rounded-2xl ${coupon.active ? 'bg-indigo-50 text-indigo-600' : 'bg-gray-100 text-gray-400'}`}>
+               <div className={`p-4 rounded-2xl ${coupon.active ? 'bg-gray-100 text-black' : 'bg-gray-100 text-gray-400'}`}>
                   <Ticket size={24} />
                </div>
                <div className="flex gap-2">
@@ -170,7 +170,7 @@ export default function AdminCouponsPage() {
             </div>
 
             <h3 className="text-2xl font-black text-gray-900 tracking-tighter mb-2">{coupon.code}</h3>
-            <p className="text-indigo-600 font-black text-lg mb-6">
+            <p className="text-black font-black text-lg mb-6">
                {coupon.type === 'percentage' ? `${coupon.value}% OFF` : `${formatCurrency(coupon.value)} OFF`}
             </p>
 

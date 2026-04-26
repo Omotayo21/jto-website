@@ -1,17 +1,66 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
+import { OrderStatusTracker } from '@/components/orders/OrderStatusTracker';
+import { formatCurrency } from '@/lib/utils';
+import { Loader2, Package } from 'lucide-react';
 
-const NAV_TABS = ['Overview', 'Orders', 'Wishlist', 'Settings'];
+import { ProductCard } from '@/components/products/ProductCard';
+
+const NAV_TABS = ['Overview', 'Orders', 'Favorites'];
 
 export default function AccountPage() {
   const { user, setUser } = useAuthStore();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('Overview');
   const [loggingOut, setLoggingOut] = useState(false);
+  const [orders, setOrders] = useState([]);
+  const [loadingOrders, setLoadingOrders] = useState(false);
+  const [favorites, setFavorites] = useState([]);
+  const [loadingFavorites, setLoadingFavorites] = useState(false);
+
+  useEffect(() => {
+    if (user && activeTab === 'Orders') {
+      fetchOrders();
+    }
+    if (user && (activeTab === 'Favorites' || activeTab === 'Overview')) {
+      fetchFavorites();
+    }
+  }, [user, activeTab]);
+
+  const fetchFavorites = async () => {
+    if (favorites.length > 0) return; // already fetched
+    setLoadingFavorites(true);
+    try {
+      const res = await fetch('/api/favourites');
+      const data = await res.json();
+      if (data.success) {
+        setFavorites(data.data);
+      }
+    } catch {
+      // Handle error silently
+    } finally {
+      setLoadingFavorites(false);
+    }
+  };
+
+  const fetchOrders = async () => {
+    setLoadingOrders(true);
+    try {
+      const res = await fetch(`/api/orders?userId=${user._id || user.id}`);
+      const data = await res.json();
+      if (data.success) {
+        setOrders(data.data);
+      }
+    } catch {
+      toast.error('Failed to load orders');
+    } finally {
+      setLoadingOrders(false);
+    }
+  };
 
   const handleLogout = async () => {
     setLoggingOut(true);
@@ -36,7 +85,7 @@ export default function AccountPage() {
         </p>
         <Link
           href="/login"
-          className="px-10 py-4 bg-black text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#800020] transition-colors"
+          className="px-10 py-4 bg-black text-white rounded-none text-xs font-black uppercase tracking-widest hover:bg-[#800020] transition-colors"
         >
           Sign In
         </Link>
@@ -53,7 +102,6 @@ export default function AccountPage() {
       {/* ── Hero Banner ── */}
       <div className="relative bg-black text-white overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          {/* subtle texture pattern */}
           <div className="absolute inset-0" style={{
             backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(255,255,255,0.03) 4px, rgba(255,255,255,0.03) 8px)'
           }} />
@@ -61,7 +109,7 @@ export default function AccountPage() {
         <div className="max-w-[1440px] mx-auto px-8 md:px-12 py-16 relative z-10">
           <div className="flex flex-col md:flex-row items-start md:items-end gap-8">
             {/* Avatar */}
-            <div className="w-24 h-24 rounded-full bg-[#800020] flex items-center justify-center shrink-0 border-4 border-white/10">
+            <div className="w-24 h-24 bg-[#800020] flex items-center justify-center shrink-0 border-4 border-white/10 rounded-none">
               <span className="text-2xl font-black text-white serif-font">{initials}</span>
             </div>
 
@@ -74,7 +122,7 @@ export default function AccountPage() {
             <button
               onClick={handleLogout}
               disabled={loggingOut}
-              className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors border border-white/10 px-5 py-3 rounded-full hover:border-white/30 disabled:opacity-40"
+              className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors border border-white/10 px-5 py-3 hover:border-white/30 disabled:opacity-40"
             >
               {loggingOut ? 'Signing out…' : 'Sign Out'}
             </button>
@@ -107,11 +155,10 @@ export default function AccountPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Quick stat cards */}
             {[
-              { label: 'Total Orders', value: '—', icon: '📦' },
-              { label: 'Wishlist Items', value: '—', icon: '♡' },
-              { label: 'Loyalty Points', value: '0 pts', icon: '✦' },
+              { label: 'Total Orders', value: orders.length || '—', icon: '📦' },
+              { label: 'Saved Favorites', value: favorites.length || '0', icon: '♡' },
             ].map(card => (
-              <div key={card.label} className="bg-white p-8 border border-gray-100">
+              <div key={card.label} className="bg-white p-8 border border-gray-200">
                 <span className="text-2xl block mb-4">{card.icon}</span>
                 <p className="text-3xl font-black serif-font italic mb-1">{card.value}</p>
                 <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">{card.label}</p>
@@ -119,26 +166,18 @@ export default function AccountPage() {
             ))}
 
             {/* Account Details Card */}
-            <div className="md:col-span-3 bg-white border border-gray-100 p-8">
+            <div className="md:col-span-2 bg-white border border-gray-200 p-8">
               <h3 className="text-xs font-black uppercase tracking-[0.2em] text-gray-400 mb-6">Account Details</h3>
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-4">
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-300 mb-1">Full Name</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1">Full Name</p>
                     <p className="text-sm font-medium text-black">{user.name}</p>
                   </div>
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-300 mb-1">Email Address</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1">Email Address</p>
                     <p className="text-sm font-medium text-black">{user.email}</p>
                   </div>
-                </div>
-                <div className="flex flex-col justify-end">
-                  <Link
-                    href="/account?tab=settings"
-                    className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-black transition-colors border-b border-gray-200 pb-1 w-fit"
-                  >
-                    Edit Profile →
-                  </Link>
                 </div>
               </div>
             </div>
@@ -147,79 +186,110 @@ export default function AccountPage() {
 
         {/* Orders */}
         {activeTab === 'Orders' && (
-          <div className="bg-white border border-gray-100">
-            <div className="p-8 border-b border-gray-100">
+          <div className="bg-white border border-gray-200">
+            <div className="p-8 border-b border-gray-200">
               <h2 className="text-xs font-black uppercase tracking-[0.2em] text-gray-400">Order History</h2>
             </div>
-            <div className="p-16 text-center">
-              <p className="text-3xl serif-font italic text-gray-200 mb-3">No orders yet</p>
-              <p className="text-xs uppercase tracking-widest text-gray-300 mb-8 font-black">Your order history will appear here</p>
-              <Link
-                href="/products"
-                className="inline-block px-10 py-4 bg-black text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#800020] transition-colors"
-              >
-                Shop the Collection
-              </Link>
-            </div>
-          </div>
-        )}
+            
+            {loadingOrders ? (
+              <div className="p-20 flex justify-center">
+                <div className="w-8 h-8 border-2 border-gray-200 border-t-black rounded-full animate-spin" />
+              </div>
+            ) : orders.length === 0 ? (
+              <div className="p-16 text-center">
+                <p className="text-3xl serif-font italic text-gray-300 mb-3">No orders yet</p>
+                <p className="text-xs uppercase tracking-widest text-gray-400 mb-8 font-black">Your order history will appear here</p>
+                <Link
+                  href="/products"
+                  className="inline-block px-10 py-4 bg-black text-white rounded-none text-xs font-black uppercase tracking-widest hover:bg-[#800020] transition-colors"
+                >
+                  Shop the Collection
+                </Link>
+              </div>
+            ) : (
+              <div className="divide-y divide-gray-100">
+                {orders.map(order => (
+                  <div key={order._id} className="p-8">
+                    <div className="flex flex-wrap justify-between items-start gap-4 mb-8">
+                      <div>
+                        <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Order Placed</p>
+                        <p className="font-medium">{new Date(order.createdAt).toLocaleDateString()}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Total</p>
+                        <p className="font-bold">{formatCurrency(order.total)}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Order #</p>
+                        <p className="font-bold">{order.orderNumber}</p>
+                      </div>
+                      <div className="text-right">
+                        <span className="inline-block px-3 py-1 bg-gray-100 text-black text-[10px] font-black uppercase tracking-widest">
+                          {order.status}
+                        </span>
+                      </div>
+                    </div>
 
-        {/* Wishlist */}
-        {activeTab === 'Wishlist' && (
-          <div className="bg-white border border-gray-100">
-            <div className="p-8 border-b border-gray-100">
-              <h2 className="text-xs font-black uppercase tracking-[0.2em] text-gray-400">Saved Pieces</h2>
-            </div>
-            <div className="p-16 text-center">
-              <p className="text-3xl serif-font italic text-gray-200 mb-3">Your wishlist is empty</p>
-              <p className="text-xs uppercase tracking-widest text-gray-300 mb-8 font-black">Save pieces you love to revisit later</p>
-              <Link
-                href="/products"
-                className="inline-block px-10 py-4 bg-black text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#800020] transition-colors"
-              >
-                Explore the Collection
-              </Link>
-            </div>
-          </div>
-        )}
+                    <div className="bg-[#fafaf9] p-6 border border-gray-100 mb-8">
+                      <h4 className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-4">Items Summary</h4>
+                      <div className="space-y-4">
+                        {order.items.map((item, idx) => (
+                          <div key={idx} className="flex items-center gap-4">
+                            <div className="w-12 h-16 bg-gray-200 shrink-0">
+                              <img src={item.image || item.product?.media?.[0]?.url || '/placeholder.png'} className="w-full h-full object-cover" alt={item.name} />
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-sm font-bold line-clamp-1">{item.name}</p>
+                              <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
+                                Qty: {item.quantity} {item.variant?.size && `| Size: ${item.variant.size}`}
+                              </p>
+                            </div>
+                            <p className="text-sm font-medium">{formatCurrency(item.price)}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
 
-        {/* Settings */}
-        {activeTab === 'Settings' && (
-          <div className="max-w-lg space-y-8">
-            <div className="bg-white border border-gray-100 p-8">
-              <h3 className="text-xs font-black uppercase tracking-[0.2em] text-gray-400 mb-8">Profile Information</h3>
-              <div className="space-y-6">
-                {[
-                  { label: 'Full Name', value: user.name, type: 'text' },
-                  { label: 'Email Address', value: user.email, type: 'email' },
-                ].map(field => (
-                  <div key={field.label} className="border-b border-gray-200 focus-within:border-black transition-colors">
-                    <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1">{field.label}</label>
-                    <input
-                      type={field.type}
-                      defaultValue={field.value}
-                      className="w-full bg-transparent py-3 text-sm text-black outline-none"
-                    />
+                    <div>
+                      <h4 className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Order Status</h4>
+                      <OrderStatusTracker status={order.status} history={order.statusHistory} />
+                    </div>
                   </div>
                 ))}
-                <button
-                  className="w-full py-4 bg-black text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#800020] transition-colors mt-4"
-                  onClick={() => toast.success('Profile updated!')}
-                >
-                  Save Changes
-                </button>
               </div>
-            </div>
+            )}
+          </div>
+        )}
 
-            <div className="bg-white border border-gray-100 p-8">
-              <h3 className="text-xs font-black uppercase tracking-[0.2em] text-gray-400 mb-6">Danger Zone</h3>
-              <button
-                onClick={handleLogout}
-                className="text-[10px] font-black uppercase tracking-widest text-[#800020] border border-[#800020]/20 px-6 py-3 hover:bg-[#800020] hover:text-white transition-all rounded-full"
-              >
-                Sign Out
-              </button>
+        {/* Favorites */}
+        {activeTab === 'Favorites' && (
+          <div className="bg-white border border-gray-200">
+            <div className="p-8 border-b border-gray-200">
+              <h2 className="text-xs font-black uppercase tracking-[0.2em] text-gray-400">Saved Favorites</h2>
             </div>
+            
+            {loadingFavorites ? (
+              <div className="p-20 flex justify-center">
+                <div className="w-8 h-8 border-2 border-gray-200 border-t-black rounded-full animate-spin" />
+              </div>
+            ) : favorites.length === 0 ? (
+              <div className="p-16 text-center">
+                <p className="text-3xl serif-font italic text-gray-300 mb-3">Your favorites list is empty</p>
+                <p className="text-xs uppercase tracking-widest text-gray-400 mb-8 font-black">Save pieces you love to revisit later</p>
+                <Link
+                  href="/products"
+                  className="inline-block px-10 py-4 bg-black text-white rounded-none text-xs font-black uppercase tracking-widest hover:bg-[#800020] transition-colors"
+                >
+                  Explore the Collection
+                </Link>
+              </div>
+            ) : (
+              <div className="p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {favorites.map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>

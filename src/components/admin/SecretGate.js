@@ -65,8 +65,8 @@ export default function SecretGate({ children }) {
     return (
       <div className="fixed inset-0 z-[110] bg-gray-50 flex flex-col items-center justify-center animate-in fade-in duration-500">
         <div className="relative">
-          <div className="w-20 h-20 border-4 border-indigo-100 rounded-full" />
-          <Icon name="Loader2" size={80} className="text-indigo-600 animate-spin absolute inset-0" />
+          <div className="w-20 h-20 border-4 border-gray-200 rounded-full" />
+          <Icon name="Loader2" size={80} className="text-black animate-spin absolute inset-0" />
         </div>
         <p className="mt-6 text-xs font-black uppercase tracking-[0.4em] text-gray-400 animate-pulse">Syncing Portal</p>
       </div>
@@ -78,7 +78,7 @@ export default function SecretGate({ children }) {
   return (
     <div className="fixed inset-0 z-[100] bg-gray-50 flex items-center justify-center p-6">
       <div className="max-w-md w-full bg-white p-12 rounded-[2.5rem] shadow-2xl shadow-gray-200 border border-gray-100 text-center">
-        <div className="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner">
+        <div className="w-20 h-20 bg-gray-100 text-black rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner">
           <Icon name="Lock" size={32} />
         </div>
         <h1 className="text-3xl font-black text-gray-900 tracking-tight mb-3">Admin Access</h1>
@@ -93,7 +93,7 @@ export default function SecretGate({ children }) {
             className="h-14 text-center tracking-[0.5em] font-black text-xl placeholder:tracking-normal placeholder:font-bold"
           />
           {error && <p className="text-rose-500 text-sm font-bold animate-shake">{error}</p>}
-          <Button type="submit" className="w-full h-14 text-lg font-black shadow-lg shadow-indigo-100">
+          <Button type="submit" className="w-full h-14 text-lg font-black shadow-lg shadow-gray-200">
             Authorize Sessions
           </Button>
         </form>

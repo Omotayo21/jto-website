@@ -62,15 +62,19 @@ export function ProductReviews({ productId }) {
   };
 
   if (isLoading) {
-    return <div className="p-10 text-center"><Loader2 className="animate-spin inline-block mr-2" /> Loading reviews...</div>;
+    return (
+      <div className="p-10 flex justify-center">
+        <div className="w-8 h-8 border-2 border-gray-200 border-t-black rounded-full animate-spin" />
+      </div>
+    );
   }
 
   return (
     <div className="mt-20 space-y-12">
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-black text-gray-900 tracking-tight flex items-center gap-4">
-          <MessageSquare className="text-indigo-600" size={32} /> Customer Reviews
-          <span className="text-sm font-bold bg-indigo-50 text-indigo-600 px-4 py-1 rounded-full uppercase tracking-widest">{reviews.length} total</span>
+        <h2 className="text-3xl serif-font italic text-gray-900 tracking-tight flex items-center gap-4">
+          Customer Reviews
+          <span className="text-xs font-bold bg-black text-white px-3 py-1 uppercase tracking-widest">{reviews.length} total</span>
         </h2>
       </div>
 
@@ -78,8 +82,8 @@ export function ProductReviews({ productId }) {
         {/* Review Form */}
         <div className="lg:col-span-1">
           {user ? (
-            <div className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-xl shadow-gray-100/50 sticky top-24">
-              <h3 className="font-black text-gray-900 text-xl mb-6">Leave a Review</h3>
+            <div className="bg-white p-8 border border-gray-200 sticky top-24">
+              <h3 className="font-black text-gray-900 text-xl mb-6 serif-font italic">Leave a Review</h3>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="text-xs font-black text-gray-400 uppercase tracking-widest block mb-3">Rating</label>
@@ -89,7 +93,7 @@ export function ProductReviews({ productId }) {
                         key={star}
                         type="button"
                         onClick={() => setNewReview({ ...newReview, rating: star })}
-                        className={`transition-all hover:scale-110 ${newReview.rating >= star ? 'text-amber-400' : 'text-gray-200'}`}
+                        className={`transition-all hover:scale-110 ${newReview.rating >= star ? 'text-[#800020]' : 'text-gray-200'}`}
                       >
                         <Star size={32} fill={newReview.rating >= star ? 'currentColor' : 'none'} />
                       </button>
@@ -104,19 +108,19 @@ export function ProductReviews({ productId }) {
                     required
                     rows="4"
                     placeholder="Tell others what you think..."
-                    className="w-full bg-gray-50 border-gray-100 rounded-2xl p-4 text-sm font-medium focus:bg-white focus:ring-4 focus:ring-indigo-50 transition-all outline-none border"
+                    className="w-full bg-white border-gray-200 p-4 text-sm font-medium focus:ring-1 focus:ring-black transition-all outline-none border"
                   />
                 </div>
-                <Button disabled={isSubmitting} type="submit" className="w-full h-14 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3">
-                  {isSubmitting ? <Loader2 className="animate-spin" /> : <><Send size={18} /> Submit Review</>}
+                <Button disabled={isSubmitting} type="submit" className="w-full h-14 rounded-none bg-black hover:bg-[#800020] font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3">
+                  {isSubmitting ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <>Submit Review</>}
                 </Button>
                 <p className="text-[10px] text-center text-gray-400 font-bold uppercase tracking-wider">Only verified purchasers can submit</p>
               </form>
             </div>
           ) : (
-            <div className="bg-gray-50 p-8 rounded-[2rem] border-2 border-dashed border-gray-200 text-center">
+            <div className="bg-gray-50 p-8 border border-gray-200 text-center">
               <p className="text-gray-500 font-bold mb-4">Log in to leave a review</p>
-              <Button onClick={() => window.location.href = '/login'}>Sign In</Button>
+              <Button onClick={() => window.location.href = '/login'} className="bg-black hover:bg-[#800020] rounded-none">Sign In</Button>
             </div>
           )}
         </div>
@@ -124,16 +128,16 @@ export function ProductReviews({ productId }) {
         {/* Reviews List */}
         <div className="lg:col-span-2 space-y-6">
           {reviews.length === 0 ? (
-            <div className="py-20 text-center bg-gray-50/50 rounded-[2.5rem] border border-gray-100">
+            <div className="py-20 text-center bg-gray-50/50 border border-gray-100">
                <Star size={48} className="text-gray-200 mx-auto mb-4" />
                <p className="text-gray-400 font-black uppercase tracking-widest text-xs">Be the first to review this product</p>
             </div>
           ) : (
             reviews.map((review) => (
-              <div key={review._id} className="bg-white p-8 rounded-[2.5rem] border border-gray-50 shadow-sm hover:shadow-md transition-shadow">
+              <div key={review._id} className="bg-white p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
                 <div className="flex justify-between items-start mb-6">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 font-black">
+                    <div className="w-12 h-12 bg-gray-100 flex items-center justify-center text-black font-black">
                       {review.userName[0]}
                     </div>
                     <div>
@@ -141,7 +145,7 @@ export function ProductReviews({ productId }) {
                       <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{new Date(review.createdAt).toLocaleDateString()}</p>
                     </div>
                   </div>
-                  <div className="flex gap-1 text-amber-400">
+                  <div className="flex gap-1 text-[#800020]">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <Star key={star} size={14} fill={review.rating >= star ? 'currentColor' : 'none'} />
                     ))}
@@ -149,10 +153,10 @@ export function ProductReviews({ productId }) {
                 </div>
                 <p className="text-gray-600 font-medium leading-relaxed italic">&quot;{review.comment}&quot;</p>
                 <div className="mt-6 flex items-center gap-2">
-                   <div className="w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center">
+                   <div className="w-4 h-4 bg-black rounded-full flex items-center justify-center">
                       <CheckCircle2 size={10} className="text-white" />
                    </div>
-                   <span className="text-[9px] font-black text-emerald-600 uppercase tracking-widest">Verified Purchase</span>
+                   <span className="text-[9px] font-black text-black uppercase tracking-widest">Verified Purchase</span>
                 </div>
               </div>
             ))

@@ -59,7 +59,7 @@ export default function AdminOrderDetailsPage({ params }) {
   if (isLoading) {
     return (
       <div className="h-96 flex items-center justify-center">
-        <Loader2 className="w-10 h-10 text-indigo-600 animate-spin" />
+        <Loader2 className="w-10 h-10 text-black animate-spin" />
       </div>
     );
   }
@@ -68,7 +68,7 @@ export default function AdminOrderDetailsPage({ params }) {
     return (
       <div className="p-20 text-center">
         <h2 className="text-2xl font-bold text-gray-900">Order not found</h2>
-        <Link href="/management-portal/orders" className="text-indigo-600 mt-4 block">Back to Orders</Link>
+        <Link href="/management-portal/orders" className="text-black mt-4 block">Back to Orders</Link>
       </div>
     );
   }
@@ -76,7 +76,7 @@ export default function AdminOrderDetailsPage({ params }) {
   return (
     <div className="space-y-10 pb-20">
       <div className="flex items-center gap-4">
-        <Link href="/management-portal/orders" className="p-3 bg-white rounded-2xl text-gray-500 hover:text-indigo-600 transition-all shadow-sm border border-gray-100">
+        <Link href="/management-portal/orders" className="p-3 bg-white rounded-2xl text-gray-500 hover:text-black transition-all shadow-sm border border-gray-100">
           <ArrowLeft size={20} />
         </Link>
         <div>
@@ -89,11 +89,11 @@ export default function AdminOrderDetailsPage({ params }) {
         <div className="lg:col-span-2 space-y-10">
           {/* Status Control */}
           <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
-             <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-indigo-600 pl-4 uppercase tracking-tight">Fulfillment Status</h2>
+             <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-black pl-4 uppercase tracking-tight">Fulfillment Status</h2>
              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   { id: 'pending', label: 'Pending', icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50' },
-                  { id: 'processing', label: 'Processing', icon: Package, color: 'text-indigo-600', bg: 'bg-indigo-50' },
+                  { id: 'processing', label: 'Processing', icon: Package, color: 'text-black', bg: 'bg-gray-100' },
                   { id: 'shipped', label: 'Shipped', icon: Truck, color: 'text-blue-600', bg: 'bg-blue-50' },
                   { id: 'delivered', label: 'Delivered', icon: CheckCircle, color: 'text-emerald-600', bg: 'bg-emerald-50' },
                 ].map((s) => (
@@ -101,7 +101,7 @@ export default function AdminOrderDetailsPage({ params }) {
                     key={s.id}
                     disabled={isUpdating}
                     onClick={() => updateStatus(s.id)}
-                    className={`flex flex-col items-center gap-3 p-6 rounded-3xl border-2 transition-all ${order.status === s.id ? `${s.bg} border-indigo-600 shadow-lg` : 'bg-gray-50 border-transparent hover:border-gray-200'} ${isUpdating ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`flex flex-col items-center gap-3 p-6 rounded-3xl border-2 transition-all ${order.status === s.id ? `${s.bg} border-black shadow-lg` : 'bg-gray-50 border-transparent hover:border-gray-200'} ${isUpdating ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     <s.icon size={24} className={order.status === s.id ? s.color : 'text-gray-400'} />
                     <span className={`text-xs font-black uppercase tracking-widest ${order.status === s.id ? s.color : 'text-gray-400'}`}>{s.label}</span>
@@ -141,7 +141,7 @@ export default function AdminOrderDetailsPage({ params }) {
              </div>
              <div className="p-8 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
                 <span className="font-black text-gray-500 uppercase tracking-widest">Grand Total</span>
-                <span className="text-3xl font-black text-indigo-600">{formatCurrency(order.total)}</span>
+                <span className="text-3xl font-black text-black">{formatCurrency(order.total)}</span>
              </div>
           </section>
         </div>

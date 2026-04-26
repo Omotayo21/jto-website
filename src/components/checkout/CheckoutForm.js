@@ -106,8 +106,8 @@ export function CheckoutForm() {
   return (
     <div className="grid lg:grid-cols-2 gap-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
-        <h2 className="text-2xl font-black mb-8 tracking-tight flex items-center gap-3">
-          <span className="w-8 h-8 bg-indigo-600 text-white rounded-lg flex items-center justify-center text-sm">1</span>
+        <h2 className="text-2xl font-black mb-8 tracking-tight flex items-center gap-3 serif-font italic">
+          <span className="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center text-sm font-sans not-italic">1</span>
           Delivery Details
         </h2>
         <form id="checkout-form" onSubmit={handleCheckout} className="space-y-6">
@@ -123,7 +123,7 @@ export function CheckoutForm() {
               <label className="text-xs font-bold uppercase text-gray-400 ml-1">Delivery Zone</label>
               <select 
                 required
-                className="w-full h-14 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-indigo-500 transition-all font-medium"
+                className="w-full h-14 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-black transition-all font-medium"
                 value={selectedZone?.slug || ''}
                 onChange={(e) => setSelectedZone(zones.find(z => z.slug === e.target.value))}
               >
@@ -146,26 +146,26 @@ export function CheckoutForm() {
         </form>
       </div>
 
-      <div className="bg-gray-900 p-10 rounded-[2.5rem] text-white flex flex-col shadow-2xl shadow-indigo-200/20">
-        <h2 className="text-2xl font-black mb-8 tracking-tight flex items-center gap-3">
-          <span className="w-8 h-8 bg-indigo-600 text-white rounded-lg flex items-center justify-center text-sm">2</span>
+      <div className="bg-gray-900 p-10 rounded-[2.5rem] text-white flex flex-col shadow-2xl shadow-black/20">
+        <h2 className="text-2xl font-black mb-8 tracking-tight flex items-center gap-3 serif-font italic">
+          <span className="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center text-sm font-sans not-italic border border-white/20">2</span>
           Order Summary
         </h2>
         
         <div className="flex-1 overflow-y-auto mb-8 space-y-6 max-h-[400px] pr-4 custom-scrollbar">
           {items.map((item, idx) => (
              <div key={idx} className="flex gap-4 group">
-               <div className="w-20 h-20 rounded-2xl overflow-hidden bg-white/10 p-1 shrink-0">
+               <div className="w-20 h-20 rounded-2xl overflow-hidden bg-white/10 p-1 shrink-0 border border-white/10">
                  <img src={item.image || '/placeholder.png'} alt={item.name} className="w-full h-full object-cover rounded-xl" />
                </div>
                <div className="flex-1">
-                 <h4 className="font-bold text-white group-hover:text-indigo-400 transition-colors line-clamp-1">{item.name}</h4>
+                 <h4 className="font-bold text-white group-hover:text-gray-300 transition-colors line-clamp-1">{item.name}</h4>
                  <p className="text-xs text-gray-400 mt-1 uppercase tracking-wider font-black">
                    {item.variant?.size} {item.variant?.color && `| ${item.variant.color.name}`}
                  </p>
                  <div className="flex justify-between items-center mt-2">
                    <span className="text-xs bg-white/10 px-2 py-0.5 rounded text-gray-300">Qty: {item.quantity}</span>
-                   <span className="font-black text-indigo-400">NGN {(item.price * item.quantity).toLocaleString()}</span>
+                   <span className="font-black text-white">NGN {(item.price * item.quantity).toLocaleString()}</span>
                  </div>
                </div>
              </div>
@@ -179,14 +179,14 @@ export function CheckoutForm() {
                 value={couponCode} 
                 onChange={e => setCouponCode(e.target.value.toUpperCase())} 
                 disabled={discountVal > 0} 
-                className="bg-white/5 border-white/10 text-white h-14 rounded-xl placeholder:text-gray-600" 
+                className="bg-white/5 border-white/10 text-white h-14 rounded-xl placeholder:text-gray-600 focus:ring-white" 
              />
              {discountVal > 0 ? (
                <div className="w-14 h-14 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center border border-emerald-500/30">
                  <CheckCircle2 size={24}/>
                </div>
              ) : (
-               <Button onClick={handleApplyCoupon} disabled={validatingCoupon || !couponCode} className="h-14 px-8 rounded-xl bg-indigo-600 hover:bg-indigo-700">Apply</Button>
+               <Button onClick={handleApplyCoupon} disabled={validatingCoupon || !couponCode} className="h-14 px-8 rounded-xl bg-black hover:bg-[#800020] border border-white/20">Apply</Button>
              )}
            </div>
 
@@ -198,14 +198,14 @@ export function CheckoutForm() {
              </div>
              {discountVal > 0 && <div className="flex justify-between text-emerald-400"><span>Discount Applied</span><span>-NGN {discountVal.toLocaleString()}</span></div>}
              
-             <div className="flex justify-between text-3xl font-black text-white pt-6 border-t border-white/10">
-               <span>Total</span><span className="text-indigo-400">NGN {total.toLocaleString()}</span>
+             <div className="flex justify-between text-3xl font-black text-white pt-6 border-t border-white/10 serif-font italic">
+               <span>Total</span><span>NGN {total.toLocaleString()}</span>
              </div>
            </div>
 
            {error && <p className="text-rose-400 text-xs font-bold bg-rose-500/10 p-4 rounded-xl border border-rose-500/20">{error}</p>}
            
-           <Button type="submit" form="checkout-form" disabled={loading || items.length === 0} className="w-full h-16 text-xl font-black rounded-2xl bg-indigo-600 hover:bg-indigo-700 shadow-xl shadow-indigo-600/20 transition-all hover:-translate-y-1">
+           <Button type="submit" form="checkout-form" disabled={loading || items.length === 0} className="w-full h-16 text-xl font-black rounded-2xl bg-black hover:bg-[#800020] shadow-xl shadow-black/20 transition-all hover:-translate-y-1 border border-white/20">
              {loading ? 'INITIALISING...' : `CONFIRM & PAY NGN ${total.toLocaleString()}`}
            </Button>
 

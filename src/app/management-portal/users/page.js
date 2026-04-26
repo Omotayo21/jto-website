@@ -67,7 +67,7 @@ export default function AdminUsersPage() {
                        </div>
                      </div>
                    </td>
-                   <td className="p-5 text-indigo-600 font-bold capitalize">{user.role || 'user'}</td>
+                   <td className="p-5 text-black font-bold capitalize">{user.role || 'user'}</td>
                    <td className="p-5">
                       <Badge variant={user.status === 'banned' ? 'danger' : 'success'} className="uppercase tracking-widest text-[10px] px-2 py-1">
                         {user.status || 'active'}
