@@ -186,7 +186,7 @@ export function CheckoutForm() {
                  <CheckCircle2 size={24}/>
                </div>
              ) : (
-               <Button onClick={handleApplyCoupon} disabled={validatingCoupon || !couponCode} className="h-14 px-8 rounded-xl bg-black hover:bg-[#800020] border border-white/20">Apply</Button>
+               <Button onClick={handleApplyCoupon} disabled={validatingCoupon || !couponCode} className="h-14 px-8 rounded-xl bg-black hover:bg-[#DAA520] border border-white/20">Apply</Button>
              )}
            </div>
 
@@ -205,7 +205,7 @@ export function CheckoutForm() {
 
            {error && <p className="text-rose-400 text-xs font-bold bg-rose-500/10 p-4 rounded-xl border border-rose-500/20">{error}</p>}
            
-           <Button type="submit" form="checkout-form" disabled={loading || items.length === 0} className="w-full h-16 text-xl font-black rounded-2xl bg-black hover:bg-[#800020] shadow-xl shadow-black/20 transition-all hover:-translate-y-1 border border-white/20">
+           <Button type="submit" form="checkout-form" disabled={loading || items.length === 0} className="w-full h-16 text-xl font-black rounded-2xl bg-black hover:bg-[#DAA520] shadow-xl shadow-black/20 transition-all hover:-translate-y-1 border border-white/20">
              {loading ? 'INITIALISING...' : `CONFIRM & PAY NGN ${total.toLocaleString()}`}
            </Button>
 
@@ -217,3 +217,4 @@ export function CheckoutForm() {
     </div>
   );
 }
+

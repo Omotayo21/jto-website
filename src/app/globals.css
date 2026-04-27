@@ -7,7 +7,7 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
-  --accent: #800020; /* Burgundy */
+  --accent: #DAA520; /* Burgundy */
   --accent-foreground: #ffffff;
   --muted: #f4f4f4;
   --muted-foreground: #666666;
@@ -33,7 +33,7 @@
   }
   
   .btn-primary {
-    @apply btn-pill bg-black text-white hover:bg-[#800020] active:scale-95;
+    @apply btn-pill bg-black text-white hover:bg-[#DAA520] active:scale-95;
   }
 
   .btn-outline {
@@ -54,3 +54,4 @@
     box-shadow: 0 10px 40px rgba(0,0,0,0.04);
   }
 }
+

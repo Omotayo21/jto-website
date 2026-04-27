@@ -2,6 +2,7 @@ import { connectDB } from '@/lib/mongodb';
 import Product from '@/models/Product';
 import { ProductCard } from '@/components/products/ProductCard';
 import { Hero } from '@/components/home/Hero';
+import { VideoQuote } from '@/components/home/VideoQuote';
 import { NewsletterSection } from '@/components/home/NewsletterSection';
 import { FaqAccordion } from '@/components/home/FaqAccordion';
 
@@ -23,10 +24,14 @@ export default async function Home() {
       {/* Hero Carousel */}
       <Hero />
 
+      {/* Video Quote Section */}
+      <VideoQuote />
+
       {/* Featured Collection */}
       <section className="section-padding max-w-[1440px] mx-auto">
         <div className="flex flex-col items-center mb-16 text-center">
-          <h2 className="text-3xl md:text-4xl serif-font italic mb-4">The Curated Selection</h2>
+          <span className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400 mb-4">The Collection</span>
+          <h2 className="text-4xl md:text-6xl font-black serif-font italic leading-tight">Client Favorites</h2>
           <div className="w-12 h-[1px] bg-black mb-6" />
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
             Essential Pieces for the Modern Silhouette
@@ -54,7 +59,7 @@ export default async function Home() {
       </section>
 
       {/* ── ABOUT US SECTION ── */}
-      <section className="bg-[#800020] text-white section-padding">
+      <section className="bg-[#DAA520] text-white section-padding">
         <div className="max-w-3xl mx-auto text-center space-y-6">
           <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/50">About Us</span>
           <h3 className="text-3xl md:text-4xl serif-font italic leading-snug">
@@ -94,3 +99,4 @@ export default async function Home() {
     </div>
   );
 }
+

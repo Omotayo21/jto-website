@@ -54,7 +54,7 @@ export default function NewsletterAdmin() {
         </div>
         <button 
           onClick={exportToCSV}
-          className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-[#800020] transition-all shadow-xl shadow-gray-200"
+          className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-[#DAA520] transition-all shadow-xl shadow-gray-200"
         >
           <Download size={14} /> Export CSV
         </button>
@@ -138,3 +138,4 @@ export default function NewsletterAdmin() {
     </div>
   );
 }
+

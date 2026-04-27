@@ -94,7 +94,7 @@ export function ProductActions({ product }) {
          <button 
            disabled={isOutOfStock || loading} 
            onClick={handleAddToCart}
-           className="w-full h-14 bg-black text-white text-[10px] font-black uppercase tracking-[0.3em] hover:bg-[#800020] transition-colors disabled:bg-gray-100 disabled:text-gray-400"
+           className="w-full h-14 bg-black text-white text-[10px] font-black uppercase tracking-[0.3em] hover:bg-[#DAA520] transition-colors disabled:bg-gray-100 disabled:text-gray-400"
          >
            {loading ? <Icon name="Loader2" className="animate-spin mx-auto" size={18} /> : isOutOfStock ? 'Sold Out' : 'Add to Bag'}
          </button>
@@ -108,3 +108,4 @@ export function ProductActions({ product }) {
     </div>
   );
 }
+

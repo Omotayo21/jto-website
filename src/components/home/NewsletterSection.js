@@ -39,7 +39,7 @@ export function NewsletterSection() {
         <div className="px-12 md:px-20 py-20 flex flex-col justify-center">
           {/* Email icon */}
           <div className="mb-8">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#800020" strokeWidth="1.5">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#DAA520" strokeWidth="1.5">
               <rect x="2" y="4" width="20" height="16" rx="2"/>
               <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
             </svg>
@@ -94,3 +94,4 @@ export function NewsletterSection() {
     </section>
   );
 }
+

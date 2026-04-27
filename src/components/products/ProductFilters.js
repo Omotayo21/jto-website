@@ -42,10 +42,10 @@ export function ProductFilters() {
       <div className="flex items-center gap-6">
         <button 
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.15em] hover:text-[#800020] transition-colors"
+          className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.15em] hover:text-[#DAA520] transition-colors"
         >
           <SlidersHorizontal size={14} />
-          Filters {(minPrice || maxPrice) && <span className="w-2 h-2 bg-[#800020] rounded-full" />}
+          Filters {(minPrice || maxPrice) && <span className="w-2 h-2 bg-[#DAA520] rounded-full" />}
         </button>
 
         <div className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.15em] text-gray-500">
@@ -106,7 +106,7 @@ export function ProductFilters() {
               <div className="pt-4 flex flex-col gap-2">
                 <button 
                   onClick={applyFilters}
-                  className="w-full h-12 bg-black text-white text-[10px] font-black uppercase tracking-widest hover:bg-[#800020] transition-colors"
+                  className="w-full h-12 bg-black text-white text-[10px] font-black uppercase tracking-widest hover:bg-[#DAA520] transition-colors"
                 >
                   Apply Filters
                 </button>
@@ -124,3 +124,4 @@ export function ProductFilters() {
     </div>
   );
 }
+

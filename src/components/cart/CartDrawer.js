@@ -50,7 +50,7 @@ export function CartDrawer() {
               </div>
               <p className="text-xl font-black serif-font italic text-black">Sign In Required</p>
               <p className="text-gray-400 mt-3 mb-8 max-w-[250px] text-sm font-medium">Please sign in to view and manage your cart.</p>
-              <Link href="/login" onClick={closeCart} className="w-full bg-black text-white h-12 flex items-center justify-center font-black uppercase tracking-widest text-[10px] hover:bg-[#800020] transition-colors">
+              <Link href="/login" onClick={closeCart} className="w-full bg-black text-white h-12 flex items-center justify-center font-black uppercase tracking-widest text-[10px] hover:bg-[#DAA520] transition-colors">
                  Sign In
               </Link>
             </div>
@@ -65,7 +65,7 @@ export function CartDrawer() {
               </div>
               <p className="text-xl serif-font italic text-black">Your cart is empty</p>
               <p className="text-gray-400 mt-3 mb-8 max-w-[250px] text-sm font-medium">Looks like you haven&apos;t added any products yet.</p>
-              <button onClick={closeCart} className="px-8 py-3 bg-black text-white font-black uppercase tracking-widest text-[10px] hover:bg-[#800020] transition-colors">Continue Shopping</button>
+              <button onClick={closeCart} className="px-8 py-3 bg-black text-white font-black uppercase tracking-widest text-[10px] hover:bg-[#DAA520] transition-colors">Continue Shopping</button>
             </div>
           ) : (
             <ul className="space-y-6">
@@ -77,7 +77,7 @@ export function CartDrawer() {
                   <div className="flex-1 flex flex-col pt-1">
                     <div className="flex justify-between items-start gap-4">
                       <h3 className="font-medium text-sm text-black leading-tight line-clamp-2">{item.name}</h3>
-                      <button onClick={() => removeItem(item.productId, item.variant)} className="p-1 text-gray-300 hover:text-[#800020] transition-colors">
+                      <button onClick={() => removeItem(item.productId, item.variant)} className="p-1 text-gray-300 hover:text-[#DAA520] transition-colors">
                         <Trash size={14} />
                       </button>
                     </div>
@@ -114,7 +114,7 @@ export function CartDrawer() {
             <button 
                onClick={handleCheckout} 
                disabled={checkoutLoading}
-               className="flex group w-full justify-center items-center text-center bg-black text-white hover:bg-[#800020] py-4 h-14 font-black uppercase tracking-widest text-[10px] transition-all disabled:opacity-50"
+               className="flex group w-full justify-center items-center text-center bg-black text-white hover:bg-[#DAA520] py-4 h-14 font-black uppercase tracking-widest text-[10px] transition-all disabled:opacity-50"
             >
               {checkoutLoading ? (
                 <div className="w-5 h-5 border-2 border-transparent border-t-white rounded-full animate-spin" />
@@ -128,3 +128,4 @@ export function CartDrawer() {
     </div>
   );
 }
+

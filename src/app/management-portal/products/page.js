@@ -22,7 +22,7 @@ export default async function AdminProductsPage() {
           <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">Product Management</h1>
           <p className="text-gray-500 font-bold text-xs uppercase tracking-widest mt-1 opacity-70">Inventory & Catalog Control</p>
         </div>
-        <Link href="/management-portal/products/new" className="w-full sm:w-auto bg-black text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-[#800020] transition-all shadow-xl shadow-gray-200 hover:-translate-y-0.5 active:scale-95">
+        <Link href="/management-portal/products/new" className="w-full sm:w-auto bg-black text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-[#DAA520] transition-all shadow-xl shadow-gray-200 hover:-translate-y-0.5 active:scale-95">
           <Plus size={18} /> Add Product
         </Link>
       </div>
@@ -61,7 +61,7 @@ export default async function AdminProductsPage() {
                       </Badge>
                    </td>
                    <td className="p-6 text-right">
-                     <Link href={`/management-portal/products/${product._id || product.id}`} className="text-white bg-black px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-[#800020] shadow-lg shadow-gray-200 transition-all inline-block whitespace-nowrap overflow-hidden">
+                     <Link href={`/management-portal/products/${product._id || product.id}`} className="text-white bg-black px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-[#DAA520] shadow-lg shadow-gray-200 transition-all inline-block whitespace-nowrap overflow-hidden">
                        Edit
                      </Link>
                    </td>
@@ -82,3 +82,4 @@ export default async function AdminProductsPage() {
     </div>
   );
 }
+

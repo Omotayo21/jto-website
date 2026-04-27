@@ -123,7 +123,7 @@ function ShopMegaMenu({ onClose }) {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
               </div>
-              <span className="text-[10px] font-black uppercase tracking-[0.15em] text-gray-600 group-hover:text-[#800020] transition-colors">
+              <span className="text-[10px] font-black uppercase tracking-[0.15em] text-gray-600 group-hover:text-[#DAA520] transition-colors">
                 {cat.label}
               </span>
             </Link>
@@ -139,7 +139,7 @@ function SaleMegaMenu({ onClose }) {
   return (
     <div className="absolute top-full left-1/2 -translate-x-1/2 mt-0 bg-white shadow-2xl border border-gray-100 z-[200] w-[90vw] max-w-[900px]">
       <div className="p-8">
-        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800020] mb-6">Sale Collections</p>
+        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#DAA520] mb-6">Sale Collections</p>
         <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
           {SALE_COLLECTIONS.map(col => (
             <Link
@@ -155,7 +155,7 @@ function SaleMegaMenu({ onClose }) {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
               </div>
-              <span className="text-[10px] font-black uppercase tracking-[0.15em] text-gray-600 group-hover:text-[#800020] transition-colors">
+              <span className="text-[10px] font-black uppercase tracking-[0.15em] text-gray-600 group-hover:text-[#DAA520] transition-colors">
                 {col.label}
               </span>
             </Link>
@@ -167,7 +167,7 @@ function SaleMegaMenu({ onClose }) {
 }
 
 /* ─── Nav Item (with dropdown or mega menu) ─── */
-function DropdownItem({ item }) {
+function DropdownItem({ item, isTransparent }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -184,8 +184,8 @@ function DropdownItem({ item }) {
     return (
       <Link
         href={item.href}
-        className={`text-[11px] font-medium uppercase tracking-[0.15em] hover:text-[#800020] transition-colors whitespace-nowrap ${
-          item.sale ? 'text-[#800020] font-bold' : 'text-black'
+        className={`text-[11px] font-medium uppercase tracking-[0.15em] hover:text-[#DAA520] transition-colors whitespace-nowrap ${
+          item.sale ? 'text-[#DAA520] font-bold' : 'text-black'
         }`}
       >
         {item.label}
@@ -203,8 +203,8 @@ function DropdownItem({ item }) {
         onMouseLeave={() => setOpen(false)}
       >
         <button
-          className={`flex items-center gap-1 text-[11px] font-medium uppercase tracking-[0.15em] hover:text-[#800020] transition-colors whitespace-nowrap ${
-            item.sale ? 'text-[#800020] font-bold' : 'text-black'
+          className={`flex items-center gap-1 text-[11px] font-medium uppercase tracking-[0.15em] hover:text-[#DAA520] transition-colors whitespace-nowrap ${
+            item.sale ? 'text-[#DAA520] font-bold' : 'text-black'
           }`}
           onClick={() => setOpen(o => !o)}
         >
@@ -240,7 +240,7 @@ function DropdownItem({ item }) {
       onMouseLeave={() => setOpen(false)}
     >
       <button
-        className="flex items-center gap-1 text-[11px] font-medium uppercase tracking-[0.15em] hover:text-[#800020] transition-colors whitespace-nowrap text-black"
+        className="flex items-center gap-1 text-[11px] font-medium uppercase tracking-[0.15em] hover:text-[#DAA520] transition-colors whitespace-nowrap text-black"
         onClick={() => setOpen(o => !o)}
       >
         {item.label}
@@ -263,7 +263,7 @@ function DropdownItem({ item }) {
             <Link
               key={sub.label}
               href={sub.href}
-              className="block px-6 py-2.5 text-sm text-gray-700 hover:text-[#800020] hover:bg-gray-50 transition-colors tracking-wide"
+              className="block px-6 py-2.5 text-sm text-gray-700 hover:text-[#DAA520] hover:bg-gray-50 transition-colors tracking-wide"
               onClick={() => setOpen(false)}
             >
               {sub.label}
@@ -326,14 +326,14 @@ export function Navbar() {
   return (
     <>
       {/* ── ANNOUNCEMENT BAR ── */}
-      <div className="w-full bg-[#800020] text-white text-center py-2.5 px-4 flex items-center justify-center gap-2 text-[11px] font-medium tracking-wide">
+      <div className="w-full bg-[#FFDA03] text-black text-center py-2.5 px-4 flex items-center justify-center gap-2 text-[11px] font-black uppercase tracking-widest">
         <span>Free Shipping on Orders ₦350,000+</span>
         <span>→</span>
       </div>
 
       {/* ── MAIN NAVBAR ── */}
       <nav
-        className={`sticky top-0 left-0 right-0 z-50 w-full bg-white transition-shadow duration-300 ${
+        className={`sticky top-0 left-0 right-0 z-50 w-full bg-white text-black transition-all duration-300 border-b border-gray-100 ${
           isScrolled ? 'shadow-sm' : ''
         }`}
       >
@@ -400,7 +400,7 @@ export function Navbar() {
         </div>
 
         {/* Row 2: Navigation Links (desktop only) */}
-        <div className="hidden md:block border-t border-b border-gray-100">
+        <div className="hidden md:block border-t border-gray-100">
           <div className="max-w-[1440px] mx-auto px-8 flex items-center justify-center gap-8 h-11">
             {NAV_ITEMS.map(item => (
               <DropdownItem key={item.label} item={item} />
@@ -447,7 +447,7 @@ export function Navbar() {
                 href={item.href}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`text-2xl font-black serif-font uppercase tracking-tighter border-b border-gray-100 py-5 ${
-                  item.sale ? 'text-[#800020]' : 'text-black'
+                  item.sale ? 'text-[#DAA520]' : 'text-black'
                 }`}
               >
                 {item.label}
@@ -466,3 +466,4 @@ export function Navbar() {
     </>
   );
 }
+

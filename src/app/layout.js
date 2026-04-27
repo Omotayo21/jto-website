@@ -2,6 +2,7 @@ import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { CartDrawer } from '@/components/cart/CartDrawer';
+import { ChatButton } from '@/components/ui/ChatButton';
 import { Toaster } from 'react-hot-toast';
 
 export const metadata = {
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
         </main>
         <Footer />
         <CartDrawer />
+        <ChatButton />
         <Toaster position="bottom-right" toastOptions={{ className: 'font-sans text-xs uppercase tracking-widest rounded-none shadow-2xl border border-gray-100' }} />
       </body>
     </html>

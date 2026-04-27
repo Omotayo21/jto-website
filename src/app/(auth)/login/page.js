@@ -43,7 +43,7 @@ export default function LoginPage() {
         </h1>
 
         {error && (
-          <p className="text-sm text-[#800020] text-center mb-6 font-medium">{error}</p>
+          <p className="text-sm text-[#DAA520] text-center mb-6 font-medium">{error}</p>
         )}
 
         <form onSubmit={handleLogin} className="space-y-0">
@@ -86,7 +86,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4 bg-black text-white rounded-full text-sm font-bold uppercase tracking-widest hover:bg-[#800020] transition-colors disabled:opacity-50"
+              className="w-full py-4 bg-black text-white rounded-full text-sm font-bold uppercase tracking-widest hover:bg-[#DAA520] transition-colors disabled:opacity-50"
             >
               {loading ? 'Signing in…' : 'Sign in'}
             </button>
@@ -96,7 +96,7 @@ export default function LoginPage() {
         {/* Register link */}
         <p className="text-center text-sm text-gray-400 mt-8">
           New customer?{' '}
-          <Link href="/register" className="text-black font-bold hover:text-[#800020] transition-colors underline underline-offset-2">
+          <Link href="/register" className="text-black font-bold hover:text-[#DAA520] transition-colors underline underline-offset-2">
             Create account
           </Link>
         </p>
@@ -104,3 +104,4 @@ export default function LoginPage() {
     </div>
   );
 }
+

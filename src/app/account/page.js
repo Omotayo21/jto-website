@@ -23,7 +23,7 @@ export default function AccountPage() {
   const [loadingFavorites, setLoadingFavorites] = useState(false);
 
   useEffect(() => {
-    if (user && activeTab === 'Orders') {
+    if (user && (activeTab === 'Orders' || activeTab === 'Overview')) {
       fetchOrders();
     }
     if (user && (activeTab === 'Favorites' || activeTab === 'Overview')) {
@@ -48,6 +48,7 @@ export default function AccountPage() {
   };
 
   const fetchOrders = async () => {
+    if (orders.length > 0) return;
     setLoadingOrders(true);
     try {
       const res = await fetch(`/api/orders?userId=${user._id || user.id}`);
@@ -85,7 +86,7 @@ export default function AccountPage() {
         </p>
         <Link
           href="/login"
-          className="px-10 py-4 bg-black text-white rounded-none text-xs font-black uppercase tracking-widest hover:bg-[#800020] transition-colors"
+          className="px-10 py-4 bg-black text-white rounded-none text-xs font-black uppercase tracking-widest hover:bg-[#DAA520] transition-colors"
         >
           Sign In
         </Link>
@@ -109,7 +110,7 @@ export default function AccountPage() {
         <div className="max-w-[1440px] mx-auto px-8 md:px-12 py-16 relative z-10">
           <div className="flex flex-col md:flex-row items-start md:items-end gap-8">
             {/* Avatar */}
-            <div className="w-24 h-24 bg-[#800020] flex items-center justify-center shrink-0 border-4 border-white/10 rounded-none">
+            <div className="w-24 h-24 bg-[#DAA520] flex items-center justify-center shrink-0 border-4 border-white/10 rounded-none">
               <span className="text-2xl font-black text-white serif-font">{initials}</span>
             </div>
 
@@ -201,7 +202,7 @@ export default function AccountPage() {
                 <p className="text-xs uppercase tracking-widest text-gray-400 mb-8 font-black">Your order history will appear here</p>
                 <Link
                   href="/products"
-                  className="inline-block px-10 py-4 bg-black text-white rounded-none text-xs font-black uppercase tracking-widest hover:bg-[#800020] transition-colors"
+                  className="inline-block px-10 py-4 bg-black text-white rounded-none text-xs font-black uppercase tracking-widest hover:bg-[#DAA520] transition-colors"
                 >
                   Shop the Collection
                 </Link>
@@ -278,7 +279,7 @@ export default function AccountPage() {
                 <p className="text-xs uppercase tracking-widest text-gray-400 mb-8 font-black">Save pieces you love to revisit later</p>
                 <Link
                   href="/products"
-                  className="inline-block px-10 py-4 bg-black text-white rounded-none text-xs font-black uppercase tracking-widest hover:bg-[#800020] transition-colors"
+                  className="inline-block px-10 py-4 bg-black text-white rounded-none text-xs font-black uppercase tracking-widest hover:bg-[#DAA520] transition-colors"
                 >
                   Explore the Collection
                 </Link>
@@ -296,3 +297,4 @@ export default function AccountPage() {
     </div>
   );
 }
+

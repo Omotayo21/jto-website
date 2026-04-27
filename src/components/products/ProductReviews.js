@@ -93,7 +93,7 @@ export function ProductReviews({ productId }) {
                         key={star}
                         type="button"
                         onClick={() => setNewReview({ ...newReview, rating: star })}
-                        className={`transition-all hover:scale-110 ${newReview.rating >= star ? 'text-[#800020]' : 'text-gray-200'}`}
+                        className={`transition-all hover:scale-110 ${newReview.rating >= star ? 'text-[#DAA520]' : 'text-gray-200'}`}
                       >
                         <Star size={32} fill={newReview.rating >= star ? 'currentColor' : 'none'} />
                       </button>
@@ -111,7 +111,7 @@ export function ProductReviews({ productId }) {
                     className="w-full bg-white border-gray-200 p-4 text-sm font-medium focus:ring-1 focus:ring-black transition-all outline-none border"
                   />
                 </div>
-                <Button disabled={isSubmitting} type="submit" className="w-full h-14 rounded-none bg-black hover:bg-[#800020] font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3">
+                <Button disabled={isSubmitting} type="submit" className="w-full h-14 rounded-none bg-black hover:bg-[#DAA520] font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3">
                   {isSubmitting ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <>Submit Review</>}
                 </Button>
                 <p className="text-[10px] text-center text-gray-400 font-bold uppercase tracking-wider">Only verified purchasers can submit</p>
@@ -120,7 +120,7 @@ export function ProductReviews({ productId }) {
           ) : (
             <div className="bg-gray-50 p-8 border border-gray-200 text-center">
               <p className="text-gray-500 font-bold mb-4">Log in to leave a review</p>
-              <Button onClick={() => window.location.href = '/login'} className="bg-black hover:bg-[#800020] rounded-none">Sign In</Button>
+              <Button onClick={() => window.location.href = '/login'} className="bg-black hover:bg-[#DAA520] rounded-none">Sign In</Button>
             </div>
           )}
         </div>
@@ -145,7 +145,7 @@ export function ProductReviews({ productId }) {
                       <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{new Date(review.createdAt).toLocaleDateString()}</p>
                     </div>
                   </div>
-                  <div className="flex gap-1 text-[#800020]">
+                  <div className="flex gap-1 text-[#DAA520]">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <Star key={star} size={14} fill={review.rating >= star ? 'currentColor' : 'none'} />
                     ))}
@@ -175,3 +175,4 @@ function CheckCircle2({ size, className }) {
      </svg>
    );
 }
+

@@ -44,7 +44,7 @@ export default function RegisterPage() {
         </p>
 
         {error && (
-          <p className="text-sm text-[#800020] text-center mb-6 font-medium">{error}</p>
+          <p className="text-sm text-[#DAA520] text-center mb-6 font-medium">{error}</p>
         )}
 
         <form onSubmit={handleRegister} className="space-y-0">
@@ -89,7 +89,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4 bg-black text-white rounded-full text-sm font-bold uppercase tracking-widest hover:bg-[#800020] transition-colors disabled:opacity-50"
+              className="w-full py-4 bg-black text-white rounded-full text-sm font-bold uppercase tracking-widest hover:bg-[#DAA520] transition-colors disabled:opacity-50"
             >
               {loading ? 'Creating account…' : 'Create Account'}
             </button>
@@ -98,7 +98,7 @@ export default function RegisterPage() {
 
         <p className="text-center text-sm text-gray-400 mt-8">
           Already have an account?{' '}
-          <Link href="/login" className="text-black font-bold hover:text-[#800020] transition-colors underline underline-offset-2">
+          <Link href="/login" className="text-black font-bold hover:text-[#DAA520] transition-colors underline underline-offset-2">
             Sign in
           </Link>
         </p>
@@ -106,3 +106,4 @@ export default function RegisterPage() {
     </div>
   );
 }
+

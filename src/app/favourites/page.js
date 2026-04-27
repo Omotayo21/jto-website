@@ -52,7 +52,7 @@ export default function FavouritesPage() {
         </div>
         <h1 className="text-3xl serif-font italic text-gray-900 tracking-tight mb-4">Login Required</h1>
         <p className="text-gray-500 font-bold mb-8 max-w-sm leading-relaxed">Please sign in to view and manage your favorited items across all your devices.</p>
-        <Link href="/login" className="bg-black text-white h-14 px-10 rounded-2xl flex items-center justify-center font-black uppercase tracking-widest text-[10px] shadow-xl shadow-gray-200 transition-all hover:bg-[#800020] hover:-translate-y-1 active:scale-95">
+        <Link href="/login" className="bg-black text-white h-14 px-10 rounded-2xl flex items-center justify-center font-black uppercase tracking-widest text-[10px] shadow-xl shadow-gray-200 transition-all hover:bg-[#DAA520] hover:-translate-y-1 active:scale-95">
            Sign In Now
         </Link>
       </div>
@@ -63,7 +63,7 @@ export default function FavouritesPage() {
     <div className="animate-in fade-in duration-1000">
       <div className="mb-12">
         <h1 className="text-4xl serif-font italic text-gray-900 tracking-tight flex items-center gap-4">
-          <Heart className="text-[#800020] fill-current" size={32} /> Your Favourites
+          <Heart className="text-[#DAA520] fill-current" size={32} /> Your Favourites
         </h1>
         <p className="text-gray-500 font-bold mt-2">All the items you&apos;ve fallen in love with</p>
       </div>
@@ -75,7 +75,7 @@ export default function FavouritesPage() {
           </div>
           <h2 className="text-2xl serif-font italic text-gray-900 mb-4 tracking-tight">Your collection is empty</h2>
           <p className="text-gray-500 font-bold mb-10 leading-relaxed">Start exploring our premium collection and save the items you like for later.</p>
-          <Link href="/products" className="bg-black text-white h-14 px-10 rounded-2xl flex items-center justify-center font-black uppercase tracking-widest text-[10px] shadow-xl shadow-gray-200 transition-all hover:bg-[#800020] hover:-translate-y-1 active:scale-95">
+          <Link href="/products" className="bg-black text-white h-14 px-10 rounded-2xl flex items-center justify-center font-black uppercase tracking-widest text-[10px] shadow-xl shadow-gray-200 transition-all hover:bg-[#DAA520] hover:-translate-y-1 active:scale-95">
              <ShoppingBag className="mr-2" size={16} /> Explore Collection
           </Link>
         </div>
@@ -89,3 +89,4 @@ export default function FavouritesPage() {
     </div>
   );
 }
+
