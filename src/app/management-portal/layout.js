@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { Package, ShoppingBag, Users, Tag, LayoutDashboard, Truck, Menu, X, ExternalLink, ShieldAlert } from 'lucide-react';
+import { Package, ShoppingBag, Users, Tag, LayoutDashboard, Truck, Menu, X, ExternalLink, ShieldAlert, Mail } from 'lucide-react';
 import SecretGate from '@/components/admin/SecretGate';
 import { usePathname } from 'next/navigation';
 import { logoutAdmin } from '@/lib/actions';
@@ -17,6 +17,7 @@ export default function AdminLayout({ children }) {
     { href: '/management-portal/shipping', label: 'Shipping', icon: Truck },
     { href: '/management-portal/users', label: 'Customers', icon: Users },
     { href: '/management-portal/coupons', label: 'Coupons', icon: Tag },
+    { href: '/management-portal/newsletter', label: 'Newsletter', icon: Mail },
   ];
 
   return (

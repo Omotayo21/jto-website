@@ -1,4 +1,11 @@
 import mongoose from 'mongoose';
+import '@/models/User';
+import '@/models/Product';
+import '@/models/Category';
+import '@/models/Order';
+import '@/models/Review';
+import '@/models/Cart';
+import '@/models/Newsletter';
 
 // Use a cached connection to avoid creating new connections on every API call in Next.js
 let cached = global.mongoose || { conn: null, promise: null }

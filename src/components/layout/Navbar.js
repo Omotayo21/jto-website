@@ -445,6 +445,7 @@ export function Navbar() {
               <Link
                 key={item.label}
                 href={item.href}
+                onClick={() => setIsMobileMenuOpen(false)}
                 className={`text-2xl font-black serif-font uppercase tracking-tighter border-b border-gray-100 py-5 ${
                   item.sale ? 'text-[#800020]' : 'text-black'
                 }`}
