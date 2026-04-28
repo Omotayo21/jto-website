@@ -130,9 +130,16 @@ export function ProductDetailClient({ product }) {
         <h1 className="text-3xl serif-font italic leading-snug text-black">{product.name}</h1>
 
         {/* Price */}
-        <p className="text-lg font-medium text-black">
-          ₦{product.price.toLocaleString()}
-        </p>
+        <div className="flex items-baseline gap-3">
+          <p className="text-xl font-medium text-black">
+            ₦{product.price.toLocaleString()}
+          </p>
+          {product.priceUSD && (
+            <p className="text-sm text-gray-400 font-medium">
+              / ${product.priceUSD.toLocaleString()}
+            </p>
+          )}
+        </div>
 
         {/* Colors */}
         {product.variants?.colors?.length > 0 && (

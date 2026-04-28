@@ -62,7 +62,7 @@ export default async function Home() {
       <section className="bg-[#DAA520] text-white section-padding">
         <div className="max-w-3xl mx-auto text-center space-y-6">
           <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/50">About Us</span>
-          <h3 className="text-3xl md:text-4xl serif-font italic leading-snug">
+          <h3 className="text-3xl md:text-4xl poppins-font font-black uppercase tracking-tighter leading-snug">
             JTOtheLabel
           </h3>
           <p className="text-sm md:text-base font-medium leading-relaxed text-white/80">

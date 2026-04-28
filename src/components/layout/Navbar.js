@@ -73,32 +73,9 @@ const SALE_COLLECTIONS = [
 
 const NAV_ITEMS = [
   { label: 'New In', href: '/products?category=new' },
-  { label: 'Resort', href: '/products?category=resort' },
   { label: 'Shop', href: '/products', megaMenu: 'shop' },
   { label: 'Kids', href: '/products?category=kids' },
   { label: 'Gift Card', href: '#' },
-  {
-    label: 'Runway',
-    href: '#',
-    dropdown: [
-      { label: 'LBFW', href: '#' },
-      { label: 'LFDW SS18', href: '#' },
-      { label: 'S/S 23', href: '#' },
-      { label: 'S/S 24', href: '#' },
-    ],
-  },
-  {
-    label: 'Edits',
-    href: '#',
-    dropdown: [
-      { label: 'Audacious Blacks', href: '/products?category=black' },
-      { label: 'Best Sellers', href: '/products?category=bestsellers' },
-      { label: 'Resort Edit', href: '/products?category=resort' },
-      { label: 'Tweed Edit', href: '/products?category=tweed' },
-      { label: 'Wedding Guest Edit', href: '/products?category=wedding' },
-      { label: 'Work Wear Edit', href: '/products?category=workwear' },
-    ],
-  },
   { label: 'SALE', href: '/products?category=sale', sale: true, megaMenu: 'sale' },
 ];
 
@@ -333,30 +310,29 @@ export function Navbar() {
 
       {/* ── MAIN NAVBAR ── */}
       <nav
-        className={`sticky top-0 left-0 right-0 z-50 w-full bg-white text-black transition-all duration-300 border-b border-gray-100 ${
-          isScrolled ? 'shadow-sm' : ''
+        className={`sticky top-0 left-0 right-0 z-50 w-full bg-[#FFDA03] text-black transition-all duration-300 border-b border-black/10 ${
+          isScrolled ? 'shadow-md' : ''
         }`}
       >
         {/* Row 1: Search / Logo / Icons */}
         <div className="max-w-[1440px] mx-auto px-8 flex items-center justify-between h-16">
-          {/* Left — Search */}
-          <button onClick={() => setIsSearchOpen(true)} className="p-1 hover:opacity-60 transition-opacity" aria-label="Search">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.35-4.35" />
-            </svg>
-          </button>
-
-          {/* Center — Brand Logo */}
+          {/* Left — Brand Logo */}
           <Link
             href="/"
-            className="absolute left-1/2 -translate-x-1/2 text-2xl md:text-3xl font-black tracking-tighter serif-font uppercase select-none"
+            className="text-2xl md:text-3xl font-black tracking-tighter poppins-font uppercase select-none"
           >
             JTOtheLabel
           </Link>
 
-          {/* Right — Account + Cart */}
+          {/* Right — Search + Account + Cart */}
           <div className="flex items-center gap-5">
+            <button onClick={() => setIsSearchOpen(true)} className="p-1 hover:opacity-60 transition-opacity" aria-label="Search">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+            </button>
+
             <Link
               href={user ? '/account' : '/login'}
               className="hidden md:block hover:opacity-60 transition-opacity"
@@ -400,7 +376,7 @@ export function Navbar() {
         </div>
 
         {/* Row 2: Navigation Links (desktop only) */}
-        <div className="hidden md:block border-t border-gray-100">
+        <div className="hidden md:block border-t border-black/10">
           <div className="max-w-[1440px] mx-auto px-8 flex items-center justify-center gap-8 h-11">
             {NAV_ITEMS.map(item => (
               <DropdownItem key={item.label} item={item} />
@@ -417,7 +393,7 @@ export function Navbar() {
       >
         <div className="flex flex-col h-full p-8 overflow-y-auto">
           <div className="flex justify-between items-center mb-12">
-            <span className="text-xl font-black serif-font uppercase tracking-tighter">JTOtheLabel</span>
+            <span className="text-xl font-black poppins-font uppercase tracking-tighter">JTOtheLabel</span>
             <div className="flex items-center gap-3">
               {/* Profile icon in mobile sidebar */}
               <Link
@@ -446,8 +422,8 @@ export function Navbar() {
                 key={item.label}
                 href={item.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-2xl font-black serif-font uppercase tracking-tighter border-b border-gray-100 py-5 ${
-                  item.sale ? 'text-[#DAA520]' : 'text-black'
+                className={`text-2xl font-black poppins-font uppercase tracking-tighter border-b border-gray-100 py-5 ${
+                  item.sale ? 'text-black' : 'text-black'
                 }`}
               >
                 {item.label}

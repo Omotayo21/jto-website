@@ -48,7 +48,12 @@ export function ProductCard({ product }) {
       </div>
       <div className="space-y-2 text-center">
         <h3 className="text-xs font-black uppercase tracking-[0.2em] text-gray-400 group-hover:text-black transition-colors">{product.name}</h3>
-        <p className="text-sm font-medium serif-font italic">{formatCurrency(product.price, product.currency)}</p>
+        <p className="text-sm font-medium serif-font italic">
+          {formatCurrency(product.price, product.currency)}
+          {product.priceUSD && (
+            <span className="ml-2 text-gray-400 font-sans not-italic text-[11px]">/ ${product.priceUSD.toLocaleString()}</span>
+          )}
+        </p>
 
         {/* Star Rating */}
         <StarRating average={product.ratings?.average || 0} count={product.ratings?.count || 0} />

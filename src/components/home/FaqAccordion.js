@@ -3,24 +3,20 @@ import { useState } from 'react';
 
 const FAQS = [
   {
-    q: 'How long does it take to receive my order?',
-    a: 'Our Lagos orders take 2-4 working days, and international orders take 7-10 working days. For express orders, please contact us at orders@jtothelabel.com to confirm.',
+    q: 'How can I cancel order?',
+    a: 'Orders can only be cancelled within 12 hours of placement. To cancel, please email orders@jtothelabel.com with your order number immediately.',
   },
   {
-    q: 'When are orders processed and what payment methods are accepted?',
-    a: 'Orders are processed within 24-48 hours of payment confirmation. We accept all major cards, bank transfers, and PayStack.',
+    q: 'How long does the return process takes?',
+    a: 'Once we receive your return, it takes 5-7 business days for our quality control team to review and process your refund or exchange.',
   },
   {
-    q: 'Are your pieces true to size?',
-    a: 'Our pieces are designed for a tailored fit. We recommend consulting our size guide on each product page before ordering.',
+    q: 'Can I exchange or return?',
+    a: 'Yes, we accept returns and exchanges on unworn items with tags intact within 14 days of delivery. Custom-made pieces are final sale.',
   },
   {
-    q: 'Does the fabric have stretch in it?',
-    a: 'It depends on the fabric composition. Each product description includes fabric details. Woven fabrics have minimal stretch while jersey blends have more give.',
-  },
-  {
-    q: 'How can I take care of my outfits?',
-    a: 'We recommend dry-cleaning or hand-washing in cold water for most pieces. Always check the care label inside your garment.',
+    q: 'How long does it take to review my order?',
+    a: 'Order verification usually takes 24-48 hours. Once approved, you will receive a confirmation email with your processing timeline.',
   },
 ];
 
