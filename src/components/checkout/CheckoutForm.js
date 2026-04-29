@@ -8,7 +8,8 @@ import { CheckCircle2, ChevronRight, Truck } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
 export function CheckoutForm() {
-  const { items } = useCartStore();
+  const items = useCartStore(state => state.items);
+  const globalCurrency = 'NGN';
   const [formData, setFormData] = useState({
     fullName: '', email: '', phone: '', address: '', city: '', state: '', country: 'Nigeria', notes: ''
   });
@@ -34,8 +35,13 @@ export function CheckoutForm() {
       });
   }, []);
 
-  const rawTotal = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-  const deliveryFee = selectedZone ? selectedZone.effectiveFee : 0;
+  const rawTotal = items.reduce((acc, item) => {
+    // Use strictly what is set for that currency
+    let price = globalCurrency === 'USD' ? (item.priceUSD || item.price) : item.price;
+    return acc + (price * item.quantity);
+  }, 0);
+
+  const deliveryFee = selectedZone ? (globalCurrency === 'USD' ? (selectedZone.feeUSD || 0) : selectedZone.effectiveFee) : 0;
   const total = Math.max(rawTotal - discountVal + deliveryFee, 0);
 
   const handleApplyCoupon = async () => {
@@ -50,8 +56,13 @@ export function CheckoutForm() {
       });
       const result = await res.json();
       if (result.success) {
-        setDiscountVal(result.data.discount);
-        toast.success(`Coupon applied! Discount: NGN ${result.data.discount.toLocaleString()}`);
+        // Adjust discount if currency is USD and coupon returns NGN
+        let discount = result.data.discount;
+        if (globalCurrency === 'USD') {
+          discount = Math.ceil(discount / 1500);
+        }
+        setDiscountVal(discount);
+        toast.success(`Coupon applied! Discount: ${formatCurrency(discount, globalCurrency)}`);
       } else {
         setError(result.error);
         setDiscountVal(0);
@@ -84,6 +95,7 @@ export function CheckoutForm() {
           },
           couponCode: discountVal > 0 ? couponCode : null,
           email: formData.email,
+          currency: useCartStore.getState().currency || 'NGN'
         })
       });
       const data = await res.json();
@@ -163,9 +175,21 @@ export function CheckoutForm() {
                  <p className="text-xs text-gray-400 mt-1 uppercase tracking-wider font-black">
                    {item.variant?.size} {item.variant?.color && `| ${item.variant.color.name}`}
                  </p>
+                 
+                 {globalCurrency === 'USD' && !item.priceUSD && (
+                   <p className="text-[9px] text-[#DAA520] font-black uppercase tracking-tighter mt-1 bg-white/5 inline-block px-1.5 py-0.5 rounded">
+                     ⚠️ USD price not set, using Naira value
+                   </p>
+                 )}
+
                  <div className="flex justify-between items-center mt-2">
                    <span className="text-xs bg-white/10 px-2 py-0.5 rounded text-gray-300">Qty: {item.quantity}</span>
-                   <span className="font-black text-white">NGN {(item.price * item.quantity).toLocaleString()}</span>
+                    <span className="font-black text-white">
+                      {formatCurrency(
+                        (globalCurrency === 'USD' ? (item.priceUSD || item.price) : item.price) * item.quantity, 
+                        globalCurrency
+                      )}
+                    </span>
                  </div>
                </div>
              </div>
@@ -186,27 +210,27 @@ export function CheckoutForm() {
                  <CheckCircle2 size={24}/>
                </div>
              ) : (
-               <Button onClick={handleApplyCoupon} disabled={validatingCoupon || !couponCode} className="h-14 px-8 rounded-xl bg-black hover:bg-[#DAA520] border border-white/20">Apply</Button>
+               <Button onClick={handleApplyCoupon} disabled={validatingCoupon || !couponCode} className="h-14 px-8 rounded-xl bg-black hover:bg-[#DAA520]  ">Apply</Button>
              )}
            </div>
 
            <div className="space-y-4 text-sm font-medium">
-             <div className="flex justify-between text-gray-400"><span>Subtotal</span><span className="text-white font-bold">NGN {rawTotal.toLocaleString()}</span></div>
+             <div className="flex justify-between text-gray-400"><span>Subtotal</span><span className="text-white font-bold">{formatCurrency(rawTotal, globalCurrency)}</span></div>
              <div className="flex justify-between text-gray-400">
                <span className="flex items-center gap-2"><Truck size={14}/> Delivery ({selectedZone?.name || 'Select Zone'})</span>
-               <span className="text-white font-bold">{selectedZone ? `NGN ${deliveryFee.toLocaleString()}` : '—'}</span>
+               <span className="text-white font-bold">{selectedZone ? formatCurrency(deliveryFee, globalCurrency) : '—'}</span>
              </div>
-             {discountVal > 0 && <div className="flex justify-between text-emerald-400"><span>Discount Applied</span><span>-NGN {discountVal.toLocaleString()}</span></div>}
+             {discountVal > 0 && <div className="flex justify-between text-emerald-400"><span>Discount Applied</span><span>-{formatCurrency(discountVal, globalCurrency)}</span></div>}
              
              <div className="flex justify-between text-3xl font-black text-white pt-6 border-t border-white/10 serif-font italic">
-               <span>Total</span><span>NGN {total.toLocaleString()}</span>
+               <span>Total</span><span>{formatCurrency(total, globalCurrency)}</span>
              </div>
            </div>
 
            {error && <p className="text-rose-400 text-xs font-bold bg-rose-500/10 p-4 rounded-xl border border-rose-500/20">{error}</p>}
            
            <Button type="submit" form="checkout-form" disabled={loading || items.length === 0} className="w-full h-16 text-xl font-black rounded-2xl bg-black hover:bg-[#DAA520] shadow-xl shadow-black/20 transition-all hover:-translate-y-1 border border-white/20">
-             {loading ? 'INITIALISING...' : `CONFIRM & PAY NGN ${total.toLocaleString()}`}
+             {loading ? 'INITIALISING...' : `CONFIRM & PAY ${formatCurrency(total, globalCurrency)}`}
            </Button>
 
            <p className="text-[10px] text-center text-gray-500 font-bold uppercase tracking-widest">

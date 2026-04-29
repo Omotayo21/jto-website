@@ -1,7 +1,9 @@
+"use client"
 import Link from 'next/link';
 import { formatCurrency } from '@/lib/utils';
+import { useCartStore } from '@/store/cartStore';
 
-function StarRating({ average = 0, count = 0 }) {
+function StarRating({ average = 0, count = 0, light = false }) {
   return (
     <div className="flex items-center gap-1.5 justify-center">
       <div className="flex gap-0.5">
@@ -14,23 +16,27 @@ function StarRating({ average = 0, count = 0 }) {
             fill={average >= star ? 'currentColor' : 'none'}
             stroke="currentColor"
             strokeWidth="1.5"
-            className={average >= star ? 'text-amber-400' : 'text-gray-200'}
+            className={average >= star ? 'text-amber-400' : (light ? 'text-white/20' : 'text-gray-200')}
           >
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
           </svg>
         ))}
       </div>
       {count > 0 && (
-        <span className="text-[9px] text-gray-400 font-medium">({count})</span>
+        <span className={`text-[9px] font-medium ${light ? 'text-white/50' : 'text-gray-400'}`}>({count})</span>
       )}
     </div>
   );
 }
 
-export function ProductCard({ product }) {
+export function ProductCard({ product, light = false }) {
+  const { currency: globalCurrency } = useCartStore();
   const thumbnail = product.media?.[0]?.url || product.images?.[0]?.url || '/placeholder.png';
   const outOfStock = Object.values(product.inventory || {}).every(qty => qty === 0);
   const colors = product.variants?.colors || [];
+
+  const displayPrice = globalCurrency === 'USD' && product.priceUSD ? product.priceUSD : product.price;
+  const displayCurrency = globalCurrency === 'USD' && product.priceUSD ? 'USD' : 'NGN';
 
   return (
     <Link href={`/products/${product.slug}`} className="group block mb-12">
@@ -47,16 +53,17 @@ export function ProductCard({ product }) {
         )}
       </div>
       <div className="space-y-2 text-center">
-        <h3 className="text-xs font-black uppercase tracking-[0.2em] text-gray-400 group-hover:text-black transition-colors">{product.name}</h3>
-        <p className="text-sm font-medium serif-font italic">
-          {formatCurrency(product.price, product.currency)}
-          {product.priceUSD && (
-            <span className="ml-2 text-gray-400 font-sans not-italic text-[11px]">/ ${product.priceUSD.toLocaleString()}</span>
-          )}
+        <h3 className={`text-[10px] font-black uppercase tracking-[0.2em] transition-colors ${
+          light ? 'text-white/60 group-hover:text-white' : 'text-gray-400 group-hover:text-black'
+        }`}>
+          {product.name}
+        </h3>
+        <p className={`text-sm font-medium serif-font italic ${light ? 'text-white' : 'text-black'}`}>
+          {formatCurrency(displayPrice, displayCurrency)}
         </p>
 
         {/* Star Rating */}
-        <StarRating average={product.ratings?.average || 0} count={product.ratings?.count || 0} />
+        <StarRating average={product.ratings?.average || 0} count={product.ratings?.count || 0} light={light} />
 
         {/* Color Swatches */}
         {colors.length > 0 && (
@@ -64,7 +71,7 @@ export function ProductCard({ product }) {
             {colors.map(c => (
               <span
                 key={c.name}
-                className="w-3.5 h-3.5 rounded-full border border-gray-200"
+                className={`w-3.5 h-3.5 rounded-full border ${light ? 'border-white/20' : 'border-gray-200'}`}
                 style={{ backgroundColor: c.hex }}
                 title={c.name}
               />

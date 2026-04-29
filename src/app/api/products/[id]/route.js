@@ -45,6 +45,25 @@ export async function PUT(request, { params }) {
   }
 }
 
+export async function PATCH(request, { params }) {
+  try {
+    await connectDB();
+    const { id } = params;
+    const body = await request.json();
+
+    const product = await Product.findByIdAndUpdate(id, { $set: body }, { new: true, runValidators: true });
+
+    if (!product) {
+      return NextResponse.json({ success: false, error: 'Product not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ success: true, data: product }, { status: 200 });
+  } catch (error) {
+    console.error('Product PATCH Error:', error);
+    return NextResponse.json({ success: false, error: 'Failed to update product' }, { status: 500 });
+  }
+}
+
 export async function DELETE(request, { params }) {
   try {
     await connectDB();

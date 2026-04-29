@@ -3,8 +3,11 @@ import toast from 'react-hot-toast';
 
 export const useCartStore = create((set, get) => ({
   items: [],
+  currency: 'NGN',
   isOpen: false,
   isLoading: false,
+
+  setCurrency: (currency) => set({ currency }),
 
   // Sync with Backend
   syncWithBackend: async (newItems) => {

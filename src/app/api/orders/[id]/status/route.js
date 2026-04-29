@@ -60,6 +60,21 @@ export async function PATCH(request, { params }) {
           </div>
         `
       });
+    } else if (status === 'processing') {
+      await sendEmail({
+        to: order.delivery?.email || order.userEmail,
+        subject: `Order Confirmation — #${order.orderNumber}`,
+        htmlContent: `
+          <div style="font-family: 'Inter', sans-serif; max-width: 600px; margin: auto; padding: 40px; border: 1px solid #f0f0f0; border-radius: 24px;">
+            <h1 style="color: #111827; font-size: 28px; font-weight: 900; margin: 0; letter-spacing: -0.02em; text-align: center;">Order Confirmed!</h1>
+            <p style="color: #6B7280; font-size: 16px; margin-top: 8px; text-align: center;">We've received your order #${order.orderNumber} and it's now being processed.</p>
+            <div style="margin-top: 32px; padding: 24px; background: #F9FAF9; border-radius: 16px;">
+               <p style="margin: 0; color: #374151; font-size: 14px; line-height: 1.6;">Our team is currently selecting and preparing your items with care. You will receive another notification once your package has been shipped.</p>
+            </div>
+            <p style="color: #9CA3AF; font-size: 11px; text-align: center; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; margin-top: 40px;">JTOtheLabel Premium Experience</p>
+          </div>
+        `
+      });
     } else if (status === 'delivered') {
       await sendEmail({
         to: order.delivery?.email || order.userEmail,

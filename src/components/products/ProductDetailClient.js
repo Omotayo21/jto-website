@@ -4,6 +4,7 @@ import { useCartStore } from '@/store/cartStore';
 import { useAuthStore } from '@/store/authStore';
 import { FavouriteButton } from '@/components/products/FavouriteButton';
 import { toast } from 'react-hot-toast';
+import { formatCurrency } from '@/lib/utils';
 
 function AccordionItem({ title, children }) {
   const [open, setOpen] = useState(false);
@@ -41,6 +42,9 @@ export function ProductDetailClient({ product }) {
   const { addItem, openCart } = useCartStore();
   const { user } = useAuthStore();
 
+  const displayPrice = product.price;
+  const displayCurrency = 'NGN';
+
   const inventoryTotal = product.inventory?.total || 0;
   const isOutOfStock = inventoryTotal <= 0;
   const activeMedia = media[activeIdx];
@@ -53,7 +57,9 @@ export function ProductDetailClient({ product }) {
       await addItem({
         productId: product._id,
         name: product.name,
-        price: product.price,
+        price: displayPrice,
+        priceUSD: product.priceUSD, // Store both to allow switching in cart if needed
+        currency: displayCurrency,
         image: media[0]?.url || '/placeholder.png',
         variant: { size: selectedSize, color: selectedColor },
         quantity,
@@ -130,15 +136,12 @@ export function ProductDetailClient({ product }) {
         <h1 className="text-3xl serif-font italic leading-snug text-black">{product.name}</h1>
 
         {/* Price */}
-        <div className="flex items-baseline gap-3">
-          <p className="text-xl font-medium text-black">
-            ₦{product.price.toLocaleString()}
-          </p>
-          {product.priceUSD && (
-            <p className="text-sm text-gray-400 font-medium">
-              / ${product.priceUSD.toLocaleString()}
+        <div className="flex items-center justify-between">
+          <div className="flex items-baseline gap-3">
+            <p className="text-2xl font-black text-black">
+              {formatCurrency(displayPrice, displayCurrency)}
             </p>
-          )}
+          </div>
         </div>
 
         {/* Colors */}

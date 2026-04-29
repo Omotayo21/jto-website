@@ -6,8 +6,15 @@ export function cn(...inputs) {
 }
 
 export function formatCurrency(amount, currency = 'NGN') {
+  if (currency === 'USD') {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(amount);
+  }
   return new Intl.NumberFormat('en-NG', {
     style: 'currency',
-    currency,
-  }).format(amount);
+    currency: 'NGN',
+    minimumFractionDigits: 0,
+  }).format(amount).replace('NGN', '₦');
 }

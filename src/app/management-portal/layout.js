@@ -1,24 +1,49 @@
 'use client';
-import { useState } from 'react';
+import { Package, ShoppingBag, Users, Tag, LayoutDashboard, Truck, Menu, X, ExternalLink, ShieldAlert, Mail, BarChart3, Boxes } from 'lucide-react';
 import Link from 'next/link';
-import { Package, ShoppingBag, Users, Tag, LayoutDashboard, Truck, Menu, X, ExternalLink, ShieldAlert, Mail } from 'lucide-react';
 import SecretGate from '@/components/admin/SecretGate';
 import { usePathname } from 'next/navigation';
 import { logoutAdmin } from '@/lib/actions';
+import { useEffect, useState } from 'react';
+
+const allLinks = [
+  { href: '/management-portal', label: 'Dashboard', icon: LayoutDashboard, roles: ['admin', 'finance'] },
+  { href: '/management-portal/products', label: 'Products', icon: Package, roles: ['admin', 'content'] },
+  { href: '/management-portal/inventory', label: 'Inventory', icon: Boxes, roles: ['admin', 'stock'] },
+  { href: '/management-portal/orders', label: 'Orders', icon: ShoppingBag, roles: ['admin', 'finance'] },
+  { href: '/management-portal/financials', label: 'Financials', icon: BarChart3, roles: ['admin', 'finance'] },
+  { href: '/management-portal/shipping', label: 'Shipping', icon: Truck, roles: ['admin'] },
+  { href: '/management-portal/users', label: 'Customers', icon: Users, roles: ['admin'] },
+  { href: '/management-portal/coupons', label: 'Coupons', icon: Tag, roles: ['admin'] },
+  { href: '/management-portal/newsletter', label: 'Newsletter', icon: Mail, roles: ['admin'] },
+];
 
 export default function AdminLayout({ children }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [role, setRole] = useState(null);
   const pathname = usePathname();
 
-  const navLinks = [
-    { href: '/management-portal', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/management-portal/products', label: 'Products', icon: Package },
-    { href: '/management-portal/orders', label: 'Orders', icon: ShoppingBag },
-    { href: '/management-portal/shipping', label: 'Shipping', icon: Truck },
-    { href: '/management-portal/users', label: 'Customers', icon: Users },
-    { href: '/management-portal/coupons', label: 'Coupons', icon: Tag },
-    { href: '/management-portal/newsletter', label: 'Newsletter', icon: Mail },
-  ];
+  useEffect(() => {
+    const currentRole = localStorage.getItem('admin_gate_role');
+    setRole(currentRole || 'admin');
+
+    if (currentRole) {
+      const currentLink = allLinks.find(link => pathname === link.href);
+      // If on root dashboard but role isn't allowed (like stock/content), redirect
+      // OR if on an unauthorized page, redirect
+      const isDashboard = pathname === '/management-portal';
+      const isAuthorized = currentLink?.roles.includes(currentRole);
+
+      if ((isDashboard && !isAuthorized) || (currentLink && !isAuthorized)) {
+        const firstAllowed = allLinks.find(link => link.roles.includes(currentRole));
+        if (firstAllowed && pathname !== firstAllowed.href) {
+          window.location.href = firstAllowed.href;
+        }
+      }
+    }
+  }, [pathname]);
+
+  const navLinks = allLinks.filter(link => link.roles.includes(role));
 
   return (
     <SecretGate>

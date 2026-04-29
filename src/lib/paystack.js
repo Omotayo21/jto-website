@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-export const initializePayment = async (email, amountInKobo, reference, metadata) => {
+export const initializePayment = async (email, amountInKobo, reference, metadata, currency = 'NGN') => {
   const secret = process.env.PAYSTACK_SECRET_KEY;
   const response = await fetch('https://api.paystack.co/transaction/initialize', {
     method: 'POST',
@@ -13,6 +13,7 @@ export const initializePayment = async (email, amountInKobo, reference, metadata
       amount: amountInKobo,
       reference,
       metadata,
+      currency,
       callback_url: `${process.env.NEXT_PUBLIC_APP_URL}/api/payment/verify`
     })
   });

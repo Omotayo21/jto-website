@@ -27,9 +27,11 @@ export default function SecretGate({ children }) {
         try {
           const res = await verifyAdminPasskey(saved);
           if (res.success) {
+            localStorage.setItem('admin_gate_role', res.role);
             setIsAuthorized(true);
           } else {
             localStorage.removeItem('admin_gate_key');
+            localStorage.removeItem('admin_gate_role');
           }
         } catch (err) {
           console.error('Initial verification failed:', err);
@@ -50,6 +52,7 @@ export default function SecretGate({ children }) {
       const res = await verifyAdminPasskey(passkey);
       if (res.success) {
         localStorage.setItem('admin_gate_key', passkey);
+        localStorage.setItem('admin_gate_role', res.role);
         setIsAuthorized(true);
       } else {
         setError(res.error || 'Invalid Administrative Passkey');

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Newsletter from '@/models/Newsletter';
+import { rateLimit } from '@/lib/rate-limit';
 
 export async function GET() {
   try {
@@ -15,6 +16,13 @@ export async function GET() {
 
 export async function POST(request) {
   try {
+    const ip = request.headers.get('x-forwarded-for') || 'anonymous';
+    const limitResult = rateLimit(`news-${ip}`, 2, 60 * 60 * 1000); // 2 tries per hour
+
+    if (!limitResult.success) {
+      return NextResponse.json({ success: false, error: 'Too many subscription attempts. Please try again later.' }, { status: 429 });
+    }
+
     await connectDB();
     const { email } = await request.json();
 

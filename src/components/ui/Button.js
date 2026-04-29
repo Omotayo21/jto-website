@@ -2,9 +2,9 @@ import { cn } from "@/lib/utils"
 
 export function Button({ className, variant = 'primary', size = 'default', children, ...props }) {
   const variants = {
-    primary: "bg-black text-white hover:bg-[#DAA520] shadow-lg shadow-gray-200 border border-transparent",
+    primary: "bg-black text-white hover:bg-[#DAA520] border border-transparent",
     secondary: "bg-white text-gray-800 border border-gray-200 hover:bg-gray-50 shadow-sm",
-    danger: "bg-rose-500 text-white hover:bg-rose-600 shadow-lg shadow-rose-200 border border-transparent",
+    danger: "bg-rose-500 text-white hover:bg-rose-600 border border-transparent",
     ghost: "bg-transparent text-gray-700 hover:bg-gray-100",
   }
   const sizes = {

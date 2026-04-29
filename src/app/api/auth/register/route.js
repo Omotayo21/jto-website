@@ -4,9 +4,17 @@ import User from '@/models/User';
 import { hashPassword, signToken } from '@/lib/auth';
 import validator from 'validator';
 import { sendEmail } from '@/lib/brevo';
+import { rateLimit } from '@/lib/rate-limit';
 
 export async function POST(req) {
   try {
+    const ip = req.headers.get('x-forwarded-for') || 'anonymous';
+    const limitResult = rateLimit(`reg-${ip}`, 3, 10 * 60 * 1000); // 3 registrations per 10 mins
+
+    if (!limitResult.success) {
+      return NextResponse.json({ success: false, error: 'Too many registrations from this IP. Please wait 10 minutes.' }, { status: 429 });
+    }
+
     const { name, email, password } = await req.json();
 
     // 1. Validation

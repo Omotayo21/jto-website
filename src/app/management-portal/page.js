@@ -21,15 +21,23 @@ export default async function AdminDashboard() {
       AbandonedCart.countDocuments({ converted: false })
     ]);
     
-    const revenue = await Order.aggregate([
+    const revenueStats = await Order.aggregate([
       { $match: { 'payment.status': 'success' } },
-      { $group: { _id: null, total: { $sum: '$total' } } }
+      { $group: { _id: '$currency', total: { $sum: '$total' } } }
     ]);
+
+    let ngnRevenue = 0;
+    let usdRevenue = 0;
+    revenueStats.forEach(res => {
+      if (res._id === 'USD') usdRevenue = res.total;
+      else ngnRevenue = res.total;
+    });
 
     const pendingCount = await Order.countDocuments({ status: { $in: ['pending', 'processing'] } });
 
     stats = {
-      totalRevenue: revenue[0]?.total || 0,
+      ngnRevenue,
+      usdRevenue,
       pendingOrders: pendingCount,
       abandonedCount,
       totalUsers: userCount
@@ -41,10 +49,10 @@ export default async function AdminDashboard() {
   }
 
   const statCards = [
-    { label: 'Total Revenue', value: formatCurrency(stats.totalRevenue), icon: TrendingUp, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+    { label: 'NGN Revenue', value: formatCurrency(stats.ngnRevenue, 'NGN'), icon: TrendingUp, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+    { label: 'USD Revenue', value: formatCurrency(stats.usdRevenue, 'USD'), icon: TrendingUp, color: 'text-amber-600', bg: 'bg-amber-50' },
     { label: 'Pending Orders', value: stats.pendingOrders, icon: ShoppingBag, color: 'text-black', bg: 'bg-gray-100' },
-    { label: 'Abandoned Carts', value: stats.abandonedCount, icon: MousePointer2, color: 'text-rose-600', bg: 'bg-rose-50' },
-    { label: 'Total Users', value: stats.totalUsers, icon: Users, color: 'text-amber-600', bg: 'bg-amber-50' }
+    { label: 'Abandoned Carts', value: stats.abandonedCount, icon: MousePointer2, color: 'text-rose-600', bg: 'bg-rose-50' }
   ];
 
   return (
@@ -64,7 +72,7 @@ export default async function AdminDashboard() {
         {statCards.map((stat, i) => (
           <div key={i} className="bg-white p-8 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-50 flex flex-col gap-6 group hover:-translate-y-1 transition-all duration-300">
              <div className={`${stat.bg} w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110`}>
-                <stat.icon className={`${stat.color}`} size={24} />
+                {stat.label.includes('NGN') ? <span className={`font-black text-xl ${stat.color}`}>₦</span> : <stat.icon className={`${stat.color}`} size={24} />}
              </div>
              <div>
                 <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">{stat.label}</p>
@@ -97,7 +105,7 @@ export default async function AdminDashboard() {
                   <tr key={i} className="border-b border-gray-50/50 hover:bg-gray-50/30 transition-colors group">
                     <td className="px-8 py-6 font-black text-gray-900 group-hover:text-black transition-colors text-sm whitespace-nowrap">{order.orderNumber}</td>
                     <td className="px-8 py-6 text-gray-400 font-bold text-sm truncate max-w-[150px]">{order.userEmail}</td>
-                    <td className="px-8 py-6 font-black text-gray-900 text-sm whitespace-nowrap">{formatCurrency(order.total)}</td>
+                    <td className="px-8 py-6 font-black text-gray-900 text-sm whitespace-nowrap">{formatCurrency(order.total, order.currency)}</td>
                     <td className="px-8 py-6 text-right">
                        <span className={`text-[9px] font-black uppercase px-3 py-1 rounded-full whitespace-nowrap ${
                          order.status === 'delivered' ? 'bg-emerald-50 text-emerald-600' : 'bg-gray-100 text-black'

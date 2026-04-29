@@ -7,7 +7,8 @@ const productSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   
   priceUSD: { type: Number },
- 
+  costPrice: { type: Number, default: 0 },
+  costPriceUSD: { type: Number, default: 0 },
   currency: { type: String, enum: ['NGN', 'USD'], default: 'NGN' },
   category: { type: String, required: true },
   tags: [String],

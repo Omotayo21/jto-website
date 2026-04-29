@@ -7,13 +7,6 @@ import validator from 'validator';
 
 export async function POST(req) {
   try {
-    const ip = req.headers.get('x-forwarded-for') || 'anonymous';
-    const limitResult = rateLimit(ip, 5, 60000); // 5 attempts per min
-
-    if (!limitResult.success) {
-      return NextResponse.json({ success: false, error: 'Too many login attempts. Please try again later.' }, { status: 429 });
-    }
-
     const { email, password } = await req.json();
 
     if (!email || !password) {

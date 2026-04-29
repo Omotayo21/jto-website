@@ -4,6 +4,7 @@ const deliveryZoneSchema = new mongoose.Schema({
   name: { type: String, required: true }, // e.g. "Island", "Mainland", "Outside Lagos", "Outside Nigeria"
   slug: { type: String, unique: true }, // generated from name in API
   fee: { type: Number, required: true },
+  feeUSD: { type: Number, default: 0 },
   currency: { type: String, default: 'NGN' },
   estimatedDays: String,   // e.g. "2-3 business days"
   active: { type: Boolean, default: true },

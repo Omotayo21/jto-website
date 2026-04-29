@@ -19,7 +19,7 @@ export async function POST(request) {
       return NextResponse.json({ success: false, error: 'Too many requests. Please try again later.' }, { status: 429 });
     }
 
-    const { items, delivery, couponCode, email } = await request.json();
+    const { items, delivery, couponCode, email, currency = 'NGN' } = await request.json();
     
     await connectDB();
 
@@ -38,7 +38,7 @@ export async function POST(request) {
         return NextResponse.json({ success: false, error: `Product ${item.name} not found or inactive` }, { status: 400 });
       }
 
-      // Stock check — we check for specific variant stock first, then fallback to 'total' stock
+      // Stock check
       const variantKey = item.variant?.color 
         ? `${item.variant.size}-${item.variant.color.name}`
         : `${item.variant.size}`;
@@ -49,12 +49,15 @@ export async function POST(request) {
         return NextResponse.json({ success: false, error: `Insufficient stock for ${product.name} (${item.variant.size})` }, { status: 400 });
       }
 
-      subtotal += product.price * item.quantity;
+      const price = currency === 'USD' ? (product.priceUSD || product.price) : product.price;
+      subtotal += price * item.quantity;
+
       orderItems.push({
         product: product._id,
         productName: product.name,
         image: product.media?.[0]?.url || '/placeholder.png',
-        price: product.price,
+        price: price,
+        costPrice: product.costPrice || 0,
         quantity: item.quantity,
         variant: item.variant
       });
@@ -91,7 +94,11 @@ export async function POST(request) {
                              now >= zone.pricingOverride.validFrom && 
                              now <= zone.pricingOverride.validUntil;
           
-          deliveryFee = hasOverride ? zone.pricingOverride.fee : zone.fee;
+          if (currency === 'USD') {
+            deliveryFee = zone.feeUSD || (hasOverride ? zone.pricingOverride.fee : zone.fee);
+          } else {
+            deliveryFee = hasOverride ? zone.pricingOverride.fee : zone.fee;
+          }
        }
     }
 
@@ -106,14 +113,15 @@ export async function POST(request) {
        { 
          userId,
          orderNumber,
-         couponCode: appliedCoupon?.code
-       }
+         couponCode: appliedCoupon?.code,
+         currency
+       },
+       currency // Pass currency to Paystack lib
     );
 
     if (!paystackRes.status) {
       return NextResponse.json({ success: false, error: 'Payment provider error' }, { status: 500 });
     }
-
 
     // 5. Create Pending Order
     const order = await Order.create({
@@ -130,18 +138,19 @@ export async function POST(request) {
       deliveryFee,
       discount,
       total,
-      currency: 'NGN',
+      currency,
       status: 'pending',
       payment: {
         provider: 'paystack',
         reference: orderNumber,
         status: 'pending',
-        amount: total
+        amount: total,
+        currency
       },
       statusHistory: [{
         status: 'pending',
         timestamp: new Date(),
-        note: 'Order initiated, awaiting payment confirmation.'
+        note: `Order initiated in ${currency}, awaiting payment confirmation.`
       }]
     });
 

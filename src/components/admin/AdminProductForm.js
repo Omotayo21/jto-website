@@ -9,20 +9,29 @@ import toast from 'react-hot-toast';
 
 export function AdminProductForm({ initialData = null, isEdit = false }) {
   const router = useRouter();
+  const [role, setRole] = useState(null);
+  useEffect(() => {
+    setRole(localStorage.getItem('admin_gate_role') || 'admin');
+  }, []);
+
   const [formData, setFormData] = useState(initialData || {
     name: '',
     slug: '',
     description: '',
     price: 0,
- 
     priceUSD: 0,
- 
+    costPrice: 0,
     category: '',
     media: [],
     variants: { sizes: [], colors: [] },
     inventory: {},
     status: 'active',
   });
+
+  const isContentManager = role === 'content';
+  const isFinanceManager = role === 'finance';
+  const isStockCoordinator = role === 'stock';
+  const isAdmin = role === 'admin';
 
   const [newColor, setNewColor] = useState({ name: '', hex: '#000000' });
   const [newSize, setNewSize] = useState('');
@@ -145,10 +154,13 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
         return;
       }
 
-      // Ensure inventory is updated with the total stock
+      // Ensure inventory is updated with the total stock without wiping variants
       const finalFormData = {
         ...formData,
-        inventory: { total: Number(totalStock) }
+        inventory: { 
+          ...(initialData?.inventory || {}), 
+          total: Number(totalStock) 
+        }
       };
 
       const res = await fetch(isEdit ? `/api/products/${initialData._id}` : '/api/products', {
@@ -296,26 +308,30 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
         </div>
 
         {/* Right Column: Pricing & Inventory */}
-        <div className="space-y-10">
-          <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
-            <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-emerald-600 pl-4 uppercase tracking-tight">Pricing</h2>
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Price (NGN)</label>
-                  <Input type="number" name="price" value={formData.price} onChange={handleChange} className="h-14 font-black text-black" />
+        {(isAdmin || isFinanceManager || isStockCoordinator) && (
+          <div className="space-y-10">
+            {(isAdmin || isFinanceManager) && (
+              <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
+                <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-emerald-600 pl-4 uppercase tracking-tight">Pricing & Costing</h2>
+                <div className="space-y-6">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Price (NGN)</label>
+                      <Input type="number" name="price" value={formData.price} onChange={handleChange} className="h-14 font-black text-black" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Price (USD)</label>
+                      <Input type="number" name="priceUSD" value={formData.priceUSD} onChange={handleChange} className="h-14 font-black text-black" />
+                    </div>
+                  </div>
+                  <div className="pt-4 border-t border-gray-50">
+                    <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3 text-rose-500">Cost per Item (NGN)</label>
+                    <Input type="number" name="costPrice" value={formData.costPrice} onChange={handleChange} className="h-14 font-black text-rose-600 bg-rose-50/30 border-rose-100" />
+                    <p className="text-[10px] text-gray-400 mt-2 font-medium italic">* This is only visible to Admin and Finance roles.</p>
+                  </div>
                 </div>
-               
-              </div>
-              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-50">
-                <div>
-                  <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Price (USD)</label>
-                  <Input type="number" name="priceUSD" value={formData.priceUSD} onChange={handleChange} className="h-14 font-black text-black" />
-                </div>
-               
-              </div>
-            </div>
-          </section>
+              </section>
+            )}
 
           <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
              <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-amber-600 pl-4 uppercase tracking-tight">Variants</h2>
@@ -358,26 +374,29 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
              </div>
           </section>
 
-          <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
-            <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-black pl-4 uppercase tracking-tight">Stock Management</h2>
-            <div className="space-y-6">
-               <div>
-                  <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Available Quantity</label>
-                  <Input 
-                    type="number" 
-                    value={totalStock} 
-                    onChange={e => setTotalStock(e.target.value)} 
-                    placeholder="e.g. 100" 
-                    className="h-14 font-black text-black" 
-                  />
-               </div>
-               <div className="flex gap-4">
-                  <button type="button" onClick={() => setFormData({...formData, status: 'active'})} className={`flex-1 h-14 rounded-2xl font-black text-xs uppercase tracking-widest border transition-all ${formData.status === 'active' ? 'bg-gray-100 border-black text-black' : 'bg-gray-50 border-transparent text-gray-400'}`}>Show on Shop</button>
-                  <button type="button" onClick={() => setFormData({...formData, status: 'draft'})} className={`flex-1 h-14 rounded-2xl font-black text-xs uppercase tracking-widest border transition-all ${formData.status === 'draft' ? 'bg-rose-50 border-rose-600 text-rose-600' : 'bg-gray-50 border-transparent text-gray-400'}`}>Keep in Draft</button>
-               </div>
-            </div>
-          </section>
-        </div>
+            {(isAdmin || isStockCoordinator) && (
+              <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
+                <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-black pl-4 uppercase tracking-tight">Stock Management</h2>
+                <div className="space-y-6">
+                   <div>
+                      <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Available Quantity</label>
+                      <Input 
+                        type="number" 
+                        value={totalStock} 
+                        onChange={e => setTotalStock(e.target.value)} 
+                        placeholder="e.g. 100" 
+                        className="h-14 font-black text-black" 
+                      />
+                   </div>
+                   <div className="flex gap-4">
+                      <button type="button" onClick={() => setFormData({...formData, status: 'active'})} className={`flex-1 h-14 rounded-2xl font-black text-xs uppercase tracking-widest border transition-all ${formData.status === 'active' ? 'bg-gray-100 border-black text-black' : 'bg-gray-50 border-transparent text-gray-400'}`}>Show on Shop</button>
+                      <button type="button" onClick={() => setFormData({...formData, status: 'draft'})} className={`flex-1 h-14 rounded-2xl font-black text-xs uppercase tracking-widest border transition-all ${formData.status === 'draft' ? 'bg-rose-50 border-rose-600 text-rose-600' : 'bg-gray-50 border-transparent text-gray-400'}`}>Keep in Draft</button>
+                   </div>
+                </div>
+              </section>
+            )}
+          </div>
+        )}
       </div>
     </form>
   );
