@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { OrderStatusTracker } from '@/components/orders/OrderStatusTracker';
 import { formatCurrency } from '@/lib/utils';
 import { Loader2, Package } from 'lucide-react';
+import Image from 'next/image'
 
 import { ProductCard } from '@/components/products/ProductCard';
 
@@ -237,7 +238,7 @@ export default function AccountPage() {
                         {order.items.map((item, idx) => (
                           <div key={idx} className="flex items-center gap-4">
                             <div className="w-12 h-16 bg-gray-200 shrink-0">
-                              <img src={item.image || item.product?.media?.[0]?.url || '/placeholder.png'} className="w-full h-full object-cover" alt={item.name} />
+                              <Image src={item.image || item.product?.media?.[0]?.url || '/placeholder.png'} className="w-full h-full object-cover" alt={item.name} />
                             </div>
                             <div className="flex-1">
                               <p className="text-sm font-bold line-clamp-1">{item.name}</p>

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Plus, Package } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
 import { Badge } from '@/components/ui/Badge';
+import Image from 'next/image'
 export default async function AdminProductsPage() {
   let products = [];
 
@@ -48,7 +49,7 @@ export default async function AdminProductsPage() {
                    <td className="p-6 whitespace-nowrap">
                      <div className="flex items-center gap-5">
                        <div className="w-14 h-14 rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 shrink-0">
-                         <img src={product.media?.[0]?.url || product.images?.[0]?.url || '/placeholder.png'} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                         <Image src={product.media?.[0]?.url || product.images?.[0]?.url || '/placeholder.png'} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                        </div>
                        <span className="font-black text-gray-900 group-hover:text-black transition-colors">{product.name}</span>
                      </div>

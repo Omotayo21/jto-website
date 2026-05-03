@@ -146,7 +146,7 @@ export default function ShippingManagementPage() {
             {activeTab === 'domestic' ? <MapPin size={32} className="text-gray-300" /> : <Globe size={32} className="text-gray-300" />}
           </div>
           <h3 className="text-xl font-black text-gray-900 mb-2">No {activeTab === 'domestic' ? 'Nigerian' : 'International'} Zones</h3>
-          <p className="text-gray-400 font-medium mb-6">Click "Add New Zone" to create your first {activeTab} shipping zone.</p>
+          <p className="text-gray-400 font-medium mb-6">Click &quot;Add New Zone&quot; to create your first {activeTab} shipping zone.</p>
           <Button onClick={openNewZoneModal} className="rounded-2xl h-12 px-6 font-black text-xs uppercase tracking-widest">
             <Plus className="mr-2 h-4 w-4" /> Add Zone
           </Button>

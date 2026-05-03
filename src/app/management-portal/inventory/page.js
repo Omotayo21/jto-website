@@ -4,6 +4,8 @@ import { formatCurrency } from '@/lib/utils';
 import { Boxes, AlertTriangle, Search, Save, Loader2, RefreshCw, Info } from 'lucide-react';
 import { Input } from '@/components/ui/Input';
 import { toast } from 'react-hot-toast';
+import Image from 'next/image'
+import Link from 'next/link';
 
 export default function InventoryPage() {
   const [products, setProducts] = useState([]);
@@ -156,7 +158,7 @@ function InventoryItem({ product, onUpdate, isSaving }) {
       <div className="p-8 border-b border-gray-50 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="flex items-center gap-6">
           <div className="w-16 h-20 bg-gray-50 rounded-2xl overflow-hidden border border-gray-100 shrink-0">
-            <img src={product.media?.[0]?.url || '/placeholder.png'} className="w-full h-full object-cover" />
+            <Image src={product.media?.[0]?.url || '/placeholder.png'} className="w-full h-full object-cover" alt='image' />
           </div>
           <div>
             <h3 className="text-xl font-black text-gray-900 tracking-tight">{product.name}</h3>
