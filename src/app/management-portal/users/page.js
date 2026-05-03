@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
-import Image from 'next/image'
+
 
 export default function AdminUsersPage() {
   const [users, setUsers] = useState([]);
@@ -61,7 +61,7 @@ export default function AdminUsersPage() {
                  <tr key={user.uid} className="hover:bg-gray-50 transition-colors border-b border-gray-50">
                    <td className="p-5 pl-8">
                      <div className="flex items-center gap-4">
-                       <Image src={user.photoURL || `https://ui-avatars.com/api/?name=${user.displayName || 'User'}&background=random`} className="w-12 h-12 rounded-full border border-gray-200 shadow-sm" />
+                       <img src={user.photoURL || `https://ui-avatars.com/api/?name=${user.displayName || 'User'}&background=random`} className="w-12 h-12 rounded-full border border-gray-200 shadow-sm" />
                        <div>
                          <p className="font-bold text-gray-900">{user.displayName || 'Guest User'}</p>
                          <p className="text-sm text-gray-500 font-medium">{user.email}</p>

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { formatCurrency } from '@/lib/utils';
 import { Badge } from '@/components/ui/Badge';
 import toast from 'react-hot-toast';
-import Image from 'next/image';
+
 
 export default function AdminOrderDetailsPage({ params }) {
   const { id } = params;
@@ -129,7 +129,7 @@ export default function AdminOrderDetailsPage({ params }) {
                 {order.items.map((item, idx) => (
                   <div key={idx} className="flex items-center gap-6 group">
                     <div className="w-20 h-20 rounded-2xl bg-gray-50 border border-gray-100 shrink-0 overflow-hidden">
-                       <Image src={item.image || '/placeholder.png'} alt={item.productName} className="w-full h-full object-cover" />
+                       <img src={item.image || '/placeholder.png'} alt={item.productName} className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1">
                        <h4 className="font-bold text-gray-900">{item.productName}</h4>

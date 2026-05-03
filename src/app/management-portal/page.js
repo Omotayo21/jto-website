@@ -6,7 +6,7 @@ import AbandonedCart from '@/models/AbandonedCart';
 import { formatCurrency } from '@/lib/utils';
 import { ShoppingBag, TrendingUp, Users, MousePointer2, ExternalLink, Package } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image'
+
 
 export default async function AdminDashboard() {
   let stats = { totalRevenue: 0, pendingOrders: 0, abandonedCount: 0, totalUsers: 0 };
@@ -127,7 +127,7 @@ export default async function AdminDashboard() {
               {topProducts.map((p, i) => (
                 <div key={i} className="flex items-center gap-6 group cursor-pointer">
                    <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 shrink-0">
-                      <Image src={p.media?.[0]?.url || p.images?.[0]?.url || '/placeholder.png'} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                      <img src={p.media?.[0]?.url || p.images?.[0]?.url || '/placeholder.png'} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                    </div>
                    <div className="flex-1 min-w-0">
                       <p className="font-black text-gray-900 group-hover:text-black transition-colors truncate text-sm">{p.name}</p>

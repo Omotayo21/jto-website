@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Badge } from '@/components/ui/Badge';
 import { OrderStatusTracker } from '@/components/orders/OrderStatusTracker';
 import { redirect } from 'next/navigation';
-import Image from 'next/image'
+
 
 export default async function AccountOrdersPage() {
   const token = cookies().get('auth_token')?.value;
@@ -57,7 +57,7 @@ export default async function AccountOrdersPage() {
                <div className="p-8 border-t border-gray-50 bg-gray-50/20 flex flex-wrap gap-4">
                  {order.items.slice(0, 4).map((item, idx) => (
                    <div key={idx} className="w-16 h-16 rounded-xl overflow-hidden bg-white border border-gray-100">
-                     <Image src={item.image} alt={item.productName} className="w-full h-full object-cover" />
+                     <img src={item.image} alt={item.productName} className="w-full h-full object-cover" />
                    </div>
                  ))}
                  {order.items.length > 4 && (
