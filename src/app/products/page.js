@@ -12,12 +12,22 @@ export default async function ProductsPage({ searchParams }) {
   const maxPrice = searchParams.maxPrice;
   const sort = searchParams.sort || '-createdAt';
 
+  const isNewIn = category?.toLowerCase() === 'new';
+
   let products = [];
   try {
     await connectDB();
     let query = { status: 'active' };
     
-    if (category) query.category = category.toLowerCase();
+    // For "New In" — show all products, sorted newest first
+    // For other categories — search both `categories` array and legacy `category` string
+    if (category && !isNewIn) {
+      const catLower = category.toLowerCase();
+      query.$or = [
+        { categories: catLower },
+        { category: catLower }
+      ];
+    }
     
     if (q) {
       query.name = { $regex: q, $options: 'i' };
@@ -29,13 +39,25 @@ export default async function ProductsPage({ searchParams }) {
       if (maxPrice) query.price.$lte = Number(maxPrice);
     }
 
+    // "New In" always sorts newest first
+    const effectiveSort = isNewIn ? '-createdAt' : sort;
+
     const snapshot = await Product.find(query)
-      .sort(sort)
-      .populate('category');
+      .sort(effectiveSort);
       
     products = JSON.parse(JSON.stringify(snapshot));
   } catch (error) {
     console.error('Products fetch error:', error);
+  }
+
+  // Page title
+  let pageTitle = null;
+  if (isNewIn) {
+    pageTitle = 'New In';
+  } else if (category) {
+    pageTitle = category;
+  } else if (q) {
+    pageTitle = null; // handled below
   }
 
   return (
@@ -50,8 +72,8 @@ export default async function ProductsPage({ searchParams }) {
       </div>
 
       {/* ── Category / Search Title ── */}
-      {category && (
-        <h1 className="text-2xl md:text-3xl serif-font italic capitalize mb-10">{category}</h1>
+      {pageTitle && (
+        <h1 className="text-2xl md:text-3xl serif-font italic capitalize mb-10">{pageTitle}</h1>
       )}
       {q && (
         <h1 className="text-2xl md:text-3xl serif-font italic mb-10">Search: &ldquo;{q}&rdquo;</h1>

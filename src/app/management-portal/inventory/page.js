@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { formatCurrency } from '@/lib/utils';
-import { Boxes, AlertTriangle, Search, Save, Loader2, RefreshCw } from 'lucide-react';
+import { Boxes, AlertTriangle, Search, Save, Loader2, RefreshCw, Info } from 'lucide-react';
 import { Input } from '@/components/ui/Input';
 import { toast } from 'react-hot-toast';
 
@@ -40,6 +40,8 @@ export default function InventoryPage() {
       });
       if (res.ok) {
         toast.success('Stock updated successfully');
+        // Update local state to reflect changes
+        setProducts(prev => prev.map(p => p._id === productId ? { ...p, inventory } : p));
       } else {
         throw new Error('Update failed');
       }
@@ -60,7 +62,7 @@ export default function InventoryPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <h1 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tight">Inventory Control</h1>
-          <p className="text-gray-500 font-bold mt-1 text-xs md:text-sm uppercase tracking-widest opacity-70">Stock levels & Variant Management</p>
+          <p className="text-gray-500 font-bold mt-1 text-xs md:text-sm uppercase tracking-widest opacity-70">Allocate stock among variants</p>
         </div>
         <button onClick={fetchInventory} className="flex items-center gap-2 px-6 py-3 bg-white rounded-2xl border border-gray-100 shadow-sm text-xs font-black uppercase tracking-widest hover:bg-gray-50 transition-all">
           <RefreshCw size={14} className={loading ? 'animate-spin' : ''} /> Refresh Data
@@ -99,6 +101,12 @@ function InventoryItem({ product, onUpdate, isSaving }) {
   const [localInventory, setLocalInventory] = useState(product.inventory || {});
   const [hasChanges, setHasChanges] = useState(false);
 
+  // Re-sync local state if product changes (e.g. after save)
+  useEffect(() => {
+    setLocalInventory(product.inventory || {});
+    setHasChanges(false);
+  }, [product]);
+
   const variants = [];
   if (product.variants?.sizes?.length > 0) {
     product.variants.sizes.forEach(size => {
@@ -123,8 +131,25 @@ function InventoryItem({ product, onUpdate, isSaving }) {
     setHasChanges(true);
   };
 
-  const totalQty = variants.reduce((acc, v) => acc + (localInventory[v.key] || 0), 0);
-  const unallocatedStock = localInventory.total || 0;
+  // Master Pool is the 'total' field set in the product form
+  const masterPool = product.inventory?.total || 0;
+  
+  // Calculate how much has been allocated to variants
+  const allocatedSum = variants
+    .filter(v => v.key !== 'total')
+    .reduce((acc, v) => acc + (localInventory[v.key] || 0), 0);
+
+  const remaining = masterPool - allocatedSum;
+
+  const handleSave = () => {
+    if (allocatedSum > masterPool) {
+      toast.error('Please adjust the quantity in stock of product to allocate among sizes');
+      return;
+    }
+    // Keep the 'total' field as the master pool
+    const finalInventory = { ...localInventory, total: masterPool };
+    onUpdate(finalInventory);
+  };
 
   return (
     <div className="bg-white rounded-[3rem] shadow-2xl shadow-gray-100 border border-gray-50 overflow-hidden">
@@ -142,78 +167,64 @@ function InventoryItem({ product, onUpdate, isSaving }) {
         </div>
         
         <div className="flex items-center gap-4">
-          <div className={`px-4 py-2 rounded-xl flex flex-col items-end border ${
-            totalQty < 5 ? 'bg-rose-50 border-rose-100 text-rose-600' : 'bg-gray-50 border-gray-100 text-gray-500'
+          <div className={`px-5 py-3 rounded-2xl flex flex-col items-end border transition-all ${
+            remaining < 0 ? 'bg-rose-50 border-rose-200 text-rose-600' : 'bg-gray-50 border-gray-100 text-gray-500'
           }`}>
             <div className="flex items-center gap-2">
-              {totalQty < 5 && <AlertTriangle size={14} />}
-              <span className="text-xs font-black uppercase tracking-widest">{totalQty} Units Available</span>
-            </div>
-            {unallocatedStock > 0 && (
-              <span className="text-[9px] font-bold text-amber-600 mt-1 uppercase italic">
-                + {unallocatedStock} Unallocated in Total field
+              <span className="text-xs font-black uppercase tracking-widest">
+                {masterPool} Available in Stock
               </span>
-            )}
+            </div>
+            <span className={`text-[9px] font-bold mt-1 uppercase tracking-wider ${remaining < 0 ? 'text-rose-500 animate-pulse' : 'text-gray-400'}`}>
+              {remaining < 0 ? 'OVER-ALLOCATED' : `${remaining} Remaining to allocate`}
+            </span>
           </div>
+          
           <button 
             disabled={!hasChanges || isSaving}
-            onClick={() => {
-              onUpdate(localInventory);
-              setHasChanges(false);
-            }}
-            className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-black uppercase text-[10px] tracking-widest transition-all ${
+            onClick={handleSave}
+            className={`flex items-center gap-2 px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest transition-all ${
               hasChanges 
-                ? 'bg-black text-white hover:bg-[#DAA520] shadow-lg shadow-gray-200' 
+                ? 'bg-black text-white hover:bg-[#DAA520] shadow-lg shadow-gray-200 active:scale-95' 
                 : 'bg-gray-100 text-gray-300 cursor-not-allowed'
             }`}
           >
             {isSaving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
-            Save Updates
+            Save Allocation
           </button>
         </div>
       </div>
 
       <div className="p-8 bg-gray-50/30">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {/* Unallocated / Total Stock Input */}
-          <div className="bg-amber-50 p-4 rounded-2xl border border-amber-100 shadow-sm flex flex-col gap-3">
-            <div className="flex flex-col">
-              <span className="text-[9px] font-black text-amber-600 uppercase tracking-widest leading-none mb-1">
-                Unallocated
-              </span>
-              <span className="text-sm font-black text-amber-900 leading-none">
-                Base Pool
-              </span>
-            </div>
-            <input 
-              type="number"
-              value={localInventory.total || 0}
-              onChange={e => handleQtyChange('total', e.target.value)}
-              className="w-full h-10 px-3 rounded-xl border border-amber-200 bg-white text-amber-900 font-bold text-center focus:ring-2 focus:ring-amber-500 outline-none"
-            />
+        {variants.length === 1 && variants[0].key === 'total' ? (
+          <div className="flex items-center gap-3 p-6 bg-blue-50 text-blue-700 rounded-3xl border border-blue-100">
+             <Info size={20} />
+             <p className="text-sm font-bold">This product has no size/color variants. Adjust the total quantity in the <Link href={`/management-portal/products/${product._id}`} className="underline">Product Edit</Link> page.</p>
           </div>
-
-          {variants.filter(v => v.key !== 'total').map(variant => (
-            <div key={variant.key} className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col gap-3">
-              <div className="flex flex-col">
-                <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">
-                  {variant.color ? variant.color.name : 'Standard'}
-                </span>
-                <span className="text-sm font-black text-gray-900 leading-none">
-                  Size {variant.size || 'N/A'}
-                </span>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {variants.filter(v => v.key !== 'total').map(variant => (
+              <div key={variant.key} className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col gap-3 group hover:border-black transition-all">
+                <div className="flex flex-col">
+                  <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1 group-hover:text-black transition-colors">
+                    {variant.color ? variant.color.name : 'Standard'}
+                  </span>
+                  <span className="text-sm font-black text-gray-900 leading-none">
+                    Size {variant.size || 'N/A'}
+                  </span>
+                </div>
+                <input 
+                  type="number"
+                  value={localInventory[variant.key] || 0}
+                  onChange={e => handleQtyChange(variant.key, e.target.value)}
+                  className={`w-full h-10 px-3 rounded-xl border font-bold text-center transition-all ${
+                    (localInventory[variant.key] || 0) === 0 ? 'border-gray-100 bg-gray-50/50 text-gray-300' : 'border-black bg-white text-black'
+                  } focus:ring-2 focus:ring-black outline-none`}
+                />
               </div>
-              <input 
-                type="number"
-                value={localInventory[variant.key] || 0}
-                onChange={e => handleQtyChange(variant.key, e.target.value)}
-                className={`w-full h-10 px-3 rounded-xl border font-bold text-center transition-all ${
-                  (localInventory[variant.key] || 0) < 5 ? 'border-rose-200 bg-rose-50/50 text-rose-600' : 'border-gray-100 bg-gray-50/50 text-gray-900'
-                } focus:ring-2 focus:ring-black focus:bg-white`}
-              />
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

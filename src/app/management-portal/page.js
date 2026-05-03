@@ -23,7 +23,7 @@ export default async function AdminDashboard() {
     
     const revenueStats = await Order.aggregate([
       { $match: { 'payment.status': 'success' } },
-      { $group: { _id: '$currency', total: { $sum: '$total' } } }
+      { $group: { _id: '$payment.currency', total: { $sum: '$total' } } }
     ]);
 
     let ngnRevenue = 0;
@@ -105,7 +105,7 @@ export default async function AdminDashboard() {
                   <tr key={i} className="border-b border-gray-50/50 hover:bg-gray-50/30 transition-colors group">
                     <td className="px-8 py-6 font-black text-gray-900 group-hover:text-black transition-colors text-sm whitespace-nowrap">{order.orderNumber}</td>
                     <td className="px-8 py-6 text-gray-400 font-bold text-sm truncate max-w-[150px]">{order.userEmail}</td>
-                    <td className="px-8 py-6 font-black text-gray-900 text-sm whitespace-nowrap">{formatCurrency(order.total, order.currency)}</td>
+                    <td className="px-8 py-6 font-black text-gray-900 text-sm whitespace-nowrap">{formatCurrency(order.total, order.payment?.currency || order.currency || 'NGN')}</td>
                     <td className="px-8 py-6 text-right">
                        <span className={`text-[9px] font-black uppercase px-3 py-1 rounded-full whitespace-nowrap ${
                          order.status === 'delivered' ? 'bg-emerald-50 text-emerald-600' : 'bg-gray-100 text-black'

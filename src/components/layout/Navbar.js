@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useCartStore } from '@/store/cartStore';
+import { useCurrencyStore } from '@/store/currencyStore';
 import { useAuthStore } from '@/store/authStore';
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -263,6 +264,7 @@ export function Navbar() {
 
   const { items, openCart, fetchCart } = useCartStore();
   const { user } = useAuthStore();
+  const currency = useCurrencyStore((s) => s.currency);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -304,7 +306,7 @@ export function Navbar() {
     <>
       {/* ── ANNOUNCEMENT BAR ── */}
       <div className="w-full bg-[#FFDA03] text-black text-center py-2.5 px-4 flex items-center justify-center gap-2 text-[11px] font-black uppercase tracking-widest">
-        <span>Free Shipping on Orders ₦350,000+</span>
+        <span>{currency === 'USD' ? 'Free Shipping on Orders $250+' : 'Free Shipping on Orders ₦350,000+'}</span>
         <span>→</span>
       </div>
 

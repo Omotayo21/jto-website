@@ -4,13 +4,14 @@ const productSchema = new mongoose.Schema({
   name: { type: String, required: true },
   slug: { type: String, unique: true, required: true },
   description: { type: String, required: true },
-  price: { type: Number, required: true },
-  
-  priceUSD: { type: Number },
-  costPrice: { type: Number, default: 0 },
-  costPriceUSD: { type: Number, default: 0 },
-  currency: { type: String, enum: ['NGN', 'USD'], default: 'NGN' },
-  category: { type: String, required: true },
+  price: { type: Number, required: true },       // NGN price
+  priceUSD: { type: Number, default: 0 },         // USD price
+  costPrice: { type: Number, default: 0 },         // Cost in NGN
+  costPriceUSD: { type: Number, default: 0 },      // Cost in USD
+  // Multi-category support (array of slugs)
+  categories: [{ type: String }],
+  // Keep legacy single category for backward compat
+  category: { type: String },
   tags: [String],
   media: [{
     type: { type: String, enum: ['image', 'video'] },
@@ -45,3 +46,4 @@ if (mongoose.models.Product) {
 
 const Product = mongoose.model('Product', productSchema);
 export default Product;
+

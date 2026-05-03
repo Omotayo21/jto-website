@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useCartStore } from '@/store/cartStore';
+import { useCurrencyStore } from '@/store/currencyStore';
 import { useAuthStore } from '@/store/authStore';
 import { FavouriteButton } from '@/components/products/FavouriteButton';
 import { toast } from 'react-hot-toast';
@@ -41,9 +42,10 @@ export function ProductDetailClient({ product }) {
 
   const { addItem, openCart } = useCartStore();
   const { user } = useAuthStore();
+  const currency = useCurrencyStore((s) => s.currency);
 
-  const displayPrice = product.price;
-  const displayCurrency = 'NGN';
+  const displayPrice = currency === 'USD' && product.priceUSD ? product.priceUSD : product.price;
+  const displayCurrency = currency === 'USD' && product.priceUSD ? 'USD' : 'NGN';
 
   const inventoryTotal = product.inventory?.total || 0;
   const isOutOfStock = inventoryTotal <= 0;
@@ -57,9 +59,8 @@ export function ProductDetailClient({ product }) {
       await addItem({
         productId: product._id,
         name: product.name,
-        price: displayPrice,
-        priceUSD: product.priceUSD, // Store both to allow switching in cart if needed
-        currency: displayCurrency,
+        price: product.price,
+        priceUSD: product.priceUSD,
         image: media[0]?.url || '/placeholder.png',
         variant: { size: selectedSize, color: selectedColor },
         quantity,
@@ -71,6 +72,11 @@ export function ProductDetailClient({ product }) {
       setLoading(false);
     }
   };
+
+  // Determine category display text
+  const categoryDisplay = product.categories?.length > 0
+    ? product.categories.join(' · ')
+    : product.category?.name || product.category || 'Collection';
 
   return (
     <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
@@ -127,7 +133,7 @@ export function ProductDetailClient({ product }) {
         {/* Category + Favourite */}
         <div className="flex items-center justify-between">
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
-            {product.category?.name || product.category || 'Collection'}
+            {categoryDisplay}
           </p>
           <FavouriteButton productId={product._id} />
         </div>

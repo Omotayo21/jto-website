@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useCartStore } from '@/store/cartStore';
+import { useCurrencyStore } from '@/store/currencyStore';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { formatCurrency } from '@/lib/utils';
@@ -9,9 +10,12 @@ import { toast } from 'react-hot-toast';
 
 export function CheckoutForm() {
   const items = useCartStore(state => state.items);
-  const globalCurrency = 'NGN';
+  const currency = useCurrencyStore((s) => s.currency);
+  const isNigeria = currency === 'NGN';
+
   const [formData, setFormData] = useState({
-    fullName: '', email: '', phone: '', address: '', city: '', state: '', country: 'Nigeria', notes: ''
+    fullName: '', email: '', phone: '', address: '', city: '', state: '',
+    country: isNigeria ? 'Nigeria' : '', notes: ''
   });
   const [zones, setZones] = useState([]);
   const [selectedZone, setSelectedZone] = useState(null);
@@ -21,27 +25,48 @@ export function CheckoutForm() {
   const [validatingCoupon, setValidatingCoupon] = useState(false);
   const [error, setError] = useState('');
 
+  // Fetch delivery zones based on detected currency/location
   useEffect(() => {
-    fetch('/api/delivery-zones')
+    const zoneType = isNigeria ? 'domestic' : 'international';
+    fetch(`/api/delivery-zones?type=${zoneType}`)
       .then(res => res.json())
       .then(data => {
         if (data.success) {
           setZones(data.data);
-          // Set default zone if any
           if (data.data.length > 0) {
             setSelectedZone(data.data[0]);
           }
         }
       });
-  }, []);
+  }, [isNigeria]);
+
+  // Update country default when currency changes
+  useEffect(() => {
+    if (isNigeria) {
+      setFormData(prev => ({ ...prev, country: 'Nigeria' }));
+    }
+  }, [isNigeria]);
+
+  const getItemPrice = (item) => {
+    return currency === 'USD' && item.priceUSD ? item.priceUSD : item.price;
+  };
 
   const rawTotal = items.reduce((acc, item) => {
-    // Use strictly what is set for that currency
-    let price = globalCurrency === 'USD' ? (item.priceUSD || item.price) : item.price;
-    return acc + (price * item.quantity);
+    return acc + (getItemPrice(item) * item.quantity);
   }, 0);
 
-  const deliveryFee = selectedZone ? (globalCurrency === 'USD' ? (selectedZone.feeUSD || 0) : selectedZone.effectiveFee) : 0;
+  // For domestic zones use fee (NGN), for international use feeUSD
+  const getZoneFee = (zone) => {
+    if (!zone) return 0;
+    if (isNigeria) {
+      // Use effective fee (considers pricing overrides)
+      return zone.effectiveFee ?? zone.fee;
+    } else {
+      return zone.feeUSD || 0;
+    }
+  };
+
+  const deliveryFee = getZoneFee(selectedZone);
   const total = Math.max(rawTotal - discountVal + deliveryFee, 0);
 
   const handleApplyCoupon = async () => {
@@ -56,13 +81,13 @@ export function CheckoutForm() {
       });
       const result = await res.json();
       if (result.success) {
-        // Adjust discount if currency is USD and coupon returns NGN
         let discount = result.data.discount;
-        if (globalCurrency === 'USD') {
+        // If coupon returns NGN discount but we're in USD mode, convert roughly
+        if (currency === 'USD') {
           discount = Math.ceil(discount / 1500);
         }
         setDiscountVal(discount);
-        toast.success(`Coupon applied! Discount: ${formatCurrency(discount, globalCurrency)}`);
+        toast.success(`Coupon applied! Discount: ${formatCurrency(discount, currency)}`);
       } else {
         setError(result.error);
         setDiscountVal(0);
@@ -95,7 +120,7 @@ export function CheckoutForm() {
           },
           couponCode: discountVal > 0 ? couponCode : null,
           email: formData.email,
-          currency: useCartStore.getState().currency || 'NGN'
+          currency
         })
       });
       const data = await res.json();
@@ -112,6 +137,15 @@ export function CheckoutForm() {
       setError('System Error. Try again.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const formatZoneFee = (zone) => {
+    const fee = getZoneFee(zone);
+    if (isNigeria) {
+      return `₦${fee.toLocaleString()}`;
+    } else {
+      return `$${fee.toLocaleString()}`;
     }
   };
 
@@ -132,15 +166,22 @@ export function CheckoutForm() {
           
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase text-gray-400 ml-1">Delivery Zone</label>
+              <label className="text-xs font-bold uppercase text-gray-400 ml-1">
+                {isNigeria ? 'Delivery Zone' : 'Shipping Destination'}
+              </label>
               <select 
                 required
                 className="w-full h-14 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-black transition-all font-medium"
                 value={selectedZone?.slug || ''}
                 onChange={(e) => setSelectedZone(zones.find(z => z.slug === e.target.value))}
               >
+                {zones.length === 0 && (
+                  <option value="">No zones available</option>
+                )}
                 {zones.map(zone => (
-                  <option key={zone.slug} value={zone.slug}>{zone.name} (NGN {zone.effectiveFee.toLocaleString()})</option>
+                  <option key={zone.slug} value={zone.slug}>
+                    {zone.name} ({formatZoneFee(zone)})
+                  </option>
                 ))}
               </select>
             </div>
@@ -152,7 +193,14 @@ export function CheckoutForm() {
 
           <div className="grid grid-cols-2 gap-6">
             <Input required placeholder="State / Province" value={formData.state} onChange={e => setFormData({...formData, state: e.target.value})} className="h-14 rounded-xl" />
-            <Input required placeholder="Country" value={formData.country} onChange={e => setFormData({...formData, country: e.target.value})} className="h-14 rounded-xl" />
+            <Input 
+              required 
+              placeholder="Country" 
+              value={formData.country} 
+              onChange={e => setFormData({...formData, country: e.target.value})} 
+              className="h-14 rounded-xl" 
+              readOnly={isNigeria}
+            />
           </div>
           <Input placeholder="Order Notes (Optional)" value={formData.notes} onChange={e => setFormData({...formData, notes: e.target.value})} className="h-14 rounded-xl" />
         </form>
@@ -175,20 +223,11 @@ export function CheckoutForm() {
                  <p className="text-xs text-gray-400 mt-1 uppercase tracking-wider font-black">
                    {item.variant?.size} {item.variant?.color && `| ${item.variant.color.name}`}
                  </p>
-                 
-                 {globalCurrency === 'USD' && !item.priceUSD && (
-                   <p className="text-[9px] text-[#DAA520] font-black uppercase tracking-tighter mt-1 bg-white/5 inline-block px-1.5 py-0.5 rounded">
-                     ⚠️ USD price not set, using Naira value
-                   </p>
-                 )}
 
                  <div className="flex justify-between items-center mt-2">
                    <span className="text-xs bg-white/10 px-2 py-0.5 rounded text-gray-300">Qty: {item.quantity}</span>
                     <span className="font-black text-white">
-                      {formatCurrency(
-                        (globalCurrency === 'USD' ? (item.priceUSD || item.price) : item.price) * item.quantity, 
-                        globalCurrency
-                      )}
+                      {formatCurrency(getItemPrice(item) * item.quantity, currency)}
                     </span>
                  </div>
                </div>
@@ -215,22 +254,22 @@ export function CheckoutForm() {
            </div>
 
            <div className="space-y-4 text-sm font-medium">
-             <div className="flex justify-between text-gray-400"><span>Subtotal</span><span className="text-white font-bold">{formatCurrency(rawTotal, globalCurrency)}</span></div>
+             <div className="flex justify-between text-gray-400"><span>Subtotal</span><span className="text-white font-bold">{formatCurrency(rawTotal, currency)}</span></div>
              <div className="flex justify-between text-gray-400">
                <span className="flex items-center gap-2"><Truck size={14}/> Delivery ({selectedZone?.name || 'Select Zone'})</span>
-               <span className="text-white font-bold">{selectedZone ? formatCurrency(deliveryFee, globalCurrency) : '—'}</span>
+               <span className="text-white font-bold">{selectedZone ? formatCurrency(deliveryFee, currency) : '—'}</span>
              </div>
-             {discountVal > 0 && <div className="flex justify-between text-emerald-400"><span>Discount Applied</span><span>-{formatCurrency(discountVal, globalCurrency)}</span></div>}
+             {discountVal > 0 && <div className="flex justify-between text-emerald-400"><span>Discount Applied</span><span>-{formatCurrency(discountVal, currency)}</span></div>}
              
              <div className="flex justify-between text-3xl font-black text-white pt-6 border-t border-white/10 serif-font italic">
-               <span>Total</span><span>{formatCurrency(total, globalCurrency)}</span>
+               <span>Total</span><span>{formatCurrency(total, currency)}</span>
              </div>
            </div>
 
            {error && <p className="text-rose-400 text-xs font-bold bg-rose-500/10 p-4 rounded-xl border border-rose-500/20">{error}</p>}
            
            <Button type="submit" form="checkout-form" disabled={loading || items.length === 0} className="w-full h-16 text-xl font-black rounded-2xl bg-black hover:bg-[#DAA520] shadow-xl shadow-black/20 transition-all hover:-translate-y-1 border border-white/20">
-             {loading ? 'INITIALISING...' : `CONFIRM & PAY ${formatCurrency(total, globalCurrency)}`}
+             {loading ? 'INITIALISING...' : `CONFIRM & PAY ${formatCurrency(total, currency)}`}
            </Button>
 
            <p className="text-[10px] text-center text-gray-500 font-bold uppercase tracking-widest">
@@ -241,4 +280,3 @@ export function CheckoutForm() {
     </div>
   );
 }
-

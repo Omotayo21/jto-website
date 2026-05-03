@@ -18,9 +18,15 @@ export default async function ProductPage({ params }) {
   // Fetch related products (same category, excluding current)
   let relatedProducts = [];
   try {
+    const currentCategory = product.category?._id || product.category;
+    const currentCategories = product.categories || [];
+    
     const relatedDocs = await Product.find({
       status: 'active',
-      category: product.category?._id || product.category,
+      $or: [
+        { category: currentCategory },
+        { categories: { $in: [currentCategory, ...currentCategories] } }
+      ],
       _id: { $ne: product._id },
     }).limit(4);
     relatedProducts = JSON.parse(JSON.stringify(relatedDocs));

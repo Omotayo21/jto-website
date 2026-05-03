@@ -37,7 +37,7 @@ export default async function AdminOrdersPage() {
                    <td className="p-5 pl-8 font-extrabold text-gray-900 whitespace-nowrap">{order.orderNumber}</td>
                    <td className="p-5 text-gray-600 font-medium">{order.delivery?.email || order.userEmail}</td>
                    <td className="p-5 text-gray-500 text-sm font-semibold whitespace-nowrap">{new Date(order.createdAt).toLocaleDateString()}</td>
-                   <td className="p-5 font-extrabold text-black whitespace-nowrap">{formatCurrency(order.total, order.currency || 'NGN')}</td>
+                   <td className="p-5 font-extrabold text-black whitespace-nowrap">{formatCurrency(order.total, order.payment?.currency || order.currency || 'NGN')}</td>
                    <td className="p-5">
                       <Badge variant={order.status === 'delivered' ? 'success' : order.status === 'pending' ? 'warning' : 'brand'} className="uppercase tracking-widest text-[10px] px-2 py-1">
                         {order.status}

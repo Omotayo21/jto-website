@@ -15,10 +15,24 @@ export async function GET(request) {
     const sort = searchParams.get('sort') || '-createdAt';
 
     let query = { status };
-    if (category) query.category = category;
+
+    // Handle "new" category — shows all products sorted by newest first
+    if (category && category.toLowerCase() !== 'new') {
+      const catLower = category.toLowerCase();
+      // Search in both the new `categories` array and the legacy `category` string
+      query.$or = [
+        { categories: catLower },
+        { category: catLower }
+      ];
+    }
+    // If category === 'new', no category filter is applied — just sorted by newest
+
     if (featured) query.featured = featured === 'true';
 
-    let products = Product.find(query).sort(sort);
+    // For "new" always sort newest first
+    const effectiveSort = (category && category.toLowerCase() === 'new') ? '-createdAt' : sort;
+
+    let products = Product.find(query).sort(effectiveSort);
     if (limit > 0) products = products.limit(limit);
 
     const data = await products;

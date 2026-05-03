@@ -1,7 +1,7 @@
 "use client"
 import Link from 'next/link';
 import { formatCurrency } from '@/lib/utils';
-import { useCartStore } from '@/store/cartStore';
+import { useCurrencyStore } from '@/store/currencyStore';
 
 function StarRating({ average = 0, count = 0, light = false }) {
   return (
@@ -30,13 +30,13 @@ function StarRating({ average = 0, count = 0, light = false }) {
 }
 
 export function ProductCard({ product, light = false }) {
-  const { currency: globalCurrency } = useCartStore();
+  const currency = useCurrencyStore((s) => s.currency);
   const thumbnail = product.media?.[0]?.url || product.images?.[0]?.url || '/placeholder.png';
   const outOfStock = Object.values(product.inventory || {}).every(qty => qty === 0);
   const colors = product.variants?.colors || [];
 
-  const displayPrice = globalCurrency === 'USD' && product.priceUSD ? product.priceUSD : product.price;
-  const displayCurrency = globalCurrency === 'USD' && product.priceUSD ? 'USD' : 'NGN';
+  const displayPrice = currency === 'USD' && product.priceUSD ? product.priceUSD : product.price;
+  const displayCurrency = currency === 'USD' && product.priceUSD ? 'USD' : 'NGN';
 
   return (
     <Link href={`/products/${product.slug}`} className="group block mb-12">

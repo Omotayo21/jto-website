@@ -57,7 +57,7 @@ export async function POST(request) {
         productName: product.name,
         image: product.media?.[0]?.url || '/placeholder.png',
         price: price,
-        costPrice: product.costPrice || 0,
+        costPrice: currency === 'USD' ? (product.costPriceUSD || 0) : (product.costPrice || 0),
         quantity: item.quantity,
         variant: item.variant
       });

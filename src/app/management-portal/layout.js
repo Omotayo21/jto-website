@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 const allLinks = [
   { href: '/management-portal', label: 'Dashboard', icon: LayoutDashboard, roles: ['admin', 'finance'] },
-  { href: '/management-portal/products', label: 'Products', icon: Package, roles: ['admin', 'content'] },
+  { href: '/management-portal/products', label: 'Products', icon: Package, roles: ['admin', 'content', 'stock'] },
   { href: '/management-portal/inventory', label: 'Inventory', icon: Boxes, roles: ['admin', 'stock'] },
   { href: '/management-portal/orders', label: 'Orders', icon: ShoppingBag, roles: ['admin', 'finance'] },
   { href: '/management-portal/financials', label: 'Financials', icon: BarChart3, roles: ['admin', 'finance'] },

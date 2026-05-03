@@ -14,18 +14,32 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
     setRole(localStorage.getItem('admin_gate_role') || 'admin');
   }, []);
 
-  const [formData, setFormData] = useState(initialData || {
-    name: '',
-    slug: '',
-    description: '',
-    price: 0,
-    priceUSD: 0,
-    costPrice: 0,
-    category: '',
-    media: [],
-    variants: { sizes: [], colors: [] },
-    inventory: {},
-    status: 'active',
+  const [formData, setFormData] = useState(() => {
+    if (initialData) {
+      return {
+        ...initialData,
+        // Migrate legacy single category to categories array
+        categories: initialData.categories?.length > 0
+          ? initialData.categories
+          : (initialData.category ? [initialData.category] : []),
+        costPriceUSD: initialData.costPriceUSD || 0,
+      };
+    }
+    return {
+      name: '',
+      slug: '',
+      description: '',
+      price: 0,
+      priceUSD: 0,
+      costPrice: 0,
+      costPriceUSD: 0,
+      categories: [],
+      category: '',
+      media: [],
+      variants: { sizes: [], colors: [] },
+      inventory: {},
+      status: 'active',
+    };
   });
 
   const isContentManager = role === 'content';
@@ -37,17 +51,28 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
   const [newSize, setNewSize] = useState('');
   const [totalStock, setTotalStock] = useState(() => {
     if (!initialData?.inventory) return 0;
-    // Handle both Map (doc) and Plain Object (API)
     return initialData.inventory.total || 
            (typeof initialData.inventory.get === 'function' ? initialData.inventory.get('total') : initialData.inventory['total']) || 
            0;
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const CATEGORIES = [
-    'Apparel', 'Footwear', 'Accessories', 'Electronics', 'Beauty & Personal Care',
-    'Home & Kitchen', 'Sports & Outdoors', 'Gadgets & Tech', 'Stationery & Office',
-    'Groceries', 'Health & Wellness', 'Toys & Games', 'Pet Supplies', 'Others'
+  const FASHION_CATEGORIES = [
+    { label: 'Dresses', value: 'dresses' },
+    { label: 'Tops & Blouses', value: 'tops' },
+    { label: 'Jackets & Coats', value: 'jackets' },
+    { label: 'Sets & Co-ords', value: 'sets' },
+    { label: 'Skirts', value: 'skirts' },
+    { label: 'Trousers & Pants', value: 'trousers' },
+    { label: 'Shorts', value: 'shorts' },
+    { label: 'T-Shirts', value: 'tshirts' },
+    { label: 'Jumpsuits & Playsuits', value: 'jumpsuits' },
+    { label: 'Swimwear & Resort', value: 'swimwear' },
+    { label: 'Kids', value: 'kids' },
+    { label: 'Accessories', value: 'accessories' },
+    { label: 'Bridal & Occasion', value: 'bridal' },
+    { label: 'Loungewear', value: 'loungewear' },
+    { label: 'Work Wear', value: 'workwear' },
   ];
 
   const [isUploading, setIsUploading] = useState(false);
@@ -60,6 +85,17 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
       ...prev, 
       [name]: type === 'number' ? parseFloat(value) || 0 : value 
     }));
+  };
+
+  const toggleCategory = (catValue) => {
+    setFormData(prev => {
+      const cats = prev.categories || [];
+      if (cats.includes(catValue)) {
+        return { ...prev, categories: cats.filter(c => c !== catValue) };
+      } else {
+        return { ...prev, categories: [...cats, catValue] };
+      }
+    });
   };
 
   const handleFileUpload = async (e, type) => {
@@ -154,9 +190,17 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
         return;
       }
 
+      if (formData.categories.length === 0) {
+        toast.error('Please select at least one category');
+        setIsSubmitting(false);
+        return;
+      }
+
       // Ensure inventory is updated with the total stock without wiping variants
       const finalFormData = {
         ...formData,
+        // Set legacy category to first selected category for backward compat
+        category: formData.categories[0] || '',
         inventory: { 
           ...(initialData?.inventory || {}), 
           total: Number(totalStock) 
@@ -213,15 +257,46 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
                   <Input name="slug" value={formData.slug} onChange={handleChange} placeholder="tech-windbreaker" className="h-14 font-bold" required />
                 </div>
                 <div>
-                  <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Category</label>
-                  <select name="category" value={formData.category} onChange={handleChange} className="w-full h-14 rounded-2xl border-gray-200 focus:border-black focus:ring-black font-bold px-4 bg-gray-50" required>
-                    <option value="">Select Category</option>
-                    {CATEGORIES.map(cat => (
-                      <option key={cat} value={cat.toLowerCase()}>{cat}</option>
-                    ))}
+                  <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Status</label>
+                  <select name="status" value={formData.status} onChange={handleChange} className="w-full h-14 rounded-2xl border-gray-200 focus:border-black focus:ring-black font-bold px-4 bg-gray-50">
+                    <option value="active">Active</option>
+                    <option value="draft">Draft</option>
+                    <option value="archived">Archived</option>
                   </select>
                 </div>
               </div>
+
+              {/* Multi-Category Selection */}
+              <div>
+                <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">
+                  Categories <span className="text-gray-300">(select one or more)</span>
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {FASHION_CATEGORIES.map(cat => {
+                    const isSelected = (formData.categories || []).includes(cat.value);
+                    return (
+                      <button
+                        key={cat.value}
+                        type="button"
+                        onClick={() => toggleCategory(cat.value)}
+                        className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border-2 transition-all ${
+                          isSelected
+                            ? 'bg-black text-white border-black'
+                            : 'bg-gray-50 text-gray-500 border-gray-100 hover:border-gray-300 hover:text-gray-700'
+                        }`}
+                      >
+                        {cat.label}
+                      </button>
+                    );
+                  })}
+                </div>
+                {(formData.categories || []).length > 0 && (
+                  <p className="text-[10px] text-gray-400 mt-2 font-medium italic">
+                    Selected: {formData.categories.map(c => FASHION_CATEGORIES.find(fc => fc.value === c)?.label || c).join(', ')}
+                  </p>
+                )}
+              </div>
+
               <div>
                 <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Description</label>
                 <textarea 
@@ -316,18 +391,26 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
                 <div className="space-y-6">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Price (NGN)</label>
+                      <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Price (₦ NGN)</label>
                       <Input type="number" name="price" value={formData.price} onChange={handleChange} className="h-14 font-black text-black" />
                     </div>
                     <div>
-                      <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Price (USD)</label>
+                      <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Price ($ USD)</label>
                       <Input type="number" name="priceUSD" value={formData.priceUSD} onChange={handleChange} className="h-14 font-black text-black" />
                     </div>
                   </div>
-                  <div className="pt-4 border-t border-gray-50">
-                    <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3 text-rose-500">Cost per Item (NGN)</label>
-                    <Input type="number" name="costPrice" value={formData.costPrice} onChange={handleChange} className="h-14 font-black text-rose-600 bg-rose-50/30 border-rose-100" />
-                    <p className="text-[10px] text-gray-400 mt-2 font-medium italic">* This is only visible to Admin and Finance roles.</p>
+                  <div className="pt-4 border-t border-gray-50 space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3 text-rose-500">Cost per Item (₦ NGN)</label>
+                        <Input type="number" name="costPrice" value={formData.costPrice} onChange={handleChange} className="h-14 font-black text-rose-600 bg-rose-50/30 border-rose-100" />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3 text-rose-500">Cost per Item ($ USD)</label>
+                        <Input type="number" name="costPriceUSD" value={formData.costPriceUSD} onChange={handleChange} className="h-14 font-black text-rose-600 bg-rose-50/30 border-rose-100" />
+                      </div>
+                    </div>
+                    <p className="text-[10px] text-gray-400 mt-2 font-medium italic">* Cost prices are only visible to Admin and Finance roles.</p>
                   </div>
                 </div>
               </section>

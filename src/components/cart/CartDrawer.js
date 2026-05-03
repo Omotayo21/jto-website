@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useCartStore } from '@/store/cartStore';
+import { useCurrencyStore } from '@/store/currencyStore';
 import { X, Plus, Minus, Trash, ShoppingCart } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
 import { useAuthStore } from '@/store/authStore';
@@ -13,7 +14,8 @@ export function CartDrawer() {
   const isAdminPage = pathname?.startsWith('/management-portal');
   const router = useRouter();
   const { user } = useAuthStore();
-  const { isOpen, closeCart, items, updateQuantity, removeItem, isLoading, currency: globalCurrency } = useCartStore();
+  const { isOpen, closeCart, items, updateQuantity, removeItem, isLoading } = useCartStore();
+  const currency = useCurrencyStore((s) => s.currency);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   if (!isOpen || isAdminPage) return null;
@@ -26,10 +28,19 @@ export function CartDrawer() {
     setCheckoutLoading(false);
   };
 
+  const getItemPrice = (item) => {
+    return currency === 'USD' && item.priceUSD ? item.priceUSD : item.price;
+  };
+
+  const getItemCurrency = (item) => {
+    return currency === 'USD' && item.priceUSD ? 'USD' : 'NGN';
+  };
+
   const total = items.reduce((acc, item) => {
-    const price = globalCurrency === 'USD' && item.priceUSD ? item.priceUSD : item.price;
-    return acc + (price * item.quantity);
+    return acc + (getItemPrice(item) * item.quantity);
   }, 0);
+
+  const displayCurrency = currency === 'USD' ? 'USD' : 'NGN';
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
@@ -100,10 +111,7 @@ export function CartDrawer() {
                         <button onClick={() => updateQuantity(item.productId, item.variant, item.quantity + 1)} className="w-7 h-7 flex items-center justify-center text-gray-400 hover:text-black transition-colors"><Plus size={12}/></button>
                       </div>
                       <p className="font-medium text-sm text-black">
-                        {formatCurrency(
-                          globalCurrency === 'USD' && item.priceUSD ? item.priceUSD * item.quantity : item.price * item.quantity,
-                          globalCurrency === 'USD' && item.priceUSD ? 'USD' : 'NGN'
-                        )}
+                        {formatCurrency(getItemPrice(item) * item.quantity, getItemCurrency(item))}
                       </p>
                     </div>
                   </div>
@@ -117,7 +125,7 @@ export function CartDrawer() {
           <div className="border-t border-gray-100 p-6 bg-white shrink-0 z-10">
             <div className="flex justify-between items-end mb-6">
               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Subtotal</span>
-              <span className="text-xl font-black text-black">{formatCurrency(total, globalCurrency)}</span>
+              <span className="text-xl font-black text-black">{formatCurrency(total, displayCurrency)}</span>
             </div>
             <button 
                onClick={handleCheckout} 
@@ -136,4 +144,3 @@ export function CartDrawer() {
     </div>
   );
 }
-

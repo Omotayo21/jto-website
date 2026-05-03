@@ -2,12 +2,12 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import DeliveryZone from '@/models/DeliveryZone';
 import { cookies } from 'next/headers';
-import { verifyToken } from '@/lib/auth';
 
 export async function PUT(request, { params }) {
   try {
     const { id } = params;
     await connectDB();
+    const cookieStore = cookies();
     const adminPasskey = cookieStore.get('admin_passkey')?.value;
     const secret = process.env.ADMIN_PASSKEY;
 

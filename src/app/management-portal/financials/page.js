@@ -28,9 +28,10 @@ export default async function FinancialsPage() {
 
     const colorPerformance = {};
     const sizePerformance = {};
-    const productPerformance = {}; // Aggregate performance per product from historical orders
+    const productPerformance = {};
 
     orders.forEach(order => {
+      // Determine currency from payment.currency, fallback to order.currency
       const isUSD = (order.payment?.currency || order.currency) === 'USD';
       
       if (isUSD) stats.usdRevenue += order.total;
@@ -39,6 +40,7 @@ export default async function FinancialsPage() {
       order.items.forEach(item => {
         const qty = item.quantity || 0;
         const rev = (item.price || 0) * qty;
+        // Use costPrice from the item — this was set at order time
         const cost = (item.costPrice || 0) * qty;
         const profit = rev - cost;
         
@@ -62,8 +64,22 @@ export default async function FinancialsPage() {
       });
     });
 
-    stats.ngnProfit = stats.ngnRevenue - (orders.filter(o => (o.payment?.currency || o.currency) !== 'USD').reduce((acc, o) => acc + (o.deliveryFee || 0) + o.items.reduce((ia, i) => ia + ((i.costPrice || 0) * i.quantity), 0), 0));
-    stats.usdProfit = stats.usdRevenue - (orders.filter(o => (o.payment?.currency || o.currency) === 'USD').reduce((acc, o) => acc + (o.deliveryFee || 0) + o.items.reduce((ia, i) => ia + ((i.costPrice || 0) * i.quantity), 0), 0));
+    // Calculate profit: Revenue - (cost of items + delivery fees)
+    // NGN orders
+    const ngnOrders = orders.filter(o => (o.payment?.currency || o.currency) !== 'USD');
+    const ngnCosts = ngnOrders.reduce((acc, o) => {
+      const itemCost = o.items.reduce((ia, i) => ia + ((i.costPrice || 0) * i.quantity), 0);
+      return acc + itemCost + (o.deliveryFee || 0);
+    }, 0);
+    stats.ngnProfit = stats.ngnRevenue - ngnCosts;
+
+    // USD orders  
+    const usdOrders = orders.filter(o => (o.payment?.currency || o.currency) === 'USD');
+    const usdCosts = usdOrders.reduce((acc, o) => {
+      const itemCost = o.items.reduce((ia, i) => ia + ((i.costPrice || 0) * i.quantity), 0);
+      return acc + itemCost + (o.deliveryFee || 0);
+    }, 0);
+    stats.usdProfit = stats.usdRevenue - usdCosts;
 
     topColors = Object.entries(colorPerformance).sort(([, a], [, b]) => b - a).slice(0, 5);
     topSizes = Object.entries(sizePerformance).sort(([, a], [, b]) => b - a).slice(0, 5);
@@ -122,6 +138,7 @@ export default async function FinancialsPage() {
                 </div>
               </div>
             ))}
+            {topColors.length === 0 && <p className="text-gray-400 text-sm italic">No color data yet</p>}
           </div>
         </div>
 
@@ -142,6 +159,7 @@ export default async function FinancialsPage() {
                 </div>
               </div>
             ))}
+            {topSizes.length === 0 && <p className="text-gray-400 text-sm italic">No size data yet</p>}
           </div>
         </div>
       </div>
@@ -159,10 +177,10 @@ export default async function FinancialsPage() {
               <tr>
                 <th className="px-8 py-6">Product</th>
                 <th className="px-8 py-6">Sales</th>
-                <th className="px-8 py-6">NGN Rev</th>
-                <th className="px-8 py-6 text-rose-500">NGN Profit</th>
-                <th className="px-8 py-6">USD Rev</th>
-                <th className="px-8 py-6 text-emerald-600">USD Profit</th>
+                <th className="px-8 py-6">₦ NGN Rev</th>
+                <th className="px-8 py-6 text-rose-500">₦ NGN Profit</th>
+                <th className="px-8 py-6">$ USD Rev</th>
+                <th className="px-8 py-6 text-emerald-600">$ USD Profit</th>
               </tr>
             </thead>
             <tbody>

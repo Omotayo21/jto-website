@@ -2,12 +2,27 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import DeliveryZone from '@/models/DeliveryZone';
 import { cookies } from 'next/headers';
-import { verifyToken } from '@/lib/auth';
 
-export async function GET() {
+export async function GET(request) {
   try {
     await connectDB();
-    const zones = await DeliveryZone.find({ active: true });
+    const { searchParams } = new URL(request.url);
+    const type = searchParams.get('type'); // 'domestic' or 'international'
+
+    const filter = { active: true };
+    if (type) {
+      if (type === 'domestic') {
+        // Find either 'domestic' or zones with no type set (legacy)
+        filter.$or = [
+          { type: 'domestic' },
+          { type: { $exists: false } }
+        ];
+      } else {
+        filter.type = type;
+      }
+    }
+
+    const zones = await DeliveryZone.find(filter);
     
     // Process zones to apply override if active and within date range
     const processedZones = zones.map(zone => {

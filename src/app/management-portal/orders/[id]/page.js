@@ -73,6 +73,9 @@ export default function AdminOrderDetailsPage({ params }) {
     );
   }
 
+  // Determine the currency this order was paid in
+  const orderCurrency = order.payment?.currency || order.currency || 'NGN';
+
   return (
     <div className="space-y-10 pb-20">
       <div className="flex items-center gap-4">
@@ -82,6 +85,12 @@ export default function AdminOrderDetailsPage({ params }) {
         <div>
           <h1 className="text-3xl font-black text-gray-900 tracking-tight">Order {order.orderNumber}</h1>
           <p className="text-gray-500 font-bold text-sm">Placed on {new Date(order.createdAt).toLocaleDateString()}</p>
+        </div>
+        {/* Currency Badge */}
+        <div className={`ml-auto px-4 py-2 rounded-2xl font-black text-xs uppercase tracking-widest ${
+          orderCurrency === 'USD' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'
+        }`}>
+          {orderCurrency === 'USD' ? '$ USD Order' : '₦ NGN Order'}
         </div>
       </div>
 
@@ -133,15 +142,31 @@ export default function AdminOrderDetailsPage({ params }) {
                        </div>
                     </div>
                     <div className="text-right">
-                       <p className="font-black text-gray-900">{formatCurrency(item.price * item.quantity)}</p>
-                       <p className="text-[10px] text-gray-400 font-bold uppercase">{formatCurrency(item.price)} each</p>
+                       <p className="font-black text-gray-900">{formatCurrency(item.price * item.quantity, orderCurrency)}</p>
+                       <p className="text-[10px] text-gray-400 font-bold uppercase">{formatCurrency(item.price, orderCurrency)} each</p>
                     </div>
                   </div>
                 ))}
              </div>
-             <div className="p-8 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
-                <span className="font-black text-gray-500 uppercase tracking-widest">Grand Total</span>
-                <span className="text-3xl font-black text-black">{formatCurrency(order.total)}</span>
+             <div className="p-8 bg-gray-50 border-t border-gray-100">
+                <div className="flex justify-between items-center mb-3">
+                  <span className="text-sm font-bold text-gray-400">Subtotal</span>
+                  <span className="font-black text-gray-900">{formatCurrency(order.subtotal, orderCurrency)}</span>
+                </div>
+                <div className="flex justify-between items-center mb-3">
+                  <span className="text-sm font-bold text-gray-400">Delivery ({order.delivery?.zone || 'Standard'})</span>
+                  <span className="font-black text-gray-900">{formatCurrency(order.deliveryFee, orderCurrency)}</span>
+                </div>
+                {order.discount > 0 && (
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="text-sm font-bold text-emerald-500">Discount</span>
+                    <span className="font-black text-emerald-500">-{formatCurrency(order.discount, orderCurrency)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between items-center pt-4 border-t border-gray-200">
+                  <span className="font-black text-gray-500 uppercase tracking-widest">Grand Total</span>
+                  <span className="text-3xl font-black text-black">{formatCurrency(order.total, orderCurrency)}</span>
+                </div>
              </div>
           </section>
         </div>
@@ -163,6 +188,14 @@ export default function AdminOrderDetailsPage({ params }) {
                       <p className="text-[10px] mt-2 text-gray-400 font-mono">Ref: {order.payment.reference}</p>
                    )}
                 </div>
+                <div>
+                   <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Payment Currency</p>
+                   <p className="font-bold text-gray-900">{orderCurrency}</p>
+                </div>
+                <div>
+                   <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Amount Paid</p>
+                   <p className="font-black text-gray-900 text-lg">{formatCurrency(order.payment?.amount || order.total, orderCurrency)}</p>
+                </div>
              </div>
           </section>
 
@@ -182,6 +215,10 @@ export default function AdminOrderDetailsPage({ params }) {
                 <div className="pt-4 border-t border-gray-50">
                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Zone</p>
                    <p className="font-bold text-gray-900 uppercase">{order.delivery?.zone || 'Standard'}</p>
+                </div>
+                <div className="pt-4 border-t border-gray-50">
+                   <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Delivery Fee</p>
+                   <p className="font-bold text-gray-900">{formatCurrency(order.deliveryFee, orderCurrency)}</p>
                 </div>
                 {order.delivery?.notes && (
                   <div className="pt-4 border-t border-gray-50 bg-amber-50/50 p-4 rounded-2xl">
