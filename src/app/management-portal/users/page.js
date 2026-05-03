@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
-import Imagr from 'next/image'
+import Image from 'next/image'
 
 export default function AdminUsersPage() {
   const [users, setUsers] = useState([]);
