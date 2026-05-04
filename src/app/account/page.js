@@ -150,7 +150,7 @@ export default function AccountPage() {
       </div>
 
       {/* ── Content Area ── */}
-      <div className="max-w-[1440px] mx-auto px-8 md:px-12 py-12">
+      <div className="max-w-[1440px] mx-auto px-8 md:px-12 py-12 bg-[#fffce0]">
 
         {/* Overview */}
         {activeTab === 'Overview' && (
