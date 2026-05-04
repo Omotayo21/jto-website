@@ -31,8 +31,8 @@ export default async function Home() {
       <section className="section-padding max-w-[1440px] mx-auto">
         <div className="flex flex-col items-center mb-16 text-center">
           <span className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400 mb-4">The Collection</span>
-          <h2 className="text-4xl md:text-6xl font-black serif-font italic leading-tight">Client Favorites</h2>
-          <div className="w-12 h-[1px] bg-black mb-6" />
+          <h2 className="text-4xl md:text-6xl font-black  leading-tight mb-6">Client Favorites</h2>
+        
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
             Essential Pieces for the Modern Silhouette
           </p>
@@ -59,7 +59,7 @@ export default async function Home() {
       </section>
 
       {/* ── ABOUT US SECTION ── */}
-      <section className="bg-[#DAA520] text-white section-padding">
+      <section id="about" className="bg-[#DAA520] text-white section-padding">
         <div className="max-w-3xl mx-auto text-center space-y-6">
           <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/50">About Us</span>
           <h3 className="text-3xl md:text-4xl poppins-font font-black uppercase tracking-tighter leading-snug">
@@ -82,7 +82,7 @@ export default async function Home() {
       <section className="bg-[#f9f9f7] section-padding text-center">
         <div className="max-w-2xl mx-auto space-y-8">
           <span className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Our Ethos</span>
-          <h3 className="text-4xl serif-font italic leading-snug">
+          <h3 className="text-4xl  leading-snug">
             &ldquo;Wearable Art, That Commands Attention&rdquo;
           </h3>
           <p className="text-sm text-gray-500 font-medium leading-relaxed">
@@ -95,7 +95,9 @@ export default async function Home() {
       <NewsletterSection />
 
       {/* FAQ Accordion (dark) */}
-      <FaqAccordion />
+      <div id="faq">
+        <FaqAccordion />
+      </div>
     </div>
   );
 }

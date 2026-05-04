@@ -51,7 +51,7 @@ export default function AdminLayout({ children }) {
         {/* Mobile Header */}
         <div className="lg:hidden bg-white border-b border-gray-100 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
           <Link href="/" className="text-xl font-black    text-black tracking-tighter">
-            JTOtheLabel <span className="text-gray-400 text-[10px] uppercase ml-1">Admin</span>
+          <img src='/black.png' alt='logo' className='w-[80px] md:w-[100px] h-[50px] md:h-[50px] -mt-2' /> <span className="text-gray-400 text-[10px] uppercase ml-1">Admin</span>
           </Link>
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

@@ -26,7 +26,7 @@ export function FaqAccordion() {
   return (
     <section className="bg-black text-white section-padding">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl md:text-4xl serif-font italic text-center mb-16">
+        <h2 className="text-3xl md:text-4xl  text-center mb-16">
           Frequently Asked Questions
         </h2>
         <div className="divide-y divide-white/10">

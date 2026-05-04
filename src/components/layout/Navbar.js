@@ -66,10 +66,10 @@ const SHOP_CATEGORIES = [
 const SALE_COLLECTIONS = [
   { label: 'Audacious Blacks', href: '/products?category=black', image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&q=80&auto=format&fit=crop' },
   { label: 'Best Sellers', href: '/products?category=bestsellers', image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400&q=80&auto=format&fit=crop' },
-  { label: 'Resort Edit', href: '/products?category=resort', image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&q=80&auto=format&fit=crop' },
-  { label: 'Tweed Edit', href: '/products?category=tweed', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&q=80&auto=format&fit=crop' },
   { label: 'Wedding Guest', href: '/products?category=wedding', image: 'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=400&q=80&auto=format&fit=crop' },
   { label: 'Work Wear', href: '/products?category=workwear', image: 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=400&q=80&auto=format&fit=crop' },
+   { label: 'Sets', href: '/products?category=sets', image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80&auto=format&fit=crop' },
+  { label: 'Dresses', href: '/products?category=dresses', image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400&q=80&auto=format&fit=crop' },
 ];
 
 const NAV_ITEMS = [
@@ -77,7 +77,7 @@ const NAV_ITEMS = [
   { label: 'Shop', href: '/products', megaMenu: 'shop' },
   { label: 'Kids', href: '/products?category=kids' },
   { label: 'Gift Card', href: '#' },
-  { label: 'SALE', href: '/products?category=sale', sale: true, megaMenu: 'sale' },
+  { label: 'SALE', href: '/products?category=sale', sale: false, megaMenu: 'sale' },
 ];
 
 /* ─── Mega Menu for Shop ─── */
@@ -115,7 +115,7 @@ function ShopMegaMenu({ onClose }) {
 /* ─── Mega Menu for Sale ─── */
 function SaleMegaMenu({ onClose }) {
   return (
-    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-0 bg-white shadow-2xl border border-gray-100 z-[200] w-[90vw] max-w-[900px]">
+    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-0 bg-white shadow-2xl border border-gray-100 z-[200] w-[90vw] max-w-[700px]">
       <div className="p-8">
         <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#DAA520] mb-6">Sale Collections</p>
         <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
@@ -292,7 +292,7 @@ export function Navbar() {
       <nav className="sticky top-0 z-40 w-full bg-white border-b border-gray-100 lg:hidden">
         <div className="px-6 h-16 flex justify-between items-center">
           <Link href="/" className="text-xl font-black tracking-tighter serif-font uppercase">
-            JTOtheLabel
+       <img src='/black.png' alt='logo' className='w-[100px] h-[80px]' />
           </Link>
           <Link href="/" className="text-[10px] font-black uppercase tracking-widest px-4 py-2 bg-black text-white rounded-full">
             Store
@@ -323,7 +323,7 @@ export function Navbar() {
             href="/"
             className="text-2xl md:text-3xl font-black tracking-tighter poppins-font uppercase select-none"
           >
-            JTOtheLabel
+         <img src='/black.png' alt='logo' className='w-[80px] md:w-[100px] h-[50px] md:h-[50px] -mt-2' />
           </Link>
 
           {/* Right — Search + Account + Cart */}
@@ -395,7 +395,7 @@ export function Navbar() {
       >
         <div className="flex flex-col h-full p-8 overflow-y-auto">
           <div className="flex justify-between items-center mb-12">
-            <span className="text-xl font-black poppins-font uppercase tracking-tighter">JTOtheLabel</span>
+             <img src='/black.png' alt='logo' className='w-[80px] h-[50px] -mt-2' />
             <div className="flex items-center gap-3">
               {/* Profile icon in mobile sidebar */}
               <Link

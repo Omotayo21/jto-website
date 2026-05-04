@@ -38,15 +38,17 @@ export default function LoginPage() {
     <div className="min-h-[80vh] flex items-center justify-center px-4 bg-white">
       <div className="w-full max-w-md">
         {/* Title */}
+         <div className="flex justify-center mb-8 flex flex-col items-center space-y-6">
+          <img src='/black.png' alt='logo' className='w-[120px] h-[80px]' />
         <h1 className="text-3xl serif-font italic text-center text-black mb-12 tracking-tight">
           Log in
         </h1>
-
+</div>
         {error && (
           <p className="text-sm text-[#DAA520] text-center mb-6 font-medium">{error}</p>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-0">
+        <form onSubmit={handleLogin} className="space-y-8">
           {/* Email */}
           <div className="border-b border-gray-300 focus-within:border-black transition-colors">
             <input
@@ -72,7 +74,7 @@ export default function LoginPage() {
           </div>
 
           {/* Forgot password */}
-          <div className="text-center mt-6">
+          <div className="text-right mt-6">
             <Link
               href="/forgot-password"
               className="text-sm text-gray-500 hover:text-black transition-colors underline-offset-2 hover:underline"

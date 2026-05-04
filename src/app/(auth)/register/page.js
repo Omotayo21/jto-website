@@ -36,9 +36,12 @@ export default function RegisterPage() {
     <div className="min-h-[80vh] flex items-center justify-center px-4 bg-white">
       <div className="w-full max-w-md">
         {/* Title */}
-        <h1 className="text-3xl serif-font italic text-center text-black mb-2 tracking-tight">
+       <div className="flex justify-center mb-8 flex flex-col items-center space-y-6">
+          <img src='/black.png' alt='logo' className='w-[120px] h-[80px]' />
+        <h1 className="text-3xl  text-center text-black mb-12 tracking-tight">
           Create Account
         </h1>
+</div>
         <p className="text-center text-xs text-gray-400 uppercase tracking-widest mb-12 font-medium">
           Join the JTOtheLabel Community
         </p>
@@ -47,7 +50,7 @@ export default function RegisterPage() {
           <p className="text-sm text-[#DAA520] text-center mb-6 font-medium">{error}</p>
         )}
 
-        <form onSubmit={handleRegister} className="space-y-0">
+        <form onSubmit={handleRegister} className="space-y-8">
           {/* Name */}
           <div className="border-b border-gray-300 focus-within:border-black transition-colors">
             <input
