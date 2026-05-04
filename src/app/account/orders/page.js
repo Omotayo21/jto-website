@@ -23,14 +23,14 @@ export default async function AccountOrdersPage() {
     <div className="max-w-5xl mx-auto py-12 px-4">
       <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight mb-8">Order History</h1>
       {orders.length === 0 ? (
-        <div className="bg-white p-16 text-center shadow-lg shadow-gray-200/40 rounded-[2rem] border border-gray-100 flex flex-col items-center">
+        <div className="bg-[#FFFCE0] p-16 text-center shadow-lg shadow-gray-200/40 rounded-[2rem] border border-gray-100 flex flex-col items-center">
           <p className="text-xl text-gray-500 mb-6 font-medium">You have no past orders.</p>
           <Link href="/products" className="bg-indigo-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200">Start Shopping</Link>
         </div>
       ) : (
         <div className="space-y-12">
           {orders.map(order => (
-            <div key={order._id} className="bg-white rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100 overflow-hidden group hover:shadow-2xl transition-all duration-500">
+            <div key={order._id} className="bg-[#FFFCE0] rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100 overflow-hidden group hover:shadow-2xl transition-all duration-500">
                <div className="p-8 border-b border-gray-50 bg-gray-50/30 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                  <div>
                    <div className="flex items-center gap-4 mb-2">
@@ -56,7 +56,7 @@ export default async function AccountOrdersPage() {
 
                <div className="p-8 border-t border-gray-50 bg-gray-50/20 flex flex-wrap gap-4">
                  {order.items.slice(0, 4).map((item, idx) => (
-                   <div key={idx} className="w-16 h-16 rounded-xl overflow-hidden bg-white border border-gray-100">
+                   <div key={idx} className="w-16 h-16 rounded-xl overflow-hidden bg-[#FFFCE0] border border-gray-100">
                      <img src={item.image} alt={item.productName} className="w-full h-full object-cover" />
                    </div>
                  ))}

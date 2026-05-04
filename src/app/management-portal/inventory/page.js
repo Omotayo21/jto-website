@@ -66,7 +66,7 @@ export default function InventoryPage() {
           <h1 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tight">Inventory Control</h1>
           <p className="text-gray-500 font-bold mt-1 text-xs md:text-sm uppercase tracking-widest opacity-70">Allocate stock among variants</p>
         </div>
-        <button onClick={fetchInventory} className="flex items-center gap-2 px-6 py-3 bg-white rounded-2xl border border-gray-100 shadow-sm text-xs font-black uppercase tracking-widest hover:bg-gray-50 transition-all">
+        <button onClick={fetchInventory} className="flex items-center gap-2 px-6 py-3 bg-[#FFFCE0] rounded-2xl border border-gray-100 shadow-sm text-xs font-black uppercase tracking-widest hover:bg-gray-50 transition-all">
           <RefreshCw size={14} className={loading ? 'animate-spin' : ''} /> Refresh Data
         </button>
       </div>
@@ -75,7 +75,7 @@ export default function InventoryPage() {
         <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
         <Input 
           placeholder="Search inventory by product name or category..." 
-          className="h-16 pl-16 rounded-[2rem] bg-white border-gray-100 shadow-xl shadow-gray-100 text-lg"
+          className="h-16 pl-16 rounded-[2rem] bg-[#FFFCE0] border-gray-100 shadow-xl shadow-gray-100 text-lg"
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
@@ -83,7 +83,7 @@ export default function InventoryPage() {
 
       <div className="grid gap-8">
         {loading ? (
-          <div className="h-64 flex items-center justify-center bg-white rounded-[3rem] border border-gray-50">
+          <div className="h-64 flex items-center justify-center bg-[#FFFCE0] rounded-[3rem] border border-gray-50">
             <Loader2 className="animate-spin text-gray-300" size={48} />
           </div>
         ) : filteredProducts.map(product => (
@@ -154,7 +154,7 @@ function InventoryItem({ product, onUpdate, isSaving }) {
   };
 
   return (
-    <div className="bg-white rounded-[3rem] shadow-2xl shadow-gray-100 border border-gray-50 overflow-hidden">
+    <div className="bg-[#FFFCE0] rounded-[3rem] shadow-2xl shadow-gray-100 border border-gray-50 overflow-hidden">
       <div className="p-8 border-b border-gray-50 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="flex items-center gap-6">
           <div className="w-16 h-20 bg-gray-50 rounded-2xl overflow-hidden border border-gray-100 shrink-0">
@@ -206,7 +206,7 @@ function InventoryItem({ product, onUpdate, isSaving }) {
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {variants.filter(v => v.key !== 'total').map(variant => (
-              <div key={variant.key} className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col gap-3 group hover:border-black transition-all">
+              <div key={variant.key} className="bg-[#FFFCE0] p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col gap-3 group hover:border-black transition-all">
                 <div className="flex flex-col">
                   <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1 group-hover:text-black transition-colors">
                     {variant.color ? variant.color.name : 'Standard'}
@@ -220,7 +220,7 @@ function InventoryItem({ product, onUpdate, isSaving }) {
                   value={localInventory[variant.key] || 0}
                   onChange={e => handleQtyChange(variant.key, e.target.value)}
                   className={`w-full h-10 px-3 rounded-xl border font-bold text-center transition-all ${
-                    (localInventory[variant.key] || 0) === 0 ? 'border-gray-100 bg-gray-50/50 text-gray-300' : 'border-black bg-white text-black'
+                    (localInventory[variant.key] || 0) === 0 ? 'border-gray-100 bg-gray-50/50 text-gray-300' : 'border-black bg-[#FFFCE0] text-black'
                   } focus:ring-2 focus:ring-black outline-none`}
                 />
               </div>

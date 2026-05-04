@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background: #FFFCE0;
   --foreground: #000000;
   --accent: #DAA520; /* Burgundy */
   --accent-foreground: #ffffff;
@@ -18,7 +18,7 @@
 
 @layer base {
   body {
-    @apply bg-white text-black antialiased;
+    @apply bg-[#FFFCE0] text-black antialiased;
     font-family: var(--font-sans);
   }
 

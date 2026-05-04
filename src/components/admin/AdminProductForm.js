@@ -228,7 +228,7 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-12 pb-20">
-      <div className="flex justify-between items-center bg-white p-6 rounded-3xl shadow-sm border border-gray-100 sticky top-20 z-20">
+      <div className="flex justify-between items-center bg-[#FFFCE0] p-6 rounded-3xl shadow-sm border border-gray-100 sticky top-20 z-20">
         <div className="flex items-center gap-4">
           <Link href="/management-portal/products" className="p-3 bg-gray-50 rounded-2xl text-gray-500 hover:text-black transition-colors">
             <ArrowLeft size={20} />
@@ -244,7 +244,7 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
       <div className="grid lg:grid-cols-3 gap-10">
         {/* Left Column: Basic Info & Media */}
         <div className="lg:col-span-2 space-y-10">
-          <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
+          <section className="bg-[#FFFCE0] p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
             <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-black pl-4 uppercase tracking-tight">Basic Information</h2>
             <div className="space-y-6">
               <div>
@@ -311,7 +311,7 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
             </div>
           </section>
 
-          <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
+          <section className="bg-[#FFFCE0] p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
               <div className="flex justify-between items-center mb-8">
                 <h2 className="text-xl font-black text-gray-900 border-l-4 border-black pl-4 uppercase tracking-tight">Media Gallery</h2>
                 <div className="flex gap-3">
@@ -386,7 +386,7 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
         {(isAdmin || isFinanceManager || isStockCoordinator) && (
           <div className="space-y-10">
             {(isAdmin || isFinanceManager) && (
-              <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
+              <section className="bg-[#FFFCE0] p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
                 <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-emerald-600 pl-4 uppercase tracking-tight">Pricing & Costing</h2>
                 <div className="space-y-6">
                   <div className="grid grid-cols-2 gap-4">
@@ -416,7 +416,7 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
               </section>
             )}
 
-          <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
+          <section className="bg-[#FFFCE0] p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
              <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-amber-600 pl-4 uppercase tracking-tight">Variants</h2>
              <div className="space-y-8">
                 {/* Colors */}
@@ -433,7 +433,7 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
                    </div>
                    <div className="flex gap-2">
                      <Input placeholder="Color Name" value={newColor.name} onChange={e => setNewColor({...newColor, name: e.target.value})} className="h-10 text-xs font-medium" />
-                     <input type="color" value={newColor.hex} onChange={e => setNewColor({...newColor, hex: e.target.value})} className="h-10 w-10 shrink-0 p-1 bg-white border border-gray-200 rounded-lg cursor-pointer" />
+                     <input type="color" value={newColor.hex} onChange={e => setNewColor({...newColor, hex: e.target.value})} className="h-10 w-10 shrink-0 p-1 bg-[#FFFCE0] border border-gray-200 rounded-lg cursor-pointer" />
                      <button type="button" onClick={addColor} className="p-2 bg-black text-white rounded-lg"><Plus size={16}/></button>
                    </div>
                 </div>
@@ -458,7 +458,7 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
           </section>
 
             {(isAdmin || isStockCoordinator) && (
-              <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
+              <section className="bg-[#FFFCE0] p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
                 <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-black pl-4 uppercase tracking-tight">Stock Management</h2>
                 <div className="space-y-6">
                    <div>

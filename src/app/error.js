@@ -5,7 +5,7 @@ import Link from 'next/link';
 export default function Error({ error, reset }) {
   return (
     <div className="min-h-[70vh] flex items-center justify-center p-6">
-      <div className="max-w-md w-full bg-white rounded-[3rem] p-10 shadow-2xl shadow-gray-100 border border-gray-100 text-center">
+      <div className="max-w-md w-full bg-[#FFFCE0] rounded-[3rem] p-10 shadow-2xl shadow-gray-100 border border-gray-100 text-center">
         <div className="w-20 h-20 bg-rose-50 rounded-3xl flex items-center justify-center text-rose-500 mx-auto mb-8 shadow-inner">
           <AlertTriangle size={40} />
         </div>

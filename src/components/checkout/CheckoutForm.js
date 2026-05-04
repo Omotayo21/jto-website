@@ -151,7 +151,7 @@ export function CheckoutForm() {
 
   return (
     <div className="grid lg:grid-cols-2 gap-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
+      <div className="bg-[#FFFCE0] p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
         <h2 className="text-2xl font-black mb-8 tracking-tight flex items-center gap-3 ">
           <span className="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center text-sm font-sans not-italic">1</span>
           Delivery Details
@@ -206,7 +206,7 @@ export function CheckoutForm() {
         </form>
       </div>
 
-      <div className="bg-gray-100 p-10 rounded-[2.5rem] text-black flex flex-col shadow-2xl shadow-black/20">
+      <div className="bg-[#FFFCE0] p-10 rounded-[2.5rem] text-black flex flex-col shadow-2xl shadow-black/20">
         <h2 className="text-2xl font-black mb-8 tracking-tight flex items-center gap-3 ">
           <span className="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center text-sm  border border-white/20">2</span>
           Order Summary
@@ -225,7 +225,7 @@ export function CheckoutForm() {
                  </p>
 
                  <div className="flex justify-between items-center mt-2">
-                   <span className="text-xs bg-white/10 px-2 py-0.5 rounded text-black">Qty: {item.quantity}</span>
+                   <span className="text-xs bg-[#FFFCE0]/10 px-2 py-0.5 rounded text-black">Qty: {item.quantity}</span>
                     <span className="font-black text-black">
                       {formatCurrency(getItemPrice(item) * item.quantity, currency)}
                     </span>
@@ -242,7 +242,7 @@ export function CheckoutForm() {
                 value={couponCode} 
                 onChange={e => setCouponCode(e.target.value.toUpperCase())} 
                 disabled={discountVal > 0} 
-                className="bg-white/30 text-black h-14 rounded-xl placeholder:text-gray-600 border border-black  " 
+                className="bg-[#FFFCE0]/30 text-black h-14 rounded-xl placeholder:text-gray-600 border border-black  " 
              />
              {discountVal > 0 ? (
                <div className="w-14 h-14 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center border border-emerald-500/30">

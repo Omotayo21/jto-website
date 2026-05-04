@@ -44,7 +44,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white pt-32 pb-20">
+    <div className="min-h-screen pt-32 pb-20">
       <div className="max-w-[1440px] mx-auto px-8 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
           
@@ -104,7 +104,7 @@ export default function ContactPage() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Jane Doe"
-                    className="w-full bg-white border border-gray-200 px-6 py-4 rounded-xl text-sm outline-none focus:border-black transition-all"
+                    className="w-full bg-[#FFFCE0] border border-gray-200 px-6 py-4 rounded-xl text-sm outline-none focus:border-black transition-all"
                   />
                 </div>
                 <div className="space-y-2">
@@ -116,7 +116,7 @@ export default function ContactPage() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="jane@example.com"
-                    className="w-full bg-white border border-gray-200 px-6 py-4 rounded-xl text-sm outline-none focus:border-black transition-all"
+                    className="w-full bg-[#FFFCE0] border border-gray-200 px-6 py-4 rounded-xl text-sm outline-none focus:border-black transition-all"
                   />
                 </div>
               </div>
@@ -130,7 +130,7 @@ export default function ContactPage() {
                   value={formData.subject}
                   onChange={handleChange}
                   placeholder="Inquiry about S/S 24 Collection"
-                  className="w-full bg-white border border-gray-200 px-6 py-4 rounded-xl text-sm outline-none focus:border-black transition-all"
+                  className="w-full bg-[#FFFCE0] border border-gray-200 px-6 py-4 rounded-xl text-sm outline-none focus:border-black transition-all"
                 />
               </div>
 
@@ -143,7 +143,7 @@ export default function ContactPage() {
                   value={formData.message}
                   onChange={handleChange}
                   placeholder="How can we help you?"
-                  className="w-full bg-white border border-gray-200 px-6 py-4 rounded-xl text-sm outline-none focus:border-black transition-all resize-none"
+                  className="w-full bg-[#FFFCE0] border border-gray-200 px-6 py-4 rounded-xl text-sm outline-none focus:border-black transition-all resize-none"
                 />
               </div>
 

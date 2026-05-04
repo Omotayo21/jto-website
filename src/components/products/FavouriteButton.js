@@ -49,7 +49,7 @@ export function FavouriteButton({ productId }) {
     <button 
       onClick={handleToggle}
       disabled={loading}
-      className={`p-3 rounded-2xl shadow-lg border transition-all hover:scale-110 active:scale-95 ${isFavourite ? 'bg-rose-50 border-rose-100 text-rose-500 shadow-rose-200' : 'bg-white border-gray-100 text-gray-400 shadow-gray-100 hover:text-rose-400'}`}
+      className={`p-3 rounded-2xl shadow-lg border transition-all hover:scale-110 active:scale-95 ${isFavourite ? 'bg-rose-50 border-rose-100 text-rose-500 shadow-rose-200' : 'bg-[#FFFCE0] border-gray-100 text-gray-400 shadow-gray-100 hover:text-rose-400'}`}
     >
       {loading ? (
         <Loader2 className="w-6 h-6 animate-spin" />

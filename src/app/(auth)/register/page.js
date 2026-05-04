@@ -33,7 +33,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4 bg-white">
+    <div className="min-h-[80vh] flex items-center justify-center px-4 bg-[#FFFCE0]">
       <div className="w-full max-w-md">
         {/* Title */}
        <div className="flex justify-center mb-8 flex flex-col items-center space-y-6">

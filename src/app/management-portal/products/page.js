@@ -28,7 +28,7 @@ export default async function AdminProductsPage() {
         </Link>
       </div>
 
-      <div className="bg-white rounded-[2rem] md:rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100 overflow-hidden">
+      <div className="bg-[#FFFCE0] rounded-[2rem] md:rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100 overflow-hidden">
         <div className="overflow-x-auto scrollbar-hide">
           <table className="w-full text-left min-w-[700px]">
             <thead>

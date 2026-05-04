@@ -55,7 +55,7 @@ export function Hero() {
             </h1>
             <Link
               href="/products"
-              className="px-12 py-4 border border-white text-white uppercase text-[10px] font-bold tracking-[0.3em] hover:bg-white hover:text-black transition-all duration-500"
+              className="px-12 py-4 border border-white text-white uppercase text-[10px] font-bold tracking-[0.3em] hover:bg-[#FFFCE0] hover:text-black transition-all duration-500"
             >
               Explore Collection
             </Link>
@@ -67,14 +67,14 @@ export function Hero() {
       <div className="absolute bottom-10 right-12 z-30 flex items-center gap-1">
         <button
           onClick={prev}
-          className="w-10 h-10 bg-white/20 backdrop-blur-sm border border-white/30 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 rounded-full"
+          className="w-10 h-10 bg-[#FFFCE0]/20 backdrop-blur-sm border border-white/30 text-white flex items-center justify-center hover:bg-[#FFFCE0] hover:text-black transition-all duration-300 rounded-full"
           aria-label="Previous slide"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
         <button
           onClick={next}
-          className="w-10 h-10 bg-white/20 backdrop-blur-sm border border-white/30 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 rounded-full"
+          className="w-10 h-10 bg-[#FFFCE0]/20 backdrop-blur-sm border border-white/30 text-white flex items-center justify-center hover:bg-[#FFFCE0] hover:text-black transition-all duration-300 rounded-full"
           aria-label="Next slide"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
@@ -86,7 +86,7 @@ export function Hero() {
             <button
               key={idx}
               onClick={() => setCurrent(idx)}
-              className={`rounded-full transition-all duration-500 ${idx === current ? 'w-5 h-1.5 bg-white' : 'w-1.5 h-1.5 bg-white/40'}`}
+              className={`rounded-full transition-all duration-500 ${idx === current ? 'w-5 h-1.5 bg-[#FFFCE0]' : 'w-1.5 h-1.5 bg-[#FFFCE0]/40'}`}
             />
           ))}
         </div>

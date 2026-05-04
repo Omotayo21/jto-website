@@ -19,8 +19,8 @@ export function PolicyModal({ isOpen, onClose, title, content }) {
       />
       
       {/* Modal Content */}
-      <div className="relative bg-white w-full max-w-2xl max-h-[80vh] overflow-y-auto rounded-[2rem] shadow-2xl animate-in zoom-in-95 duration-300">
-        <div className="sticky top-0 bg-white px-8 py-6 border-b border-gray-100 flex justify-between items-center z-10">
+      <div className="relative bg-[#FFFCE0] w-full max-w-2xl max-h-[80vh] overflow-y-auto rounded-[2rem] shadow-2xl animate-in zoom-in-95 duration-300">
+        <div className="sticky top-0 bg-[#FFFCE0] px-8 py-6 border-b border-gray-100 flex justify-between items-center z-10">
           <h2 className="text-xl font-black poppins-font uppercase tracking-tighter">{title}</h2>
           <button 
             onClick={onClose}

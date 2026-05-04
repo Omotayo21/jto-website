@@ -160,7 +160,7 @@ export default function AccountPage() {
               { label: 'Total Orders', value: orders.length || '—', icon: '📦' },
               { label: 'Saved Favorites', value: favorites.length || '0', icon: '♡' },
             ].map(card => (
-              <div key={card.label} className="bg-white p-8 border border-gray-200">
+              <div key={card.label} className="bg-[#FFFCE0] p-8 border border-gray-200">
                 <span className="text-2xl block mb-4">{card.icon}</span>
                 <p className="text-3xl font-black serif-font italic mb-1">{card.value}</p>
                 <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">{card.label}</p>
@@ -168,7 +168,7 @@ export default function AccountPage() {
             ))}
 
             {/* Account Details Card */}
-            <div className="md:col-span-2 bg-white border border-gray-200 p-8">
+            <div className="md:col-span-2 bg-[#FFFCE0] border border-gray-200 p-8">
               <h3 className="text-xs font-black uppercase tracking-[0.2em] text-gray-400 mb-6">Account Details</h3>
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-4">
@@ -188,7 +188,7 @@ export default function AccountPage() {
 
         {/* Orders */}
         {activeTab === 'Orders' && (
-          <div className="bg-white border border-gray-200">
+          <div className="bg-[#FFFCE0] border border-gray-200">
             <div className="p-8 border-b border-gray-200">
               <h2 className="text-xs font-black uppercase tracking-[0.2em] text-gray-400">Order History</h2>
             </div>
@@ -265,7 +265,7 @@ export default function AccountPage() {
 
         {/* Favorites */}
         {activeTab === 'Favorites' && (
-          <div className="bg-white border border-gray-200">
+          <div className="bg-[#FFFCE0] border border-gray-200">
             <div className="p-8 border-b border-gray-200">
               <h2 className="text-xs font-black uppercase tracking-[0.2em] text-gray-400">Saved Favorites</h2>
             </div>

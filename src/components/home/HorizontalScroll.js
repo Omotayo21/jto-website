@@ -21,7 +21,7 @@ export function HorizontalScroll({ products, title }) {
       <div className="max-w-[1440px] mx-auto px-8 md:px-12">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl serif-font italic mb-6">Client Favourites</h2>
-          <div className="w-20 h-[1px] bg-white/30 mx-auto" />
+          <div className="w-20 h-[1px] bg-[#FFFCE0]/30 mx-auto" />
         </div>
 
         <div className="relative group">
@@ -32,7 +32,7 @@ export function HorizontalScroll({ products, title }) {
           >
             {products.map((product) => (
               <div key={product._id} className="min-w-[280px] md:min-w-[380px] snap-start">
-                <div className="bg-white p-4 md:p-8 text-black">
+                <div className="bg-[#FFFCE0] p-4 md:p-8 text-black">
                   <ProductCard product={product} />
                 </div>
               </div>
@@ -57,7 +57,7 @@ export function HorizontalScroll({ products, title }) {
         {/* Pagination Dots */}
         <div className="flex justify-center gap-2 mt-4">
           {products.slice(0, 5).map((_, i) => (
-            <div key={i} className={`w-1.5 h-1.5 rounded-full ${i === 0 ? 'bg-white' : 'bg-white/30'}`} />
+            <div key={i} className={`w-1.5 h-1.5 rounded-full ${i === 0 ? 'bg-[#FFFCE0]' : 'bg-[#FFFCE0]/30'}`} />
           ))}
         </div>
       </div>

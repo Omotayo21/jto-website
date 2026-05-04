@@ -82,7 +82,7 @@ export function ProductReviews({ productId }) {
         {/* Review Form */}
         <div className="lg:col-span-1">
           {user ? (
-            <div className="bg-white p-8 border border-gray-200 sticky top-24">
+            <div className="bg-[#FFFCE0] p-8 border border-gray-200 sticky top-24">
               <h3 className="font-black text-gray-900 text-xl mb-6 serif-font italic">Leave a Review</h3>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
@@ -108,7 +108,7 @@ export function ProductReviews({ productId }) {
                     required
                     rows="4"
                     placeholder="Tell others what you think..."
-                    className="w-full bg-white border-gray-200 p-4 text-sm font-medium focus:ring-1 focus:ring-black transition-all outline-none border"
+                    className="w-full bg-[#FFFCE0] border-gray-200 p-4 text-sm font-medium focus:ring-1 focus:ring-black transition-all outline-none border"
                   />
                 </div>
                 <Button disabled={isSubmitting} type="submit" className="w-full h-14 rounded-none bg-black hover:bg-[#DAA520] font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3">
@@ -134,7 +134,7 @@ export function ProductReviews({ productId }) {
             </div>
           ) : (
             reviews.map((review) => (
-              <div key={review._id} className="bg-white p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <div key={review._id} className="bg-[#FFFCE0] p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
                 <div className="flex justify-between items-start mb-6">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-gray-100 flex items-center justify-center text-black font-black">

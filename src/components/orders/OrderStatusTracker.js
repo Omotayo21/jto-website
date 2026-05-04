@@ -43,7 +43,7 @@ export function OrderStatusTracker({ status, history }) {
 
           return (
             <div key={stage.id} className="flex flex-col items-center group">
-              <div className={`w-12 h-12 rounded-full border-4 flex items-center justify-center transition-all duration-500 z-10 ${isCompleted ? 'bg-black border-black text-white shadow-lg shadow-gray-200' : isActive ? 'bg-white border-black text-black scale-125 shadow-xl' : 'bg-white border-gray-100 text-gray-300'}`}>
+              <div className={`w-12 h-12 rounded-full border-4 flex items-center justify-center transition-all duration-500 z-10 ${isCompleted ? 'bg-black border-black text-white shadow-lg shadow-gray-200' : isActive ? 'bg-[#FFFCE0] border-black text-black scale-125 shadow-xl' : 'bg-[#FFFCE0] border-gray-100 text-gray-300'}`}>
                 {isCompleted ? <CheckCircle2 className="w-6 h-6" /> : <span className="font-bold">{index + 1}</span>}
               </div>
               <div className="mt-4 text-center">
@@ -57,7 +57,7 @@ export function OrderStatusTracker({ status, history }) {
               
               {/* Note tooltip for active/completed stages */}
               {statusInfo?.note && (isActive || isCompleted) && (
-                <div className="absolute -bottom-12 bg-white px-3 py-1.5 rounded-xl border border-gray-100 shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20">
+                <div className="absolute -bottom-12 bg-[#FFFCE0] px-3 py-1.5 rounded-xl border border-gray-100 shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20">
                   <p className="text-[10px] font-bold text-black uppercase tracking-widest">{statusInfo.note}</p>
                 </div>
               )}

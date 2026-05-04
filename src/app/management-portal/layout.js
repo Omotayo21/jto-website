@@ -49,7 +49,7 @@ export default function AdminLayout({ children }) {
     <SecretGate>
       <div className="flex flex-col lg:flex-row min-h-screen bg-gray-50 overflow-x-hidden">
         {/* Mobile Header */}
-        <div className="lg:hidden bg-white border-b border-gray-100 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+        <div className="lg:hidden bg-[#FFFCE0] border-b border-gray-100 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
           <Link href="/" className="text-xl font-black    text-black tracking-tighter">
           <img src='/black.png' alt='logo' className='w-[80px] md:w-[100px] h-[50px] md:h-[50px] -mt-2' /> <span className="text-gray-400 text-[10px] uppercase ml-1">Admin</span>
           </Link>
@@ -71,7 +71,7 @@ export default function AdminLayout({ children }) {
 
         {/* Sidebar */}
         <aside className={`
-          fixed lg:sticky top-0 left-0 z-50 h-screen w-72 bg-white border-r border-gray-100 p-8 flex flex-col gap-2 
+          fixed lg:sticky top-0 left-0 z-50 h-screen w-72 bg-[#FFFCE0] border-r border-gray-100 p-8 flex flex-col gap-2 
           transition-transform duration-300 ease-in-out shadow-2xl lg:shadow-none
           ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}>

@@ -22,7 +22,7 @@ function SearchOverlay({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[300] bg-white animate-in fade-in duration-300 flex flex-col">
+    <div className="fixed inset-0 z-[300] bg-[#FFFCE0] animate-in fade-in duration-300 flex flex-col">
       <div className="flex justify-between items-center p-8 border-b border-gray-100">
         <span className="text-xl font-black serif-font uppercase tracking-tighter">Search</span>
         <button onClick={onClose} className="p-2 hover:opacity-60 transition-opacity">
@@ -289,7 +289,7 @@ export function Navbar() {
 
   if (isAdminPage) {
     return (
-      <nav className="sticky top-0 z-40 w-full bg-white border-b border-gray-100 lg:hidden">
+      <nav className="sticky top-0 z-40 w-full bg-[#FFFCE0] border-b border-gray-100 lg:hidden">
         <div className="px-6 h-16 flex justify-between items-center">
           <Link href="/" className="text-xl font-black tracking-tighter serif-font uppercase">
        <img src='/black.png' alt='logo' className='w-[100px] h-[80px]' />
@@ -305,7 +305,7 @@ export function Navbar() {
   return (
     <>
       {/* ── ANNOUNCEMENT BAR ── */}
-      <div className="w-full bg-[#FFDA03] text-black text-center py-2.5 px-4 flex items-center justify-center gap-2 text-[11px] font-black uppercase tracking-widest">
+      <div className="w-full bg-[#FFDA03] text-black text-center py-2.5  flex items-center justify-center gap-2 text-[9px] font-black uppercase tracking-widest">
         <span>{currency === 'USD' ? 'Free Shipping on Orders $250+' : 'Free Shipping on Orders ₦350,000+'}</span>
         <span>→</span>
       </div>
@@ -317,15 +317,19 @@ export function Navbar() {
         }`}
       >
         {/* Row 1: Search / Logo / Icons */}
-        <div className="max-w-[1440px] mx-auto px-8 flex items-center justify-between h-16">
+        <div className="max-w-[1440px] bg-white mx-auto px-8 flex items-center justify-between h-16">
           {/* Left — Brand Logo */}
           <Link
             href="/"
             className="text-2xl md:text-3xl font-black tracking-tighter poppins-font uppercase select-none"
           >
-         <img src='/black.png' alt='logo' className='w-[80px] md:w-[100px] h-[50px] md:h-[50px] -mt-2' />
+         <img src='/without text.png' alt='logo' className='w-[60px] md:w-[60px] h-[60px] md:h-[60px] ' />
           </Link>
-
+          
+            <div className='flex  flex-col items-center'>
+              <h1 className='font-black md:block hidden md:text-[30px] uppercase -pl-20'>JTOtheLabel</h1>
+            </div>
+            
           {/* Right — Search + Account + Cart */}
           <div className="flex items-center gap-5">
             <button onClick={() => setIsSearchOpen(true)} className="p-1 hover:opacity-60 transition-opacity" aria-label="Search">
@@ -395,7 +399,7 @@ export function Navbar() {
       >
         <div className="flex flex-col h-full p-8 overflow-y-auto">
           <div className="flex justify-between items-center mb-12">
-             <img src='/black.png' alt='logo' className='w-[80px] h-[50px] -mt-2' />
+             <img src='/without text.png' alt='logo' className='w-[60px] h-[60px] -mt-2' />
             <div className="flex items-center gap-3">
               {/* Profile icon in mobile sidebar */}
               <Link

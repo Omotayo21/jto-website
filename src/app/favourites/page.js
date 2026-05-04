@@ -69,7 +69,7 @@ export default function FavouritesPage() {
       </div>
 
       {favourites.length === 0 ? (
-        <div className="bg-white rounded-[3rem] p-16 text-center border border-gray-100 shadow-2xl shadow-gray-50 flex flex-col items-center max-w-2xl mx-auto">
+        <div className="bg-[#FFFCE0] rounded-[3rem] p-16 text-center border border-gray-100 shadow-2xl shadow-gray-50 flex flex-col items-center max-w-2xl mx-auto">
           <div className="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-8 text-gray-300">
              <Heart size={32} />
           </div>

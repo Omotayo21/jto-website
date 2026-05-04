@@ -44,7 +44,7 @@ export default function AdminUsersPage() {
     <div>
       <h1 className="text-3xl font-extrabold text-gray-900 mb-8">User Management</h1>
 
-      <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-[#FFFCE0] rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>

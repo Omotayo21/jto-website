@@ -63,7 +63,7 @@ export default async function AdminDashboard() {
           <h1 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tight">Admin Console</h1>
           <p className="text-gray-500 font-bold mt-1 text-xs md:text-sm uppercase tracking-widest opacity-70">Platform performance overview</p>
         </div>
-        <div className="flex items-center gap-3 px-6 py-3 bg-white rounded-2xl border border-gray-100 shadow-sm self-start md:self-auto">
+        <div className="flex items-center gap-3 px-6 py-3 bg-[#FFFCE0] rounded-2xl border border-gray-100 shadow-sm self-start md:self-auto">
           <div className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse ring-4 ring-emerald-100" />
           <span className="text-[10px] md:text-xs font-black text-gray-600 uppercase tracking-widest">{new Date().toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}</span>
         </div>
@@ -71,7 +71,7 @@ export default async function AdminDashboard() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
         {statCards.map((stat, i) => (
-          <div key={i} className="bg-white p-8 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-50 flex flex-col gap-6 group hover:-translate-y-1 transition-all duration-300">
+          <div key={i} className="bg-[#FFFCE0] p-8 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-50 flex flex-col gap-6 group hover:-translate-y-1 transition-all duration-300">
              <div className={`${stat.bg} w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110`}>
                 {stat.label.includes('NGN') ? <span className={`font-black text-xl ${stat.color}`}>₦</span> : <stat.icon className={`${stat.color}`} size={24} />}
              </div>
@@ -84,7 +84,7 @@ export default async function AdminDashboard() {
       </div>
 
       <div className="grid lg:grid-cols-3 gap-8 md:gap-12 pb-10">
-        <div className="lg:col-span-2 bg-white rounded-[3rem] shadow-2xl shadow-gray-100 border border-gray-50 overflow-hidden">
+        <div className="lg:col-span-2 bg-[#FFFCE0] rounded-[3rem] shadow-2xl shadow-gray-100 border border-gray-50 overflow-hidden">
           <div className="p-8 md:p-10 border-b border-gray-50 flex items-center justify-between">
             <h3 className="text-lg md:text-xl font-black text-gray-900 uppercase tracking-tight">Recent Transactions</h3>
             <Link href="/management-portal/orders" className="text-[10px] font-black text-black uppercase tracking-widest flex items-center gap-2 hover:bg-gray-100 px-4 py-2 rounded-xl transition-all">
@@ -121,7 +121,7 @@ export default async function AdminDashboard() {
           </div>
         </div>
 
-        <div className="bg-white rounded-[3rem] p-3 md:p-5 shadow-2xl shadow-gray-100 border border-gray-50 h-fit w-fit">
+        <div className="bg-[#FFFCE0] rounded-[3rem] p-3 md:p-5 shadow-2xl shadow-gray-100 border border-gray-50 h-fit w-fit">
            <h3 className="text-lg md:text-xl font-black text-gray-900 uppercase tracking-tight mb-10 pb-6 border-b border-gray-50">Best Sellers</h3>
            <div className="space-y-8">
               {topProducts.map((p, i) => (

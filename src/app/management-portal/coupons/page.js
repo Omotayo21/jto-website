@@ -111,7 +111,7 @@ export default function AdminCouponsPage() {
       </div>
 
       {showAdd && (
-        <div className="bg-white p-10 rounded-[2.5rem] shadow-xl border border-gray-100 animate-in fade-in slide-in-from-top-4 duration-500">
+        <div className="bg-[#FFFCE0] p-10 rounded-[2.5rem] shadow-xl border border-gray-100 animate-in fade-in slide-in-from-top-4 duration-500">
            <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-black pl-4 uppercase tracking-tight">New Coupon Details</h2>
            <form onSubmit={handleCreate} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               <div className="space-y-2">
@@ -152,7 +152,7 @@ export default function AdminCouponsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {coupons.map((coupon) => (
-          <div key={coupon._id} className={`bg-white rounded-[2.5rem] p-8 shadow-xl border-2 transition-all relative overflow-hidden group ${coupon.active ? 'border-transparent' : 'border-dashed border-gray-200 grayscale'}`}>
+          <div key={coupon._id} className={`bg-[#FFFCE0] rounded-[2.5rem] p-8 shadow-xl border-2 transition-all relative overflow-hidden group ${coupon.active ? 'border-transparent' : 'border-dashed border-gray-200 grayscale'}`}>
             <div className={`absolute top-0 right-0 w-24 h-24 -mr-8 -mt-8 rounded-full blur-2xl opacity-20 ${coupon.active ? 'bg-gray-1000' : 'bg-gray-500'}`} />
             
             <div className="flex justify-between items-start mb-8">
@@ -186,7 +186,7 @@ export default function AdminCouponsPage() {
                </div>
             </div>
             
-            {!coupon.active && <div className="absolute inset-0 bg-white/40 backdrop-blur-[1px] flex items-center justify-center">
+            {!coupon.active && <div className="absolute inset-0 bg-[#FFFCE0]/40 backdrop-blur-[1px] flex items-center justify-center">
                 <span className="bg-gray-900 text-white text-[10px] font-black uppercase tracking-[0.3em] px-6 py-2 rounded-full">Inactive</span>
             </div>}
           </div>

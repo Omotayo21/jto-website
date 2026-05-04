@@ -20,7 +20,7 @@ export function Modal({ isOpen, onClose, title, children, className }) {
         className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity" 
         onClick={onClose}
       />
-      <div className={cn("relative z-50 w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200 mx-4", className)}>
+      <div className={cn("relative z-50 w-full max-w-lg rounded-2xl bg-[#FFFCE0] p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200 mx-4", className)}>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
           <button 

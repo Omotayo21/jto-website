@@ -73,7 +73,7 @@ export function ProductFilters() {
       {isOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
-          <div className="absolute top-full left-0 mt-4 w-72 bg-white border border-gray-100 shadow-2xl z-50 p-6 animate-in fade-in slide-in-from-top-2 duration-300">
+          <div className="absolute top-full left-0 mt-4 w-72 bg-[#FFFCE0] border border-gray-100 shadow-2xl z-50 p-6 animate-in fade-in slide-in-from-top-2 duration-300">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-[10px] font-black uppercase tracking-[0.2em]">Filter Options</h3>
               <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-black">

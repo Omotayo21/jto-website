@@ -14,7 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-white text-black min-h-screen flex flex-col antialiased selection:bg-black selection:text-white">
+      <body className="bg-[#FFFCE0] text-black min-h-screen flex flex-col antialiased selection:bg-black selection:text-white">
         <CurrencyDetector />
         <Navbar />
         <main className="flex-grow w-full min-h-screen">

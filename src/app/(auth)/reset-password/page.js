@@ -60,7 +60,7 @@ export default function ResetPasswordPage() {
 
   if (success) {
     return (
-      <div className="max-w-md mx-auto mt-20 p-12 bg-white rounded-[3rem] shadow-2xl shadow-gray-200/50 border border-gray-100 text-center animate-in zoom-in-95 duration-500">
+      <div className="max-w-md mx-auto mt-20 p-12 bg-[#FFFCE0] rounded-[3rem] shadow-2xl shadow-gray-200/50 border border-gray-100 text-center animate-in zoom-in-95 duration-500">
         <div className="w-20 h-20 bg-emerald-50 text-emerald-500 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner">
           <CheckCircle2 size={40} />
         </div>
@@ -78,7 +78,7 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="max-w-md mx-auto mt-20 p-12 bg-white rounded-[3rem] shadow-2xl shadow-gray-200/50 border border-gray-100 animate-in fade-in slide-in-from-bottom-10 duration-700">
+    <div className="max-w-md mx-auto mt-20 p-12 bg-[#FFFCE0] rounded-[3rem] shadow-2xl shadow-gray-200/50 border border-gray-100 animate-in fade-in slide-in-from-bottom-10 duration-700">
       <div className="mb-10">
         <div className="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6">
           <Lock size={30} />
@@ -96,7 +96,7 @@ export default function ResetPasswordPage() {
             placeholder="••••••••" 
             value={password} 
             onChange={e => setPassword(e.target.value)} 
-            className="h-14 rounded-2xl border-gray-100 bg-gray-50 focus:bg-white transition-all font-bold" 
+            className="h-14 rounded-2xl border-gray-100 bg-gray-50 focus:bg-[#FFFCE0] transition-all font-bold" 
           />
         </div>
 
@@ -108,7 +108,7 @@ export default function ResetPasswordPage() {
             placeholder="••••••••" 
             value={confirmPassword} 
             onChange={e => setConfirmPassword(e.target.value)} 
-            className="h-14 rounded-2xl border-gray-100 bg-gray-50 focus:bg-white transition-all font-bold" 
+            className="h-14 rounded-2xl border-gray-100 bg-gray-50 focus:bg-[#FFFCE0] transition-all font-bold" 
           />
         </div>
         

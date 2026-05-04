@@ -141,7 +141,7 @@ export default function ShippingManagementPage() {
       </div>
 
       {displayedZones.length === 0 ? (
-        <div className="text-center py-20 bg-white rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
+        <div className="text-center py-20 bg-[#FFFCE0] rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
           <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
             {activeTab === 'domestic' ? <MapPin size={32} className="text-gray-300" /> : <Globe size={32} className="text-gray-300" />}
           </div>
@@ -154,7 +154,7 @@ export default function ShippingManagementPage() {
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {displayedZones.map(zone => (
-            <div key={zone._id} className="bg-white rounded-[2.5rem] p-8 shadow-xl shadow-gray-100 border border-gray-50 group hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
+            <div key={zone._id} className="bg-[#FFFCE0] rounded-[2.5rem] p-8 shadow-xl shadow-gray-100 border border-gray-50 group hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
               <div className={`absolute top-0 right-0 w-32 h-32 -mr-16 -mt-16 rounded-full blur-3xl opacity-10 transition-opacity group-hover:opacity-20 ${zone.active ? 'bg-black' : 'bg-gray-400'}`} />
               
               <div className="flex justify-between items-start mb-6">
@@ -199,7 +199,7 @@ export default function ShippingManagementPage() {
       {isModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 sm:p-0">
           <div className="absolute inset-0 bg-gray-900/60 backdrop-blur-md animate-in fade-in duration-300" onClick={() => setIsModalOpen(false)} />
-          <div className="relative bg-white w-full max-w-lg rounded-[3.5rem] p-10 shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-10 duration-500">
+          <div className="relative bg-[#FFFCE0] w-full max-w-lg rounded-[3.5rem] p-10 shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-10 duration-500">
              <h2 className="text-3xl font-black text-gray-900 mb-2 tracking-tight">
                {editingZone ? 'Edit Zone' : 'New Zone'}
              </h2>
@@ -241,7 +241,7 @@ export default function ShippingManagementPage() {
                       placeholder={isDomestic ? 'e.g. Lagos Island' : 'e.g. United States'} 
                       value={formData.name} 
                       onChange={e => setFormData({...formData, name: e.target.value})}
-                      className="h-14 rounded-2xl border-gray-100 bg-gray-50 focus:bg-white transition-all font-bold"
+                      className="h-14 rounded-2xl border-gray-100 bg-gray-50 focus:bg-[#FFFCE0] transition-all font-bold"
                    />
                 </div>
 
@@ -253,7 +253,7 @@ export default function ShippingManagementPage() {
                       placeholder="e.g. USA, UK, CA" 
                       value={formData.country} 
                       onChange={e => setFormData({...formData, country: e.target.value.toUpperCase()})}
-                      className="h-14 rounded-2xl border-gray-100 bg-gray-50 focus:bg-white transition-all font-bold"
+                      className="h-14 rounded-2xl border-gray-100 bg-gray-50 focus:bg-[#FFFCE0] transition-all font-bold"
                     />
                   </div>
                 )}
@@ -268,7 +268,7 @@ export default function ShippingManagementPage() {
                           placeholder="0" 
                           value={formData.fee} 
                           onChange={e => setFormData({...formData, fee: Number(e.target.value)})}
-                          className="h-14 rounded-2xl border-gray-100 bg-gray-50 focus:bg-white transition-all font-bold"
+                          className="h-14 rounded-2xl border-gray-100 bg-gray-50 focus:bg-[#FFFCE0] transition-all font-bold"
                       />
                     </div>
                   ) : (
@@ -280,7 +280,7 @@ export default function ShippingManagementPage() {
                           placeholder="0" 
                           value={formData.feeUSD} 
                           onChange={e => setFormData({...formData, feeUSD: Number(e.target.value)})}
-                          className="h-14 rounded-2xl border-gray-100 bg-gray-50 focus:bg-white transition-all font-bold"
+                          className="h-14 rounded-2xl border-gray-100 bg-gray-50 focus:bg-[#FFFCE0] transition-all font-bold"
                       />
                     </div>
                   )}
@@ -290,7 +290,7 @@ export default function ShippingManagementPage() {
                         placeholder={isDomestic ? 'e.g. 1-2 days' : 'e.g. 7-14 days'} 
                         value={formData.estimatedDays} 
                         onChange={e => setFormData({...formData, estimatedDays: e.target.value})}
-                        className="h-14 rounded-2xl border-gray-100 bg-gray-50 focus:bg-white transition-all font-bold"
+                        className="h-14 rounded-2xl border-gray-100 bg-gray-50 focus:bg-[#FFFCE0] transition-all font-bold"
                     />
                   </div>
                 </div>

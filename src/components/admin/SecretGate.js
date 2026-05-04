@@ -80,7 +80,7 @@ export default function SecretGate({ children }) {
 
   return (
     <div className="fixed inset-0 z-[100] bg-gray-50 flex items-center justify-center p-6">
-      <div className="max-w-md w-full bg-white p-12 rounded-[2.5rem] shadow-2xl shadow-gray-200 border border-gray-100 text-center">
+      <div className="max-w-md w-full bg-[#FFFCE0] p-12 rounded-[2.5rem] shadow-2xl shadow-gray-200 border border-gray-100 text-center">
         <div className="w-20 h-20 bg-gray-100 text-black rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner">
           <Icon name="Lock" size={32} />
         </div>

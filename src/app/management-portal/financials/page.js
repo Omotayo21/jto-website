@@ -108,7 +108,7 @@ export default async function FinancialsPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
         {cards.map((card, i) => (
-          <div key={i} className="bg-white p-8 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-50 flex flex-col gap-6">
+          <div key={i} className="bg-[#FFFCE0] p-8 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-50 flex flex-col gap-6">
              <div className={`${card.bg} w-14 h-14 rounded-2xl flex items-center justify-center`}>
                 {card.label.includes('NGN') ? <span className={`font-black text-xl ${card.color}`}>₦</span> : <card.icon className={`${card.color}`} size={24} />}
              </div>
@@ -121,7 +121,7 @@ export default async function FinancialsPage() {
       </div>
 
       <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
-        <div className="bg-white rounded-[3rem] p-10 shadow-2xl shadow-gray-100 border border-gray-50">
+        <div className="bg-[#FFFCE0] rounded-[3rem] p-10 shadow-2xl shadow-gray-100 border border-gray-50">
           <h3 className="text-xl font-black text-gray-900 uppercase tracking-tight mb-8">Popular Colours</h3>
           <div className="space-y-6">
             {topColors.map(([color, count], i) => (
@@ -142,7 +142,7 @@ export default async function FinancialsPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-[3rem] p-10 shadow-2xl shadow-gray-100 border border-gray-50">
+        <div className="bg-[#FFFCE0] rounded-[3rem] p-10 shadow-2xl shadow-gray-100 border border-gray-50">
           <h3 className="text-xl font-black text-gray-900 uppercase tracking-tight mb-8">Size Performance</h3>
           <div className="space-y-6">
             {topSizes.map(([size, count], i) => (
@@ -164,7 +164,7 @@ export default async function FinancialsPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-[3rem] shadow-2xl shadow-gray-100 border border-gray-50 overflow-hidden">
+      <div className="bg-[#FFFCE0] rounded-[3rem] shadow-2xl shadow-gray-100 border border-gray-50 overflow-hidden">
         <div className="p-8 md:p-10 border-b border-gray-50 flex items-center justify-between">
           <h3 className="text-lg md:text-xl font-black text-gray-900 uppercase tracking-tight">Product Costing & Performance</h3>
           <div className="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-xl text-[10px] font-black text-gray-400 uppercase tracking-widest">

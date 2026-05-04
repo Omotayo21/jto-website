@@ -13,7 +13,7 @@ export function ShopFollowButton() {
         className="fixed bottom-8 left-8 z-[100] h-12 px-6 bg-[#5A31F4] text-white rounded-full shadow-2xl flex items-center gap-3 hover:scale-105 transition-all active:scale-95 group font-bold text-sm"
         aria-label="Follow on Shop"
       >
-        <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
+        <div className="w-6 h-6 bg-[#FFFCE0]/20 rounded-full flex items-center justify-center">
           <Heart size={14} className="fill-current" />
         </div>
         Follow on shop
@@ -23,7 +23,7 @@ export function ShopFollowButton() {
       {isOpen && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
-          <div className="relative bg-white w-full max-w-sm p-8 rounded-[2rem] shadow-2xl animate-in zoom-in-95 duration-300">
+          <div className="relative bg-[#FFFCE0] w-full max-w-sm p-8 rounded-[2rem] shadow-2xl animate-in zoom-in-95 duration-300">
             <button 
               onClick={() => setIsOpen(false)}
               className="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors"
