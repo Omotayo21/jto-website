@@ -57,7 +57,7 @@ export default async function AdminDashboard() {
   ];
 
   return (
-    <div className="space-y-10 md:space-y-12">
+    <div className="space-y-10 md:space-y-12 bg-[#fffce0]">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <h1 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tight">Admin Console</h1>

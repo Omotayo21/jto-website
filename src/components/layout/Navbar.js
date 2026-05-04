@@ -291,9 +291,7 @@ export function Navbar() {
     return (
       <nav className="sticky top-0 z-40 w-full bg-[#FFFCE0] border-b border-gray-100 lg:hidden">
         <div className="px-6 h-16 flex justify-between items-center">
-          <Link href="/" className="text-xl font-black tracking-tighter serif-font uppercase">
-       <img src='/black.png' alt='logo' className='w-[100px] h-[80px]' />
-          </Link>
+          
           <Link href="/" className="text-[10px] font-black uppercase tracking-widest px-4 py-2 bg-black text-white rounded-full">
             Store
           </Link>
