@@ -206,7 +206,7 @@ export function CheckoutForm() {
         </form>
       </div>
 
-      <div className="bg-[#DAA520] p-10 rounded-[2.5rem] text-white flex flex-col shadow-2xl shadow-black/20">
+      <div className="bg-gray-100 p-10 rounded-[2.5rem] text-black flex flex-col shadow-2xl shadow-black/20">
         <h2 className="text-2xl font-black mb-8 tracking-tight flex items-center gap-3 ">
           <span className="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center text-sm  border border-white/20">2</span>
           Order Summary
@@ -219,14 +219,14 @@ export function CheckoutForm() {
                  <img src={item.image || '/placeholder.png'} alt={item.name} className="w-full h-full object-cover rounded-xl" />
                </div>
                <div className="flex-1">
-                 <h4 className="font-bold text-white group-hover:text-gray-300 transition-colors line-clamp-1">{item.name}</h4>
-                 <p className="text-xs  mt-1 uppercase tracking-wider font-black">
+                 <h4 className="font-bold text-black group-hover:text-gray-300 transition-colors line-clamp-1">{item.name}</h4>
+                 <p className="text-xs  mt-1 uppercase tracking-wider font-black text-black">
                    {item.variant?.size} {item.variant?.color && `| ${item.variant.color.name}`}
                  </p>
 
                  <div className="flex justify-between items-center mt-2">
-                   <span className="text-xs bg-white/10 px-2 py-0.5 rounded text-gray-100">Qty: {item.quantity}</span>
-                    <span className="font-black text-white">
+                   <span className="text-xs bg-white/10 px-2 py-0.5 rounded text-black">Qty: {item.quantity}</span>
+                    <span className="font-black text-black">
                       {formatCurrency(getItemPrice(item) * item.quantity, currency)}
                     </span>
                  </div>
@@ -242,26 +242,26 @@ export function CheckoutForm() {
                 value={couponCode} 
                 onChange={e => setCouponCode(e.target.value.toUpperCase())} 
                 disabled={discountVal > 0} 
-                className="bg-white/10 text-black h-14 rounded-xl placeholder:text-gray-600  " 
+                className="bg-white/30 text-black h-14 rounded-xl placeholder:text-gray-600 border border-black  " 
              />
              {discountVal > 0 ? (
                <div className="w-14 h-14 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center border border-emerald-500/30">
                  <CheckCircle2 size={24}/>
                </div>
              ) : (
-               <Button onClick={handleApplyCoupon} disabled={validatingCoupon || !couponCode} className="h-14 px-8 rounded-xl bg-gray-400 hover:bg-black  ">Apply</Button>
+               <Button onClick={handleApplyCoupon} disabled={validatingCoupon || !couponCode} className="h-14 px-8 rounded-xl bg-gray-500 hover:bg-black  ">Apply</Button>
              )}
            </div>
 
            <div className="space-y-4 text-sm font-medium">
-             <div className="flex justify-between text-white"><span>Subtotal</span><span className="text-white font-bold">{formatCurrency(rawTotal, currency)}</span></div>
-             <div className="flex justify-between text-white">
+             <div className="flex justify-between text-black"><span>Subtotal</span><span className="text-black font-bold">{formatCurrency(rawTotal, currency)}</span></div>
+             <div className="flex justify-between text-black">
                <span className="flex items-center gap-2"><Truck size={14}/> Delivery ({selectedZone?.name || 'Select Zone'})</span>
-               <span className="text-white font-bold">{selectedZone ? formatCurrency(deliveryFee, currency) : '—'}</span>
+               <span className="text-black font-bold">{selectedZone ? formatCurrency(deliveryFee, currency) : '—'}</span>
              </div>
-             {discountVal > 0 && <div className="flex justify-between text-white"><span>Discount Applied</span><span>-{formatCurrency(discountVal, currency)}</span></div>}
+             {discountVal > 0 && <div className="flex justify-between text-black"><span>Discount Applied</span><span>-{formatCurrency(discountVal, currency)}</span></div>}
              
-             <div className="flex justify-between text-3xl font-black text-white pt-6 border-t border-white/10 ">
+             <div className="flex justify-between text-3xl font-black text-black pt-6 border-t border-white/10 ">
                <span>Total</span><span>{formatCurrency(total, currency)}</span>
              </div>
            </div>
