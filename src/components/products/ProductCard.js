@@ -58,7 +58,7 @@ export function ProductCard({ product, light = false }) {
         }`}>
           {product.name}
         </h3>
-        <p className={`text-sm font-medium serif-font italic ${light ? 'text-white' : 'text-black'}`}>
+        <p className={`text-sm font-medium   ${light ? 'text-white' : 'text-black'}`}>
           {formatCurrency(displayPrice, displayCurrency)}
         </p>
 

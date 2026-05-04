@@ -98,7 +98,7 @@ export default function AdminOrderDetailsPage({ params }) {
       <div className="grid lg:grid-cols-3 gap-10">
         <div className="lg:col-span-2 space-y-10">
           {/* Status Control */}
-          <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
+          <section className="bg-[#fffce0] p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
              <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-black pl-4 uppercase tracking-tight">Fulfillment Status</h2>
              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
@@ -121,7 +121,7 @@ export default function AdminOrderDetailsPage({ params }) {
           </section>
 
           {/* Items */}
-          <section className="bg-white rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100 overflow-hidden">
+          <section className="bg-[#fffce0] rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100 overflow-hidden">
              <div className="p-8 border-b border-gray-50 bg-gray-50/50">
                 <h2 className="text-xl font-black text-gray-900 uppercase tracking-tight">Order Items</h2>
              </div>
@@ -173,7 +173,7 @@ export default function AdminOrderDetailsPage({ params }) {
         </div>
 
         <div className="space-y-10">
-          <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
+          <section className="bg-[#fffce0] p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
              <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-rose-600 pl-4 uppercase tracking-tight">Customer Info</h2>
              <div className="space-y-6">
                 <div>
@@ -200,7 +200,7 @@ export default function AdminOrderDetailsPage({ params }) {
              </div>
           </section>
 
-          <section className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
+          <section className="bg-[#fffce0] p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
              <h2 className="text-xl font-black text-gray-900 mb-8 border-l-4 border-amber-600 pl-4 uppercase tracking-tight">Shipping</h2>
              <div className="space-y-4 text-sm text-gray-600 font-medium leading-relaxed">
                 <p>
@@ -224,7 +224,7 @@ export default function AdminOrderDetailsPage({ params }) {
                 {order.delivery?.notes && (
                   <div className="pt-4 border-t border-gray-50 bg-amber-50/50 p-4 rounded-2xl">
                      <p className="text-[10px] font-black text-amber-600 uppercase tracking-widest mb-1">Customer Note</p>
-                     <p className="text-gray-900 font-bold italic">&quot;{order.delivery.notes}&quot;</p>
+                     <p className="text-gray-900 font-bold ">&quot;{order.delivery.notes}&quot;</p>
                   </div>
                 )}
              </div>

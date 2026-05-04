@@ -138,7 +138,7 @@ export default async function FinancialsPage() {
                 </div>
               </div>
             ))}
-            {topColors.length === 0 && <p className="text-gray-400 text-sm italic">No color data yet</p>}
+            {topColors.length === 0 && <p className="text-gray-400 text-sm ">No color data yet</p>}
           </div>
         </div>
 
@@ -159,7 +159,7 @@ export default async function FinancialsPage() {
                 </div>
               </div>
             ))}
-            {topSizes.length === 0 && <p className="text-gray-400 text-sm italic">No size data yet</p>}
+            {topSizes.length === 0 && <p className="text-gray-400 text-sm ">No size data yet</p>}
           </div>
         </div>
       </div>

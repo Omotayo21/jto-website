@@ -47,9 +47,7 @@
 }
 
 @layer utilities {
-  .serif-font {
-    font-family: var(--font-serif);
-  }
+
 
   .poppins-font {
     font-family: var(--font-poppins);

@@ -16,7 +16,7 @@ export default async function OrderConfirmationPage({ params }) {
   const order = JSON.parse(JSON.stringify(orderDoc));
 
   return (
-    <div className="max-w-4xl mx-auto mt-20 bg-white p-16 rounded-[3rem] shadow-2xl shadow-emerald-200/20 border border-emerald-50 text-center">
+    <div className="max-w-4xl mx-auto mt-20 bg-[#FFFCE0] p-16 rounded-[3rem] shadow-2xl shadow-emerald-200/20 border border-emerald-50 text-center">
       <CartClearer />
       <div className="w-28 h-28 bg-gradient-to-br from-emerald-400 to-emerald-600 text-white rounded-full flex items-center justify-center mx-auto mb-10 shadow-xl shadow-emerald-200">
         <CheckCircle2 size={56} className="animate-in zoom-in duration-500 delay-200" />

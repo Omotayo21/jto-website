@@ -48,7 +48,7 @@ export function CartDrawer() {
       
       <div className="fixed inset-y-0 right-0 max-w-md w-full bg-[#FFFCE0] shadow-2xl flex flex-col animate-in slide-in-from-right duration-300 overflow-hidden">
         <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between bg-[#FFFCE0] z-10">
-          <h2 className="text-xl font-black serif-font italic text-black">Your Cart</h2>
+          <h2 className="text-xl font-black   text-black">Your Cart</h2>
           <button onClick={closeCart} className="p-2 text-gray-400 hover:text-black rounded-full hover:bg-gray-50 transition-all border border-gray-100">
             <X size={20} />
           </button>
@@ -62,7 +62,7 @@ export function CartDrawer() {
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
                 </svg>
               </div>
-              <p className="text-xl font-black serif-font italic text-black">Sign In Required</p>
+              <p className="text-xl font-black   text-black">Sign In Required</p>
               <p className="text-gray-400 mt-3 mb-8 max-w-[250px] text-sm font-medium">Please sign in to view and manage your cart.</p>
               <Link href="/login" onClick={closeCart} className="w-full bg-black text-white h-12 flex items-center justify-center font-black uppercase tracking-widest text-[10px] hover:bg-[#DAA520] transition-colors">
                  Sign In
@@ -77,7 +77,7 @@ export function CartDrawer() {
                   <ShoppingCart size={36} className="text-gray-300" />
                 )}
               </div>
-              <p className="text-xl serif-font italic text-black">Your cart is empty</p>
+              <p className="text-xl   text-black">Your cart is empty</p>
               <p className="text-gray-400 mt-3 mb-8 max-w-[250px] text-sm font-medium">Looks like you haven&apos;t added any products yet.</p>
               <button onClick={closeCart} className="px-8 py-3 bg-black text-white font-black uppercase tracking-widest text-[10px] hover:bg-[#DAA520] transition-colors">Continue Shopping</button>
             </div>

@@ -54,7 +54,7 @@ export function NewsletterSection() {
             </svg>
           </div>
           
-          <h2 className="text-4xl md:text-6xl serif-font text-white mb-6 tracking-wide uppercase">
+          <h2 className="text-4xl md:text-6xl  text-white mb-6 tracking-wide uppercase">
             For Exclusive Access
           </h2>
           
@@ -89,7 +89,7 @@ export function NewsletterSection() {
               </button>
             </div>
             
-            <p className="mt-8 text-xs text-gray-400 font-light italic">
+            <p className="mt-8 text-xs text-gray-400 font-light ">
               Unsubscribe easily, whenever you like.
             </p>
           </form>

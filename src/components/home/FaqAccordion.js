@@ -36,7 +36,7 @@ export function FaqAccordion() {
                 onClick={() => setOpen(open === i ? null : i)}
                 className="w-full flex justify-between items-start py-7 text-left group"
               >
-                <span className="text-lg md:text-xl serif-font pr-8 leading-snug">{faq.q}</span>
+                <span className="text-lg md:text-xl  pr-8 leading-snug">{faq.q}</span>
                 <span className="shrink-0 w-7 h-7 rounded-full border border-white/30 flex items-center justify-center mt-0.5 group-hover:border-white transition-colors">
                   {open === i ? (
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">

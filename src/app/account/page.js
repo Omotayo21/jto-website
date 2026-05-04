@@ -81,7 +81,7 @@ export default function AccountPage() {
   if (!user) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-6 px-4">
-        <h2 className="text-3xl serif-font italic text-center">Your Account</h2>
+        <h2 className="text-3xl   text-center">Your Account</h2>
         <p className="text-sm text-gray-500 text-center max-w-xs">
           Sign in to access your profile, orders, and wishlist.
         </p>
@@ -112,12 +112,12 @@ export default function AccountPage() {
           <div className="flex flex-col md:flex-row items-start md:items-end gap-8">
             {/* Avatar */}
             <div className="w-24 h-24 bg-[#DAA520] flex items-center justify-center shrink-0 border-4 border-white/10 rounded-none">
-              <span className="text-2xl font-black text-white serif-font">{initials}</span>
+              <span className="text-2xl font-black text-white ">{initials}</span>
             </div>
 
             <div className="flex-1">
               <p className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-2">Member since {new Date().getFullYear()}</p>
-              <h1 className="text-3xl md:text-4xl font-black serif-font italic">{user.name || 'Valued Customer'}</h1>
+              <h1 className="text-3xl md:text-4xl font-black  ">{user.name || 'Valued Customer'}</h1>
               <p className="text-sm text-white/50 mt-1">{user.email}</p>
             </div>
 
@@ -162,7 +162,7 @@ export default function AccountPage() {
             ].map(card => (
               <div key={card.label} className="bg-[#FFFCE0] p-8 border border-gray-200">
                 <span className="text-2xl block mb-4">{card.icon}</span>
-                <p className="text-3xl font-black serif-font italic mb-1">{card.value}</p>
+                <p className="text-3xl font-black   mb-1">{card.value}</p>
                 <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">{card.label}</p>
               </div>
             ))}
@@ -199,7 +199,7 @@ export default function AccountPage() {
               </div>
             ) : orders.length === 0 ? (
               <div className="p-16 text-center">
-                <p className="text-3xl serif-font italic text-gray-300 mb-3">No orders yet</p>
+                <p className="text-3xl   text-gray-300 mb-3">No orders yet</p>
                 <p className="text-xs uppercase tracking-widest text-gray-400 mb-8 font-black">Your order history will appear here</p>
                 <Link
                   href="/products"
@@ -276,7 +276,7 @@ export default function AccountPage() {
               </div>
             ) : favorites.length === 0 ? (
               <div className="p-16 text-center">
-                <p className="text-3xl serif-font italic text-gray-300 mb-3">Your favorites list is empty</p>
+                <p className="text-3xl   text-gray-300 mb-3">Your favorites list is empty</p>
                 <p className="text-xs uppercase tracking-widest text-gray-400 mb-8 font-black">Save pieces you love to revisit later</p>
                 <Link
                   href="/products"

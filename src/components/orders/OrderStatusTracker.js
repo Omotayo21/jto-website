@@ -47,7 +47,7 @@ export function OrderStatusTracker({ status, history }) {
                 {isCompleted ? <CheckCircle2 className="w-6 h-6" /> : <span className="font-bold">{index + 1}</span>}
               </div>
               <div className="mt-4 text-center">
-                <p className={`text-sm font-bold transition-colors serif-font italic ${isCompleted || isActive ? 'text-gray-900' : 'text-gray-400'}`}>{stage.label}</p>
+                <p className={`text-sm font-bold transition-colors   ${isCompleted || isActive ? 'text-gray-900' : 'text-gray-400'}`}>{stage.label}</p>
                 {statusInfo && (
                   <p className="text-[10px] text-gray-400 font-medium mt-1 uppercase tracking-widest">
                     {new Date(statusInfo.timestamp).toLocaleDateString()}

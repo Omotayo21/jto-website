@@ -8,7 +8,7 @@ import { PolicyModal } from '@/components/ui/PolicyModal';
 const POLICIES = {
   'SHIPPING POLICY': (
     <div className="space-y-6">
-      <p className="font-bold text-black italic">At JTOtheLabel, every piece is carefully crafted and handled with the utmost attention to detail. Our shipping process reflects the same level of care, ensuring your order arrives safely and in perfect condition.</p>
+      <p className="font-bold text-black ">At JTOtheLabel, every piece is carefully crafted and handled with the utmost attention to detail. Our shipping process reflects the same level of care, ensuring your order arrives safely and in perfect condition.</p>
     </div>
   ),
   'GENERAL INFORMATION': (

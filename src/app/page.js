@@ -39,7 +39,7 @@ export default async function Home() {
         </div>
 
         {products.length === 0 ? (
-          <p className="text-gray-400 text-center py-12 serif-font italic">New arrivals coming soon…</p>
+          <p className="text-gray-400 text-center py-12  ">New arrivals coming soon…</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-4">
             {products.map(product => (

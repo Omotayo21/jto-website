@@ -50,7 +50,7 @@ export default async function ProductPage({ params }) {
         <section className="bg-[#DAA520] py-24 md:py-32 text-white mt-24">
           <div className="max-w-[1440px] mx-auto px-6 md:px-12">
             <div className="flex flex-col items-center mb-16 text-center">
-              <h2 className="text-3xl md:text-5xl serif-font italic mb-6">You may also like</h2>
+              <h2 className="text-3xl md:text-5xl   mb-6">You may also like</h2>
               <div className="w-12 h-[1px] bg-white/40 mb-6" />
               <p className="text-[10px] font-black uppercase tracking-[0.4em] text-white/70">
                 Curated for your style

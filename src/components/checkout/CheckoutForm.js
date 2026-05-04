@@ -153,7 +153,7 @@ export function CheckoutForm() {
     <div className="grid lg:grid-cols-2 gap-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="bg-[#FFFCE0] p-10 rounded-[2.5rem] shadow-xl shadow-gray-100 border border-gray-100">
         <h2 className="text-2xl font-black mb-8 tracking-tight flex items-center gap-3 ">
-          <span className="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center text-sm font-sans not-italic">1</span>
+          <span className="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center text-sm font-sans not-">1</span>
           Delivery Details
         </h2>
         <form id="checkout-form" onSubmit={handleCheckout} className="space-y-6">

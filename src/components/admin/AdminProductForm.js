@@ -291,7 +291,7 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
                   })}
                 </div>
                 {(formData.categories || []).length > 0 && (
-                  <p className="text-[10px] text-gray-400 mt-2 font-medium italic">
+                  <p className="text-[10px] text-gray-400 mt-2 font-medium ">
                     Selected: {formData.categories.map(c => FASHION_CATEGORIES.find(fc => fc.value === c)?.label || c).join(', ')}
                   </p>
                 )}
@@ -410,7 +410,7 @@ export function AdminProductForm({ initialData = null, isEdit = false }) {
                         <Input type="number" name="costPriceUSD" value={formData.costPriceUSD} onChange={handleChange} className="h-14 font-black text-rose-600 bg-rose-50/30 border-rose-100" />
                       </div>
                     </div>
-                    <p className="text-[10px] text-gray-400 mt-2 font-medium italic">* Cost prices are only visible to Admin and Finance roles.</p>
+                    <p className="text-[10px] text-gray-400 mt-2 font-medium ">* Cost prices are only visible to Admin and Finance roles.</p>
                   </div>
                 </div>
               </section>

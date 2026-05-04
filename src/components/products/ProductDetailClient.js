@@ -139,7 +139,7 @@ export function ProductDetailClient({ product }) {
         </div>
 
         {/* Product name */}
-        <h1 className="text-3xl serif-font italic leading-snug text-black">{product.name}</h1>
+        <h1 className="text-3xl   leading-snug text-black">{product.name}</h1>
 
         {/* Price */}
         <div className="flex items-center justify-between">

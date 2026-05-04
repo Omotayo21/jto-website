@@ -40,7 +40,7 @@ export default function LoginPage() {
         {/* Title */}
          <div className="flex justify-center mb-8 flex flex-col items-center space-y-6">
           <img src='/black.png' alt='logo' className='w-[120px] h-[80px]' />
-        <h1 className="text-3xl serif-font italic text-center text-black mb-12 tracking-tight">
+        <h1 className="text-3xl   text-center text-black mb-12 tracking-tight">
           Log in
         </h1>
 </div>

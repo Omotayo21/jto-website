@@ -35,7 +35,7 @@ export function ShopFollowButton() {
               <div className="w-16 h-16 bg-[#5A31F4]/10 rounded-3xl flex items-center justify-center mx-auto mb-6 text-[#5A31F4]">
                 <Heart size={32} className="fill-current" />
               </div>
-              <h3 className="text-2xl font-black serif-font uppercase tracking-tighter mb-2">Follow JTOtheLabel</h3>
+              <h3 className="text-2xl font-black  uppercase tracking-tighter mb-2">Follow JTOtheLabel</h3>
               <p className="text-sm text-gray-500">Sign in to follow the brand and get the latest updates on shop.</p>
             </div>
 

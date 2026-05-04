@@ -50,7 +50,7 @@ export function Hero() {
             <p className="text-xs font-medium uppercase tracking-[0.4em] mb-4 opacity-90">
               {slide.subtitle}
             </p>
-            <h1 className="text-5xl md:text-7xl serif-font italic mb-10 leading-tight">
+            <h1 className="text-5xl md:text-7xl   mb-10 leading-tight">
               {slide.title}
             </h1>
             <Link

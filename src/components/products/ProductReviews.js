@@ -72,7 +72,7 @@ export function ProductReviews({ productId }) {
   return (
     <div className="mt-20 space-y-12">
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl serif-font italic text-gray-900 tracking-tight flex items-center gap-4">
+        <h2 className="text-3xl   text-gray-900 tracking-tight flex items-center gap-4">
           Customer Reviews
           <span className="text-xs font-bold bg-black text-white px-3 py-1 uppercase tracking-widest">{reviews.length} total</span>
         </h2>
@@ -83,7 +83,7 @@ export function ProductReviews({ productId }) {
         <div className="lg:col-span-1">
           {user ? (
             <div className="bg-[#FFFCE0] p-8 border border-gray-200 sticky top-24">
-              <h3 className="font-black text-gray-900 text-xl mb-6 serif-font italic">Leave a Review</h3>
+              <h3 className="font-black text-gray-900 text-xl mb-6  ">Leave a Review</h3>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="text-xs font-black text-gray-400 uppercase tracking-widest block mb-3">Rating</label>
@@ -151,7 +151,7 @@ export function ProductReviews({ productId }) {
                     ))}
                   </div>
                 </div>
-                <p className="text-gray-600 font-medium leading-relaxed italic">&quot;{review.comment}&quot;</p>
+                <p className="text-gray-600 font-medium leading-relaxed ">&quot;{review.comment}&quot;</p>
                 <div className="mt-6 flex items-center gap-2">
                    <div className="w-4 h-4 bg-black rounded-full flex items-center justify-center">
                       <CheckCircle2 size={10} className="text-white" />

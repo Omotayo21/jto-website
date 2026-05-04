@@ -24,7 +24,7 @@ function SearchOverlay({ isOpen, onClose }) {
   return (
     <div className="fixed inset-0 z-[300] bg-[#FFFCE0] animate-in fade-in duration-300 flex flex-col">
       <div className="flex justify-between items-center p-8 border-b border-gray-100">
-        <span className="text-xl font-black serif-font uppercase tracking-tighter">Search</span>
+        <span className="text-xl font-black  uppercase tracking-tighter">Search</span>
         <button onClick={onClose} className="p-2 hover:opacity-60 transition-opacity">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
             <line x1="18" y1="6" x2="6" y2="18" />
@@ -40,7 +40,7 @@ function SearchOverlay({ isOpen, onClose }) {
             placeholder="WHAT ARE YOU LOOKING FOR?" 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full border-b-2 border-black text-2xl md:text-4xl py-4 bg-transparent outline-none font-black serif-font italic placeholder:text-gray-300 text-black"
+            className="w-full border-b-2 border-black text-2xl md:text-4xl py-4 bg-transparent outline-none font-black   placeholder:text-gray-300 text-black"
           />
           <button type="submit" className="absolute right-0 bottom-6 text-black hover:opacity-60 transition-opacity">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

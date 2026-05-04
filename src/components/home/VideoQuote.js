@@ -21,7 +21,7 @@ export function VideoQuote() {
       {/* Overlay Content */}
       <div className="absolute inset-0 flex flex-col justify-end p-12 md:p-24 bg-gradient-to-t from-black/80 to-transparent z-10">
         <div className="max-w-4xl self-end text-right">
-          <p className="text-2xl md:text-4xl lg:text-5xl serif-font italic text-white leading-tight mb-6">
+          <p className="text-2xl md:text-4xl lg:text-5xl   text-white leading-tight mb-6">
             &ldquo;Creating pieces that empower presence, inspire confidence, and move culture forward.&rdquo;
           </p>
           <div className="flex flex-col items-end">

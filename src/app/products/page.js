@@ -73,16 +73,16 @@ export default async function ProductsPage({ searchParams }) {
 
       {/* ── Category / Search Title ── */}
       {pageTitle && (
-        <h1 className="text-2xl md:text-3xl serif-font italic capitalize mb-10">{pageTitle}</h1>
+        <h1 className="text-2xl md:text-3xl   capitalize mb-10">{pageTitle}</h1>
       )}
       {q && (
-        <h1 className="text-2xl md:text-3xl serif-font italic mb-10">Search: &ldquo;{q}&rdquo;</h1>
+        <h1 className="text-2xl md:text-3xl   mb-10">Search: &ldquo;{q}&rdquo;</h1>
       )}
 
       {/* ── Grid ── */}
       {products.length === 0 ? (
         <div className="text-center py-32">
-          <p className="text-3xl serif-font italic text-gray-200 mb-3">No pieces found</p>
+          <p className="text-3xl   text-gray-200 mb-3">No pieces found</p>
           <p className="text-xs uppercase tracking-widest text-gray-300 font-black">Check back soon for new arrivals</p>
         </div>
       ) : (

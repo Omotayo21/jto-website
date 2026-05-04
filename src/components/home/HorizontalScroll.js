@@ -20,7 +20,7 @@ export function HorizontalScroll({ products, title }) {
     <section className="py-24 bg-[#DAA520] text-white overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-8 md:px-12">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl serif-font italic mb-6">Client Favourites</h2>
+          <h2 className="text-3xl md:text-5xl   mb-6">Client Favourites</h2>
           <div className="w-20 h-[1px] bg-[#FFFCE0]/30 mx-auto" />
         </div>
 
