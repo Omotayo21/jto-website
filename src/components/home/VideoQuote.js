@@ -15,10 +15,7 @@ export function VideoQuote() {
           src="/fashion-bg.mp4" 
           type="video/mp4" 
         />
-        <source 
-          src="/Recording%20%2312.mp4" 
-          type="video/mp4" 
-        />
+       
       </video>
 
       {/* Overlay Content */}
@@ -30,7 +27,7 @@ export function VideoQuote() {
           <div className="flex flex-col items-end">
             <span className="w-12 h-[1px] bg-[#DAA520] mb-4" />
             <p className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-[#DAA520]">
-              Kemi Onsanya <span className="text-white/60 ml-2">CEO</span>
+              Kemi Onasanya <span className="text-white/60 ml-2">CEO</span>
             </p>
           </div>
         </div>
