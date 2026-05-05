@@ -285,7 +285,6 @@ export function Navbar() {
     if (user) fetchCart();
   }, [user, fetchCart]);
 
-  if (isAuthPage) return null;
 
   if (isAdminPage) {
     return (
@@ -315,7 +314,8 @@ export function Navbar() {
         }`}
       >
         {/* Row 1: Search / Logo / Icons */}
-        <div className="max-w-[1440px] bg-white mx-auto px-8 flex items-center justify-between h-16">
+        <div className="bg-white">
+          <div className="max-w-[1440px] mx-auto px-8 flex items-center justify-between h-16">
           {/* Left — Brand Logo */}
           <Link
             href="/"
@@ -378,6 +378,7 @@ export function Navbar() {
             </button>
           </div>
         </div>
+      </div>
 
         {/* Row 2: Navigation Links (desktop only) */}
         <div className="hidden md:block border-t border-black/10">

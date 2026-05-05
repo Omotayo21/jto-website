@@ -10,7 +10,12 @@ export default async function OrderConfirmationPage({ params }) {
   const { id } = params;
   
   await connectDB();
-  const orderDoc = await Order.findById(id);
+  const orderDoc = await Order.findOne({
+    $or: [
+      { _id: id.match(/^[0-9a-fA-F]{24}$/) ? id : null },
+      { orderNumber: id }
+    ]
+  });
   if (!orderDoc) return notFound();
   
   const order = JSON.parse(JSON.stringify(orderDoc));
